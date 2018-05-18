@@ -40,6 +40,13 @@ struct node {
     }
 };
 
+void destroy(node *rt) {
+    if (!rt) return;
+    destroy(rt->son[0]);
+    destroy(rt->son[1]);
+    delete rt;
+}
+
 node *rotate(node *p, bool dir) {
     node *s = p->son[!dir], *t = s->son[dir];
     s->son[dir] = p;
@@ -71,7 +78,7 @@ node *delitem(node *rt, int key) {
         rt->update();
         return rt;
     } else if (key > rt->key) {
-        rt->son[1] = delitem(rt->son[1].key);
+        rt->son[1] = delitem(rt->son[1], key);
         rt->update();
         return rt;
     } else {
@@ -99,7 +106,7 @@ node *delitem(node *rt, int key) {
 }
 
 int getlesscnt(node *rt, int key) {
-    if (!cur) return 0;
+    if (!rt) return 0;
     int lsz = 0;
     if (rt->son[0]) lsz = rt->son[0]->sz;
     if (key < rt->key)
@@ -110,33 +117,67 @@ int getlesscnt(node *rt, int key) {
         return lsz + rt->cnt + getlesscnt(rt->son[1], key);
 }
 
-int rankitem(node *rt, int rank) {
-    if (!rt) return INF;
+int getnth(node *rt, int rank) {
+    if (!rt) return -INF;
     int lsz = 0;
     if (rt->son[0]) lsz = rt->son[0]->sz;
     if (rank <= lsz)
-        return rankitem(rt->son[0], rank);
+        return getnth(rt->son[0], rank);
     else if (rank <= lsz + rt->cnt)
         return rt->key;
     else
-        return rankitem(rt->son[1], rank - lsz - rt->cnt);
+        return getnth(rt->son[1], rank - lsz - rt->cnt);
 }
 
 int pred(node *rt, int key) {
     if (!rt) return -INF;
     if (key == rt->key) {
         node *p = rt->stpred();
-        return p?p->key:-INF;
-    } else if (rt->key > key)
+        if (!p)
+            return -INF;
+        else
+            return p->key;
+    } else if (key < rt->key)
         return pred(rt->son[0], key);
     else
         return max(rt->key, pred(rt->son[1], key));
 }
 
-int succ(node *rt,int key){
-    if(!rt)return INF;
-    if(key==rt->key){
-        node *p=rt->stsucc();
-        
+int succ(node *rt, int key) {
+    if (!rt) return INF;
+    if (key == rt->key) {
+        node *p = rt->stsucc();
+        if (!p)
+            return INF;
+        else
+            return p->key;
+    } else if (key > rt->key)
+        return succ(rt->son[1], key);
+    else
+        return min(rt->key, succ(rt->son[0], key));
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    node *rt = NULL;
+    for (int _ = 1; _ <= n; ++_) {
+        char opt;
+        int x;
+        scanf("%hhd%d", &opt, &x);
+        if (opt == 1)
+            rt = insitem(rt, x);
+        else if (opt == 2)
+            rt = delitem(rt, x);
+        else if (opt == 3)
+            printf("%d\n", 1 + getlesscnt(rt, x));
+        else if (opt == 4)
+            printf("%d\n", getnth(rt, x));
+        else if (opt == 5)
+            printf("%d\n", pred(rt, x));
+        else if (opt == 6)
+            printf("%d\n", succ(rt, x));
     }
+    destroy(rt);
+    return 0;
 }
