@@ -113,8 +113,7 @@ node *delitem(node *rt, int key) {
             } else {
                 node *p = rt->stsucc();
                 key = rt->key = p->key;
-                rt->sz = rt->sz - rt->cnt + p->cnt;
-                swap(rt->cnt, p->cnt);  //IMPORTANT!!!
+                swap(rt->cnt, p->cnt);
             }
         }
     }
