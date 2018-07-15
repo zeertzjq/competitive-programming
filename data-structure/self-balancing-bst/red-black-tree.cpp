@@ -1,3 +1,4 @@
+// https://www.luogu.org/problem/show?pid=P3369
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -266,13 +267,13 @@ int main() {
         if (opt == 1) {
             rt = insitem(rt, NULL, x);
             if (vired) vred(vicur);
-            //print2DUtil(::rt, 0);
-            //std::clog << std::string(80, '=');
+            // print2DUtil(::rt, 0);
+            // std::clog << std::string(80, '=');
         } else if (opt == 2) {
             rt = delitem(rt, NULL, x);
             if (viblack) vblack(vidad, vidir);
-            //print2DUtil(::rt, 0);
-            //std::clog << std::string(80, '=');
+            // print2DUtil(::rt, 0);
+            // std::clog << std::string(80, '=');
         } else if (opt == 3)
             printf("%d\n", 1 + getlesscnt(rt, x));
         else if (opt == 4)
