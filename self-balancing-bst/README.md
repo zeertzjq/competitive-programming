@@ -1,1 +1,1 @@
-Luogo P3369
+https://www.luogu.org/problem/show?pid=P3369

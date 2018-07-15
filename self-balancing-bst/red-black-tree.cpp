@@ -41,6 +41,8 @@ struct node {
     }
 };
 
+node *rt = NULL;
+
 void destroy(node *rt) {
     if (!rt) return;
     destroy(rt->son[0]);
@@ -61,7 +63,22 @@ void rotate(node *p, bool dir) {
     s->update();
 }
 
+bool vired = false, viblack = false, vidir;
+node *vicur, *vidad;
+
+void svired(node *cur) {
+    vired = true;
+    vicur = cur;
+}
+
+void sviblack(node *dad, bool pdir) {
+    viblack = true;
+    vidad = dad;
+    vidir = pdir;
+}
+
 void vred(node *cur) {
+    vired = false;
     if (!cur->red) return;
     node *p = cur->dad;
     if (!p) {
@@ -73,8 +90,12 @@ void vred(node *cur) {
     bool pdir = p->sdir(cur), gpdir = gp->sdir(p);
     node *u = gp->son[!gpdir];
     if (!u || !u->red) {
-        if (pdir != gpdir) rotate(p, gpdir);
+        if (pdir != gpdir) {
+            rotate(p, gpdir);
+            swap(cur, p);
+        };
         rotate(gp, !gpdir);
+        if (gp == rt) rt = gp->dad;
         p->red = false;
         gp->red = true;
     } else {
@@ -85,14 +106,18 @@ void vred(node *cur) {
 }
 
 void vblack(node *dad, bool pdir) {
+    viblack = false;
     if (!dad) return;
     node *sib = dad->son[!pdir];
     if (sib->red) {
         rotate(dad, pdir);
+        if (rt == dad) rt = dad->dad;
         sib = dad->son[!pdir];
+        dad->red = true;
+        dad->dad->red = false;
     }
-    bool rot1 = sib->son[!pdir]->red;
-    bool rot2 = sib->son[pdir]->red;
+    bool rot1 = sib->son[!pdir] ? sib->son[!pdir]->red : false;
+    bool rot2 = sib->son[pdir] ? sib->son[pdir]->red : false;
     if (!rot1 && !rot2) {
         sib->red = true;
         if (dad->red)
@@ -105,38 +130,40 @@ void vblack(node *dad, bool pdir) {
             sib = sib->dad;
         }
         rotate(dad, pdir);
+        if (rt == dad) rt = dad->dad;
         sib->red = dad->red;
         sib->son[!pdir]->red = dad->red = false;
     }
 }
 
-void insitem(node *&rt, node *dad, int key) {
+node *insitem(node *rt, node *dad, int key) {
     if (!rt) {
         rt = new node(key, dad);
         if (!dad)
             rt->red = false;
         else if (dad->red)
-            vred(rt);
-        return;
+            svired(rt);
+        return rt;
     }
     if (rt->key == key) {
         ++rt->cnt;
         ++rt->sz;
-        return;
+        return rt;
     }
     bool dir = 0;
     if (key > rt->key) dir = 1;
-    insitem(rt->son[dir], rt, key);
+    rt->son[dir] = insitem(rt->son[dir], rt, key);
     rt->update();
+    return rt;
 }
 
-void delitem(node *&rt, node *dad, int key) {
-    if (!rt) return;
+node *delitem(node *rt, node *dad, int key) {
+    if (!rt) return rt;
     if (rt->key == key) {
         if (rt->cnt > 1) {
             --rt->cnt;
             --rt->sz;
-            return;
+            return rt;
         } else if (!rt->son[0] || !rt->son[1]) {
             bool ndir = rt->sdir(NULL);
             node *np = rt->son[!ndir];
@@ -146,9 +173,9 @@ void delitem(node *&rt, node *dad, int key) {
             if (np && np->red)
                 np->red = false;
             else if (dad && !ort->red)
-                vblack(dad, dad->sdir(np));
+                sviblack(dad, dad->sdir(ort));
             delete ort;
-            return;
+            return rt;
         } else {
             node *succ = rt->stsucc();
             key = rt->key = succ->key;
@@ -157,8 +184,9 @@ void delitem(node *&rt, node *dad, int key) {
     }
     bool dir = 1;
     if (key < rt->key) dir = 0;
-    delitem(rt->son[dir], rt, key);
+    rt->son[dir] = delitem(rt->son[dir], rt, key);
     rt->update();
+    return rt;
 }
 
 int getlesscnt(node *rt, int key) {
@@ -213,19 +241,39 @@ int succ(node *rt, int key) {
         return min(rt->key, succ(rt->son[0], key));
 }
 
+void print2DUtil(node *root, int space) {
+    const int COUNT = 10;
+    if (root == NULL)
+        return;
+    space += COUNT;
+    print2DUtil(root->son[1], space);
+    fprintf(stderr, "\n");
+    for (int i = COUNT; i < space; i++)
+        fprintf(stderr, " ");
+    if (root->red) std::clog << "\x1b[0;31m";
+    fprintf(stderr, ("%d" + std::string(std::max(80 - space, 0), '=') + '\n').c_str(), root->key);
+    if (root->red) std::clog << "\x1b[0m";
+    print2DUtil(root->son[0], space);
+}
+
 int main() {
     int n;
     scanf("%d", &n);
-    node *rt = NULL;
     for (int _ = 1; _ <= n; ++_) {
         char opt;
         int x;
         scanf("%hhd%d", &opt, &x);
-        if (opt == 1)
-            insitem(rt, NULL, x);
-        else if (opt == 2)
-            delitem(rt, NULL, x);
-        else if (opt == 3)
+        if (opt == 1) {
+            rt = insitem(rt, NULL, x);
+            if (vired) vred(vicur);
+            //print2DUtil(::rt, 0);
+            //std::clog << std::string(80, '=');
+        } else if (opt == 2) {
+            rt = delitem(rt, NULL, x);
+            if (viblack) vblack(vidad, vidir);
+            //print2DUtil(::rt, 0);
+            //std::clog << std::string(80, '=');
+        } else if (opt == 3)
             printf("%d\n", 1 + getlesscnt(rt, x));
         else if (opt == 4)
             printf("%d\n", getnth(rt, x));
