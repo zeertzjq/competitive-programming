@@ -1,2 +1,2 @@
-# CodeTemplates
+# MiscellaneousCode
 Miscellaneous pieces of code
