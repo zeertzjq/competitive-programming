@@ -2,10 +2,10 @@
 using namespace std;
 
 const int INF = 2147483647;
-int seed = 1235423905;
+int seed = 19260817;
 
 int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) % 2147483647;
+    return seed = (seed * 1103515245LL + 12345LL) % 2147483648;
 }
 
 struct node {
