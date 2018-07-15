@@ -1,2 +1,2 @@
 # CodeTemplates
-Various code templates (for personal use primarily)
+Miscellaneous pieces of code
