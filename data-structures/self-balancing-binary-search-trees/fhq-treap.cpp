@@ -1,4 +1,4 @@
-// https://www.luogu.org/problem/show?pid=P3369
+// https://www.luogu.org/problemnew/show/P3369
 #include <bits/stdc++.h>
 using namespace std;
 

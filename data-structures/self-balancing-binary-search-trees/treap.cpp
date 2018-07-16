@@ -1,15 +1,30 @@
-// https://www.luogu.org/problem/show?pid=P3369
+// https://www.luogu.org/problemnew/show/P3369
 #include <bits/stdc++.h>
 using namespace std;
 
 const int INF = 2147483647;
+int seed = 19260817;
+
+int ran() {
+    return seed = (seed * 1103515245LL + 12345LL) % 2147483648;
+}
 
 struct node {
+    int key, val, cnt, sz;
     node *son[2];
-    int key;
-    int sheight;
-    int cnt;
-    int sz;
+
+    node(int k) {
+        key = k;
+        val = ran();
+        sz = cnt = 1;
+        son[0] = son[1] = NULL;
+    }
+
+    void update() {
+        sz = cnt;
+        if (son[0]) sz += son[0]->sz;
+        if (son[1]) sz += son[1]->sz;
+    }
 
     node *stpred() {
         if (!son[0]) return NULL;
@@ -24,52 +39,22 @@ struct node {
         while (ret->son[0]) ret = ret->son[0];
         return ret;
     }
-
-    void update() {
-        if (!son[0] && !son[1]) {
-            sheight = 1;
-            sz = cnt;
-        } else if (!son[0] && son[1]) {
-            sheight = son[1]->sheight + 1;
-            sz = son[1]->sz + cnt;
-        } else if (!son[1] && son[0]) {
-            sheight = son[0]->sheight + 1;
-            sz = son[0]->sz + cnt;
-        } else {
-            sheight = max(son[0]->sheight, son[1]->sheight) + 1;
-            sz = son[0]->sz + son[1]->sz + cnt;
-        }
-    }
-
-    int bal() {
-        if (!son[0] && !son[1]) return 0;
-        if (!son[0] && son[1]) return son[1]->sheight;
-        if (!son[1] && son[0]) return -son[0]->sheight;
-        return son[1]->sheight - son[0]->sheight;
-    }
-
-    node(int k) {
-        key = k;
-        sheight = 1;
-        son[0] = son[1] = NULL;
-        cnt = sz = 1;
-    }
 };
-
-node *rotate(node *p, bool dir) {
-    node *s = p->son[!dir], *t = s->son[dir];
-    p->son[!dir] = t;
-    s->son[dir] = p;
-    p->update();
-    s->update();
-    return s;
-}
 
 void destroy(node *rt) {
     if (!rt) return;
     destroy(rt->son[0]);
     destroy(rt->son[1]);
     delete rt;
+}
+
+node *rotate(node *p, bool dir) {
+    node *s = p->son[!dir], *t = s->son[dir];
+    s->son[dir] = p;
+    p->son[!dir] = t;
+    p->update();
+    s->update();
+    return s;
 }
 
 node *insitem(node *rt, int key) {
@@ -83,55 +68,42 @@ node *insitem(node *rt, int key) {
     if (key > rt->key) dir = 1;
     rt->son[dir] = insitem(rt->son[dir], key);
     rt->update();
-    int bal = rt->bal();
-    if (bal < -1) {
-        if (key > rt->son[0]->key) rt->son[0] = rotate(rt->son[0], 0);
-        rt = rotate(rt, 1);
-    }
-    if (bal > 1) {
-        if (key < rt->son[1]->key) rt->son[1] = rotate(rt->son[1], 1);
-        rt = rotate(rt, 0);
-    }
+    if (rt->son[dir]->val > rt->val) rt = rotate(rt, !dir);
     return rt;
 }
 
 node *delitem(node *rt, int key) {
     if (!rt) return rt;
-    if (key == rt->key) {
+    if (key < rt->key) {
+        rt->son[0] = delitem(rt->son[0], key);
+        rt->update();
+        return rt;
+    } else if (key > rt->key) {
+        rt->son[1] = delitem(rt->son[1], key);
+        rt->update();
+        return rt;
+    } else {
         if (rt->cnt > 1) {
             --rt->cnt;
             --rt->sz;
             return rt;
+        } else if (!rt->son[0]) {
+            node *tmp = rt->son[1];
+            delete rt;
+            return tmp;
+        } else if (!rt->son[1]) {
+            node *tmp = rt->son[0];
+            delete rt;
+            return tmp;
         } else {
-            if (!rt->son[0]) {
-                node *tmp = rt->son[1];
-                delete rt;
-                return tmp;
-            } else if (!rt->son[1]) {
-                node *tmp = rt->son[0];
-                delete rt;
-                return tmp;
-            } else {
-                node *p = rt->stsucc();
-                key = rt->key = p->key;
-                swap(rt->cnt, p->cnt);
-            }
+            bool dir = 0;
+            if (rt->son[!dir]->val > rt->son[dir]->val) dir ^= 1;
+            rt = rotate(rt, !dir);
+            rt->son[!dir] = delitem(rt->son[!dir], key);
+            rt->update();
+            return rt;
         }
     }
-    bool dir = 1;
-    if (key < rt->key) dir = 0;
-    rt->son[dir] = delitem(rt->son[dir], key);
-    rt->update();
-    int bal = rt->bal();
-    if (bal < -1) {
-        if (rt->son[0]->bal() > 0) rt->son[0] = rotate(rt->son[0], 0);
-        rt = rotate(rt, 1);
-    }
-    if (bal > 1) {
-        if (rt->son[1]->bal() < 0) rt->son[1] = rotate(rt->son[1], 1);
-        rt = rotate(rt, 0);
-    }
-    return rt;
 }
 
 int getlesscnt(node *rt, int key) {
