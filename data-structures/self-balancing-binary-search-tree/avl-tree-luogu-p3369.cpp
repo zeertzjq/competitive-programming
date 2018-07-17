@@ -25,6 +25,7 @@ struct node {
         return ret;
     }
 
+    // IMPORTANT: call update() whenever the subtree rooted at the node is modified
     void update() {
         if (!son[0] && !son[1]) {
             sheight = 1;

@@ -42,6 +42,7 @@ struct node {
         if (son[1]) sz += son[1]->sz;
     }
 
+    // IMPORTANT: call rev() before accessing son[0] and son[1]
     void rev() {
         if (!tag) return;
         tag = 0;
