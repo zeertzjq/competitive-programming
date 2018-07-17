@@ -66,34 +66,31 @@ node *rotate(node *p, bool dir) {
 node *splaykth(node *rt, int rank) {
     if (!rt) return rt;
     rt->rev();
-    int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
+    int lsz = rt->son[0] ? rt->son[0]->sz : 0;
     if (rank == lsz + 1)
         return rt;
     else if (rank <= lsz) {
-        node *s = rt->son[0];
-        s->rev();
-        int llsz = 0;
-        if (s->son[0]) llsz = s->son[0]->sz;
+        // IMPORTANT: DON'T use node *s = rt->son[0]
+        rt->son[0]->rev();
+        int llsz = rt->son[0]->son[0] ? rt->son[0]->son[0]->sz : 0;
         if (rank <= llsz) {
-            s->son[0] = splaykth(s->son[0], rank);
+            rt->son[0]->son[0] = splaykth(rt->son[0]->son[0], rank);
             rt = rotate(rt, 1);
         } else if (rank > llsz + 1) {
-            s->son[1] = splaykth(s->son[1], rank - llsz - 1);
-            s = rotate(s, 0);
+            rt->son[0]->son[1] = splaykth(rt->son[0]->son[1], rank - llsz - 1);
+            rt->son[0] = rotate(rt->son[0], 0);
         }
         if (rt->son[0]) rt = rotate(rt, 1);
     } else {
-        node *s = rt->son[1];
-        s->rev();
-        int rlsz = lsz;
-        if (s->son[0]) rlsz += s->son[0]->sz;
+        // IMPORTANT: DON'T use node *s = rt->son[1]
+        rt->son[1]->rev();
+        int rlsz = rt->son[1]->son[0] ? lsz + 1 + rt->son[1]->son[0]->sz : lsz + 1;
         if (rank > rlsz + 1) {
-            s->son[1] = splaykth(s->son[1], rank - rlsz - 1);
+            rt->son[1]->son[1] = splaykth(rt->son[1]->son[1], rank - rlsz - 1);
             rt = rotate(rt, 0);
         } else if (rank <= rlsz) {
-            s->son[0] = splaykth(s->son[0], rank - lsz - 1);
-            s = rotate(s, 1);
+            rt->son[1]->son[0] = splaykth(rt->son[1]->son[0], rank - lsz - 1);
+            rt->son[1] = rotate(rt->son[1], 1);
         }
         if (rt->son[1]) rt = rotate(rt, 0);
     }
@@ -107,6 +104,7 @@ node *build(int l, int r) {
     node *rt = new node(m);
     rt->son[0] = l < m ? build(l, m - 1) : NULL;
     rt->son[1] = m < r ? build(m + 1, r) : NULL;
+    rt->update();
     return rt;
 }
 
@@ -119,6 +117,7 @@ void destroy(node *rt) {
 
 void inorder(node *rt) {
     if (!rt) return;
+    rt->rev();
     inorder(rt->son[0]);
     if (rt->val > 0 && rt->val <= n) {
         puti(rt->val);
@@ -134,8 +133,7 @@ int main() {
     while (m--) {
         int l = geti(), r = geti();
         rt = splaykth(rt, l);
-        int lsz = 0;
-        if (rt->son[0]) lsz = rt->son[0]->sz;
+        int lsz = rt->son[0] ? rt->son[0]->sz : 0;
         rt->son[1] = splaykth(rt->son[1], r + 2 - lsz - 1);
         rt->son[1]->son[0]->tag ^= 1;
     }
