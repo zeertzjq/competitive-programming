@@ -36,7 +36,7 @@ void putll(long long x) {
         putchar('-');
         x = -x;
     }
-    if (x > 9) putll(x / 10); // IMPORTANT: DON'T use puti
+    if (x > 9) putll(x / 10);  // IMPORTANT: DON'T use puti
     putchar(x % 10 + '0');
 }
 
