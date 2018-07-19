@@ -66,6 +66,6 @@ int main() {
         puti(dist[i]);
         putchar(' ');
     }
-    printf("\n");
+    putchar('\n');
     return 0;
 }

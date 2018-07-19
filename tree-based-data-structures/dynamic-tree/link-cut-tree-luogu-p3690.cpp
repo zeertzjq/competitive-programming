@@ -134,7 +134,7 @@ int main() {
             access(y);
             splay(y);
             puti(s[y]);
-            printf("\n");
+            putchar('\n');
         } else if (opt == 1)
             link(x, y);
         else if (opt == 2)

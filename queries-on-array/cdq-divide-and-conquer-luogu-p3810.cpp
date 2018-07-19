@@ -113,7 +113,7 @@ int main() {
         ans[f[o[i].idx] + o[i].cnt - 1] += o[i].cnt;
     for (int i = 0; i < n0; ++i) {
         puti(ans[i]);
-        printf("\n");
+        putchar('\n');
     }
     return 0;
 }

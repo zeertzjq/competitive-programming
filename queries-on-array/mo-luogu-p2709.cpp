@@ -60,7 +60,7 @@ int main() {
     }
     for (int i = 1; i <= m; ++i) {
         puti(aans[i]);
-        printf("\n");
+        putchar('\n');
     }
     return 0;
 }

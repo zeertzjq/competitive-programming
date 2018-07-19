@@ -61,12 +61,12 @@ int main() {
         } else {
             int x = geti();
             if (!val[x]) {
-                printf("-1\n");  // IMPORTANT: puti doesn't support negative integers here
+                puts("-1");  // IMPORTANT: puti doesn't support negative integers here
                 continue;
             } else {
                 int rt = root(x);
                 puti(val[rt]);
-                printf("\n");
+                putchar('\n');
                 val[rt] = 0;
                 dad[merge(son[rt][0], son[rt][1])] = 0;
             }

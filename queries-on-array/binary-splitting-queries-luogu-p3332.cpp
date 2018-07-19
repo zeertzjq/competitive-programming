@@ -143,7 +143,7 @@ int main() {
     solve(1, m, -n, n);
     for (int i = 1; i <= aidx; ++i) {
         puti(ans[i]);
-        printf("\n");
+        putchar('\n');
     }
     return 0;
 }
