@@ -138,6 +138,6 @@ int main() {
         rt->son[1]->son[0]->tag ^= 1;
     }
     inorder(rt);
-    destroy(rt);
+    destroy(rt);  // IMPORTANT: DESTROY the tree
     return 0;
 }

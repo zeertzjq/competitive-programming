@@ -2,8 +2,8 @@
 using namespace std;
 
 inline int geti() {
-    register int x, f = 0;
-    register char c;
+    int x, f = 0;
+    char c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
@@ -21,9 +21,9 @@ inline void puti(int x) {
 }
 
 inline long long getll() {
-    register int f = 0;
-    register long long x;
-    register char c;
+    int f = 0;
+    long long x;
+    char c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
@@ -41,8 +41,8 @@ inline void putll(long long x) {
 }
 
 inline unsigned getu() {
-    register unsigned x;
-    register char c;
+    unsigned x;
+    char c;
     while (!isdigit(c = getchar()))
         ;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
@@ -56,8 +56,8 @@ inline void putu(unsigned x) {
 }
 
 inline unsigned long long getull() {
-    register unsigned long long x;
-    register char c;
+    unsigned long long x;
+    char c;
     while (!isdigit(c = getchar()))
         ;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
