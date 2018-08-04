@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-priority_queue<int, vector<int>, greater<int> > pq;
-
 inline int geti() {
     int x, f = 0;
     char c;
@@ -22,19 +20,24 @@ inline void puti(int x) {
     putchar(x % 10 + '0');
 }
 
+const int N = 1000000;
+int heap[N], sz = 0;
+
 int main() {
     int n = geti();
+    greater<int> cmp;
     while (n--)
         switch (geti()) {
             case 1:
-                pq.push(geti());
+                heap[sz++] = geti();
+                push_heap(heap, heap + sz, cmp);
                 break;
             case 2:
-                puti(pq.top());
+                puti(heap[0]);
                 putchar('\n');
                 break;
             case 3:
-                pq.pop();
+                pop_heap(heap, heap + sz--, cmp);
                 break;
         }
     return 0;
