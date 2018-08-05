@@ -54,14 +54,11 @@ int main() {
         int op = geti();
         if (op == 1) {
             int x = geti(), y = geti();
-            if (!val[x] || !val[y])
-                continue;
-            else
-                merge(root(x), root(y));
+            if (val[x] && val[y]) merge(root(x), root(y));
         } else {
             int x = geti();
             if (!val[x]) {
-                puts("-1");  // IMPORTANT: puti doesn't support negative integers here
+                puts("-1");
                 continue;
             } else {
                 int rt = root(x);
