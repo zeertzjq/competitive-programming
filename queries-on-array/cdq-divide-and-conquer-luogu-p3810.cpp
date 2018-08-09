@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int geti() {
+inline int geti() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -25,11 +25,11 @@ const int N = 100010, K = 200010;
 struct item {
     int a, b, c, idx, cnt;
 
-    bool operator<(const item &rhs) const {
+    inline bool operator<(const item &rhs) const {
         return a == rhs.a ? b == rhs.b ? c < rhs.c : b < rhs.b : a < rhs.a;
     }
 
-    bool operator==(const item &rhs) const {
+    inline bool operator==(const item &rhs) const {
         return a == rhs.a && b == rhs.b && c == rhs.c;
     }
 } o[N], tmp[N];
@@ -39,14 +39,14 @@ int f[N];
 int ans[N];
 int k;
 
-void add(int p, int v) {
+inline void add(int p, int v) {
     while (p <= k) {
         bit[p] += v;
         p += p & -p;
     }
 }
 
-int query(int p) {
+inline int query(int p) {
     int ret = 0;
     while (p) {
         ret += bit[p];
@@ -55,7 +55,7 @@ int query(int p) {
     return ret;
 }
 
-void clear(int p) {
+inline void clear(int p) {
     while (p <= k && bit[p]) {
         bit[p] = 0;
         p += p & -p;

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int geti() {
+inline int geti() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -20,7 +20,7 @@ void puti(int x) {
     putchar(x % 10 + '0');
 }
 
-long long getll() {
+inline long long getll() {
     long long x;
     int f = 0;
     char c;
@@ -42,23 +42,25 @@ void putll(long long x) {
 
 const int N = 50010;
 int n, m;
+
 struct query {
     bool tp;
     int l, r;
     long long c;
     int aidx;
 } q[N], q1[N], q2[N];
+
 int ans[N];
 int aidx = 0;
 
 long long sum[N << 2], tag[N << 2];
 bool dirty[N << 2];
 
-void upd(int p) {
+inline void upd(int p) {
     sum[p] = sum[p << 1] + sum[p << 1 | 1];
 }
 
-void push(int p, int l, int r) {
+inline void push(int p, int l, int r) {
     if (dirty[p]) {
         dirty[p << 1] = dirty[p << 1 | 1] = 1;
         dirty[p] = sum[p << 1] = sum[p << 1 | 1] = tag[p << 1] = tag[p << 1 | 1] = 0;

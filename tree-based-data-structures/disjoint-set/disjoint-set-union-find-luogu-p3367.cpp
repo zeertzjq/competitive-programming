@@ -11,7 +11,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline void puti(int x) {
+void puti(int x) {
     if (x < 0) {
         putchar('-');
         x = -x;
@@ -27,7 +27,7 @@ int finds(int x) {
     return dad[x] == x ? x : dad[x] = finds(dad[x]);
 }
 
-void unions(int x, int y) {
+inline void unions(int x, int y) {
     if (x == y) return;  // IMPORTANT: the two sets must not be the same
     if (rnk[x] == rnk[y]) ++rnk[x];
     if (rnk[x] > rnk[y])

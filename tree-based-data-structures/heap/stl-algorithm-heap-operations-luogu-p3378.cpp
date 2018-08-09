@@ -11,7 +11,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline void puti(int x) {
+void puti(int x) {
     if (x < 0) {
         putchar('-');
         x = -x;

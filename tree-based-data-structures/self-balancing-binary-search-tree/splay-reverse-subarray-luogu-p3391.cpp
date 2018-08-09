@@ -4,7 +4,7 @@ using namespace std;
 const int INF = 2147483647;
 int n;
 
-int geti() {
+inline int geti() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -35,14 +35,14 @@ struct node {
         son[0] = son[1] = NULL;
     }
 
-    void update() {
+    inline void update() {
         sz = 1;
         if (son[0]) sz += son[0]->sz;
         if (son[1]) sz += son[1]->sz;
     }
 
     // IMPORTANT: call rev() before accessing son[0] and son[1]
-    void rev() {
+    inline void rev() {
         if (!tag) return;
         tag = 0;
         if (son[0]) son[0]->tag ^= 1;
@@ -51,7 +51,7 @@ struct node {
     }
 };
 
-node *rotate(node *p, bool dir) {
+inline node *rotate(node *p, bool dir) {
     p->rev();
     node *s = p->son[!dir];
     s->rev();

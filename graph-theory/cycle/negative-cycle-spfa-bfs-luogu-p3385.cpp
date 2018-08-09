@@ -4,8 +4,8 @@ using namespace std;
 const int N = 2010, M = 3010, INF = 2147483647;
 
 inline int geti() {
-    register int x, f = 0;
-    register int c;
+    int x, f = 0;
+    int c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
@@ -14,8 +14,8 @@ inline int geti() {
 }
 
 inline unsigned getu() {
-    register unsigned x;
-    register int c;
+    unsigned x;
+    int c;
     while (!isdigit(c = getchar()))
         ;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
@@ -29,7 +29,7 @@ int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dist[N], cnt[N], vis[N];
 queue<int> q;
 
 inline void clear() {
-    for (register int i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
         cnt[i] = 0;
         dist[i] = INF;
     }
@@ -58,7 +58,7 @@ int detect() {
     push(1);
     while (!q.empty()) {
         int u = pop();
-        for (register int e = e0[u]; e; e = e1[e]) {
+        for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             int ndist = dist[u] + w[e];
             if (ndist < dist[v]) {
@@ -77,8 +77,8 @@ int main() {
     while (T--) {
         n = getu();
         m = getu();
-        register int ecnt = 0;
-        for (register int i = 1; i <= n; ++i) e0[i] = 0;
+        int ecnt = 0;
+        for (int i = 1; i <= n; ++i) e0[i] = 0;
         while (m--) {
             int a = getu(), b = getu(), w0 = geti();
             e1[++ecnt] = e0[a];

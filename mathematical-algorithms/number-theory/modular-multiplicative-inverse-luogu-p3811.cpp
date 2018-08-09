@@ -20,22 +20,21 @@ void puti(int x) {
     putchar(x % 10 + '0');
 }
 
-priority_queue<int, vector<int>, greater<int> > pq;
+int n;
+long long p;
+int inv[20000529];
+
+int getinv(int x) {
+    return inv[x] ? inv[x] : inv[x] = (p - (p / x) * getinv(p % x) % p) % p;
+}
 
 int main() {
-    int n = geti();
-    while (n--)
-        switch (geti()) {
-            case 1:
-                pq.push(geti());
-                break;
-            case 2:
-                puti(pq.top());
-                putchar('\n');
-                break;
-            case 3:
-                pq.pop();
-                break;
-        }
+    n = geti();
+    p = geti();
+    inv[1] = 1;
+    for (int i = 1; i <= n; ++i) {
+        puti(getinv(i));
+        putchar('\n');
+    }
     return 0;
 }

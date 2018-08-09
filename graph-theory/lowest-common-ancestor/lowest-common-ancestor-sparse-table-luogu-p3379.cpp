@@ -11,7 +11,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline void puti(int x) {
+void puti(int x) {
     if (x < 0) {
         putchar('-');
         x = -x;
@@ -23,7 +23,7 @@ inline void puti(int x) {
 const int N = 500010;
 int n, m, s, e0[N], e1[N << 1], anc[N][22], dep[N], dest[N << 1];
 
-int log2(int x) {
+inline int log2(int x) {
     int ret = 0;
     while (x >>= 1) ++ret;
     return ret;

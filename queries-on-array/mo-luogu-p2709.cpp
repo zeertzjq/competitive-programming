@@ -3,7 +3,7 @@ using namespace std;
 
 const int N = 50010;
 
-int geti() {
+inline int geti() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -25,13 +25,15 @@ void puti(long long x) {
 int n, m, k;
 int cnt[N];
 int a[N];
+
 struct query {
     int id, l, r, idx;
 
-    bool operator<(const query& rhs) {
+    inline bool operator<(const query& rhs) {
         return id < rhs.id || (id == rhs.id && r < rhs.r);
     }
 } q[N];
+
 int aans[N];
 
 int main() {

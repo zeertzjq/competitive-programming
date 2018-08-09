@@ -11,7 +11,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline void puti(int x) {
+void puti(int x) {
     if (x < 0) {
         putchar('-');
         x = -x;
@@ -31,7 +31,7 @@ inline long long getll() {
     return f ? -x : x;
 }
 
-inline void putll(long long x) {
+void putll(long long x) {
     if (x < 0) {
         putchar('-');
         x = -x;
@@ -50,7 +50,7 @@ inline unsigned getu() {
     return x;
 }
 
-inline void putu(unsigned x) {
+void putu(unsigned x) {
     if (x > 9) putu(x / 10);  // IMPORTANT: DON'T use puti
     putchar(x % 10 + '0');
 }
@@ -65,7 +65,7 @@ inline unsigned long long getull() {
     return x;
 }
 
-inline void putull(unsigned long long x) {
+void putull(unsigned long long x) {
     if (x > 9) putull(x / 10);  // IMPORTANT: DON'T use puti
     putchar(x % 10 + '0');
 }

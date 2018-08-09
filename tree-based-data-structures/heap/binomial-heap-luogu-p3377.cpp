@@ -11,7 +11,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline void puti(int x) {
+void puti(int x) {
     if (x < 0) {
         putchar('-');
         x = -x;
@@ -24,7 +24,7 @@ const int N = 100010;
 
 int val[N], chd[N], dad[N], sb1[N], sb0[N], deg[N], n, m;
 
-int merge(int h1, int h2) {
+inline int merge(int h1, int h2) {
     if (h1 == h2) return h1;
     int ret = deg[h1] > deg[h2] ? h2 : h1;
     int last = 0;
@@ -45,7 +45,7 @@ int merge(int h1, int h2) {
     return ret;
 }
 
-void adjust(int l) {
+inline void adjust(int l) {
     int m = sb0[l], r = sb0[m];
     if (!m) return;
     while (l && m) {
@@ -71,13 +71,13 @@ void adjust(int l) {
     }
 }
 
-int head(int x) {
+inline int head(int x) {
     while (dad[x]) x = dad[x];
     while (sb1[x]) x = sb1[x];
     return x;
 }
 
-int hmin(int h) {
+inline int hmin(int h) {
     int ret = h;
     for (h = sb0[h]; h; h = sb0[h])
         if (val[h] < val[ret])

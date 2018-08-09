@@ -11,7 +11,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline void puti(int x) {
+void puti(int x) {
     if (x < 0) {
         putchar('-');
         x = -x;
@@ -25,7 +25,7 @@ const int N = 100010;
 int dist[N], dad[N], son[N][2], val[N];
 int n, m;
 
-int root(int p) {
+inline int root(int p) {
     while (dad[p]) p = dad[p];
     return p;
 }

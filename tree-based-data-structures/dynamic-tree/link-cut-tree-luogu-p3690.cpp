@@ -1,21 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int geti() {
-    int x /*, f = 0*/;
+inline int geti() {
+    int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
-        /*if (c == '-') f = 1*/;
+        if (c == '-') f = 1;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
         ;
-    return /*f ? -x : */ x;
+    return f ? -x : x;
 }
 
 void puti(int x) {
-    /*if (x < 0) {
+    if (x < 0) {
         putchar('-');
         x = -x;
-    }*/
+    }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
 }
@@ -26,7 +26,7 @@ int f[N], c[N][2], s[N], v[N];
 bool r[N];
 
 // IMPORTANT: call rev(x) before accessing c[x][0] and c[x][1]
-void rev(int x) {
+inline void rev(int x) {
     if (!x) return;
     if (!r[x]) return;
     r[x] = 0;
@@ -36,15 +36,15 @@ void rev(int x) {
 }
 
 // IMPORTANT: call upd(x) whenever the subtree rooted at x is modified
-void upd(int x) {
+inline void upd(int x) {
     s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]];
 }
 
-bool ckrt(int x) {
+inline bool ckrt(int x) {
     return !f[x] || (c[f[x]][0] != x && c[f[x]][1] != x);
 }
 
-int rot(int p, bool d) {
+inline int rot(int p, bool d) {
     rev(p);
     int s = c[p][!d];
     rev(s);
