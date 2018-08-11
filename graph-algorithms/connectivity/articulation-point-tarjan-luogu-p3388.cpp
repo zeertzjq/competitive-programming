@@ -34,7 +34,6 @@ void putln(T x) {
 }
 
 const int N = 100010, E = N << 1;
-
 int n, m, e0[N], e1[E], dst[E], dfn[N], low[N], disc = 0;
 bool ap[N], vis[N];
 
