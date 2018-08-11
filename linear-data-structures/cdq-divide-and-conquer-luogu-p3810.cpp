@@ -11,13 +11,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(long long x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 const int N = 100010, K = 200010;
@@ -111,9 +124,6 @@ int main() {
     cdq(1, n);
     for (int i = 1; i <= n; ++i)
         ans[f[o[i].idx] + o[i].cnt - 1] += o[i].cnt;
-    for (int i = 0; i < n0; ++i) {
-        puti(ans[i]);
-        putchar('\n');
-    }
+    for (int i = 0; i < n0; ++i) putln(ans[i]);
     return 0;
 }

@@ -14,13 +14,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void putll(long long x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
-    if (x > 9) putll(x / 10);
+    if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 int n, m, s, e0[N], e1[M], dst[M], w[M];
@@ -62,10 +75,7 @@ int main() {
         w[i] = geti();
     }
     dijkstra();
-    for (int i = 1; i <= n; ++i) {
-        putll(dist[i]);
-        putchar(' ');
-    }
+    for (int i = 1; i <= n; ++i) putsp(dist[i]);
     putchar('\n');
     return 0;
 }

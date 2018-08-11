@@ -11,13 +11,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 priority_queue<int, vector<int>, greater<int> > pq;
@@ -30,8 +43,7 @@ int main() {
                 pq.push(geti());
                 break;
             case 2:
-                puti(pq.top());
-                putchar('\n');
+                putln(pq.top());
                 break;
             case 3:
                 pq.pop();

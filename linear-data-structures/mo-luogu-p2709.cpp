@@ -13,13 +13,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(long long x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 int n, m, k;
@@ -60,9 +73,6 @@ int main() {
         while (lp < q[i].l) ans -= 2 * --cnt[a[lp++]] + 1;
         aans[q[i].idx] = ans;
     }
-    for (int i = 1; i <= m; ++i) {
-        puti(aans[i]);
-        putchar('\n');
-    }
+    for (int i = 1; i <= m; ++i) putln(aans[i]);
     return 0;
 }

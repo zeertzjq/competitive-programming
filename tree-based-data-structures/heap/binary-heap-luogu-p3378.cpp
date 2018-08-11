@@ -11,13 +11,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 const int N = 1000000, INF = 2147483647;
@@ -61,8 +74,7 @@ int main() {
                 heapup(sz);
                 break;
             case 2:
-                puti(h[1]);
-                putchar('\n');
+                putln(h[1]);
                 break;
             case 3:
                 swap(h[1], h[sz--]);

@@ -11,15 +11,6 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
-    if (x < 0) {
-        putchar('-');
-        x = -x;
-    }
-    if (x > 9) puti(x / 10);
-    putchar(x % 10 + '0');
-}
-
 inline long long getll() {
     int f = 0;
     long long x;
@@ -29,15 +20,6 @@ inline long long getll() {
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
         ;
     return f ? -x : x;
-}
-
-void putll(long long x) {
-    if (x < 0) {
-        putchar('-');
-        x = -x;
-    }
-    if (x > 9) putll(x / 10);  // IMPORTANT: DON'T use puti
-    putchar(x % 10 + '0');
 }
 
 inline unsigned getu() {
@@ -50,11 +32,6 @@ inline unsigned getu() {
     return x;
 }
 
-void putu(unsigned x) {
-    if (x > 9) putu(x / 10);  // IMPORTANT: DON'T use puti
-    putchar(x % 10 + '0');
-}
-
 inline unsigned long long getull() {
     unsigned long long x;
     char c;
@@ -65,9 +42,26 @@ inline unsigned long long getull() {
     return x;
 }
 
-void putull(unsigned long long x) {
-    if (x > 9) putull(x / 10);  // IMPORTANT: DON'T use puti
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 int main() {

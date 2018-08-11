@@ -11,13 +11,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 const int N = 100010;
@@ -104,8 +117,7 @@ int main() {
                 int h = head(x);
                 int m = hmin(h);
                 if (m == h) h = sb0[m];  // IMPORTANT: the node with the minimum value will NO LONGER be in the heap and thus CANNOT represent the heap
-                puti(val[m]);
-                putchar('\n');
+                putln(val[m]);
                 val[m] = 0;
                 if (sb1[m]) sb0[sb1[m]] = sb0[m];
                 if (sb0[m]) sb1[sb0[m]] = sb1[m];  // IMPORTANT: update siblings

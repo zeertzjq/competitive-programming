@@ -11,13 +11,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 int n;
@@ -32,9 +45,6 @@ int main() {
     n = geti();
     p = geti();
     inv[1] = 1;
-    for (int i = 1; i <= n; ++i) {
-        puti(getinv(i));
-        putchar('\n');
-    }
+    for (int i = 1; i <= n; ++i) putln(getinv(i));
     return 0;
 }

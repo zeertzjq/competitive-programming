@@ -11,13 +11,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 const int N = 100010;
@@ -62,8 +75,7 @@ int main() {
                 continue;
             } else {
                 int rt = root(x);
-                puti(val[rt]);
-                putchar('\n');
+                putln(val[rt]);
                 val[rt] = 0;
                 dad[merge(son[rt][0], son[rt][1])] = 0;
             }

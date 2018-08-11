@@ -11,15 +11,6 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
-    if (x < 0) {
-        putchar('-');
-        x = -x;
-    }
-    if (x > 9) puti(x / 10);
-    putchar(x % 10 + '0');
-}
-
 const int N = 10010;
 int dad[N], rnk[N];
 

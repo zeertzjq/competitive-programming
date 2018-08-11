@@ -14,13 +14,26 @@ inline int geti() {
     return f ? -x : x;
 }
 
-void puti(int x) {
+template <typename T>
+void puti(T x) {
     if (x < 0) {
         putchar('-');
         x = -x;
     }
     if (x > 9) puti(x / 10);
     putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
 }
 
 struct node {
@@ -119,10 +132,7 @@ void inorder(node *rt) {
     if (!rt) return;
     rt->rev();
     inorder(rt->son[0]);
-    if (rt->val > 0 && rt->val <= n) {
-        puti(rt->val);
-        putchar(' ');
-    }
+    if (rt->val > 0 && rt->val <= n) putsp(rt->val);
     inorder(rt->son[1]);
 }
 
@@ -138,6 +148,7 @@ int main() {
         rt->son[1]->son[0]->tag ^= 1;
     }
     inorder(rt);
+    putchar('\n');
     destroy(rt);  // IMPORTANT: DESTROY the tree
     return 0;
 }
