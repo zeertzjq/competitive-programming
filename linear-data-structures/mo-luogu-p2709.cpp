@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 50010;
-
 inline int geti() {
     int x, f = 0;
     char c;
@@ -35,9 +33,8 @@ void putln(T x) {
     putchar('\n');
 }
 
-int n, m, k;
-int cnt[N];
-int a[N];
+const int N = 50010;
+int n, m, k, cnt[N], a[N], aans[N];
 
 struct query {
     int id, l, r, idx;
@@ -46,8 +43,6 @@ struct query {
         return id < rhs.id || (id == rhs.id && r < rhs.r);
     }
 } q[N];
-
-int aans[N];
 
 int main() {
     n = geti();

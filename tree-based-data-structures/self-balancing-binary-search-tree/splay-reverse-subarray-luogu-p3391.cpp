@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int INF = 2147483647;
-int n;
-
 inline int geti() {
     int x, f = 0;
     char c;
@@ -35,6 +32,9 @@ void putln(T x) {
     puti(x);
     putchar('\n');
 }
+
+const int INF = 2147483647;
+int n;
 
 struct node {
     int val, sz;

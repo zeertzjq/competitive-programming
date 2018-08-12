@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 2010, M = 3010, INF = 2147483647;
-
 inline int geti() {
     int x, f = 0;
     int c;
@@ -23,6 +21,7 @@ inline unsigned getu() {
     return x;
 }
 
+const int N = 2010, M = 3010, INF = 2147483647;
 int n, m;
 int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dist[N], cnt[N], vis[N];
 

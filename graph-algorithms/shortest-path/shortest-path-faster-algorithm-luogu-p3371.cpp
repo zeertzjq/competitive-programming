@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 10010, M = 500010, INF = 2147483647;
-
 inline int geti() {
     int x, f = 0;
     char c;
@@ -35,6 +33,7 @@ void putln(T x) {
     putchar('\n');
 }
 
+const int N = 10010, M = 500010, INF = 2147483647;
 int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N];
 queue<int> q;
 bool vis[N];

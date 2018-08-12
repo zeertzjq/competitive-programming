@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 100010, M = 200010;
-const long long INF = 100000000000;
-
 inline int geti() {
     int x, f = 0;
     char c;
@@ -36,9 +33,13 @@ void putln(T x) {
     putchar('\n');
 }
 
+typedef pair<int, int> qitem;
+
+const int N = 100010, M = 200010;
+const long long INF = 100000000000;
 int n, m, s, e0[N], e1[M], dst[M], w[M];
 long long dist[N];
-priority_queue<pair<long long, int>, vector<pair<long long, int> >, greater<pair<long long, int> > > pq;  // IMPORTANT: use std::greater<std::pair<long long, int> > to make pq a min-heap
+priority_queue<qitem, vector<qitem>, greater<qitem> > pq;  // IMPORTANT: pq should be a min-heap
 bool vis[N];
 
 // IMPORTANT: for acyclic graphs with non-negative edge weights ONLY
@@ -51,7 +52,7 @@ void dijkstra() {
         int u = pq.top().second;
         pq.pop();
         if (vis[u]) continue;
-        vis[u] = 1;  // IMPORTANT: mark u as visited
+        vis[u] = true;  // IMPORTANT: mark u as visited
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             long long ndist = dist[u] + w[e];
