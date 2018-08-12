@@ -22,26 +22,6 @@ inline long long getll() {
     return f ? -x : x;
 }
 
-inline unsigned getu() {
-    unsigned x;
-    char c;
-    while (!isdigit(c = getchar()))
-        ;
-    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
-        ;
-    return x;
-}
-
-inline unsigned long long getull() {
-    unsigned long long x;
-    char c;
-    while (!isdigit(c = getchar()))
-        ;
-    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
-        ;
-    return x;
-}
-
 template <typename T>
 void puti(T x) {
     if (x < 0) {
