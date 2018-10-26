@@ -41,10 +41,6 @@ int h[N + 1];
 #define rson (x << 1 | 1)
 #define dad (x >> 1)
 
-inline bool leaf(int x) {
-    return x << 1 > sz;
-}
-
 inline int minson(int x) {
     int l = lson <= sz ? h[lson] : INF, r = rson <= sz ? h[rson] : INF;
     return l < r ? lson : rson;
@@ -59,7 +55,7 @@ inline void heapup(int x) {
 
 inline void heapdown(int x) {
     int ms;
-    while (!leaf(x) && h[x] > h[ms = minson(x)]) {
+    while (lson <= sz && h[x] > h[ms = minson(x)]) {
         swap(h[x], h[ms]);
         x = ms;
     }
