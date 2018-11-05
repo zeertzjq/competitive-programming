@@ -1,9 +1,4 @@
 #!/bin/bash
-if [ ! -n "$1" ]; then
-    exit
-fi
-if [ ! -e "$1" ]; then
-    mkdir "$1"
-fi
-sed -e "s/%%/$1/" "$(dirname "$0")/template.cpp" > "$1/$1.cpp"
-cp "$(dirname "$0")/compile" "$1/compile"
+[[ -n "$1" ]] || exit
+[[ -e "$1" ]] || mkdir "$1"
+sed -e "s/%%/$1/" template.cpp > "$1/$1.cpp"
