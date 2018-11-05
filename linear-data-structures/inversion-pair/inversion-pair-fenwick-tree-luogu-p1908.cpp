@@ -57,7 +57,8 @@ int main() {
     n = geti();
     for (int i = 1; i <= n; ++i) a[i] = b[i] = geti();
     sort(b + 1, b + 1 + n);
-    for (int i = 1; i <= n; ++i) a[i] = lower_bound(b + 1, b + 1 + n, a[i]) - b;
+    int *r = unique(b + 1, b + 1 + n);
+    for (int i = 1; i <= n; ++i) a[i] = lower_bound(b + 1, r, a[i]) - b;
     for (int i = 1; i <= n; ++i) {
         ans += i - 1 - qry(a[i]);
         add(a[i]);
