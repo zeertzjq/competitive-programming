@@ -33,17 +33,20 @@ void putln(T x) {
     putchar('\n');
 }
 
-const int N = 100010, K = 32;
-int n, c[2][K];
-bool f = 0;
+const int N = 100010;
+int n, mp[N], f[N], ans = 0;
 
 int main() {
     n = geti();
-    long long ans = 0;
+    for (int i = 1; i <= n; ++i) mp[geti()] = i;
     for (int i = 1; i <= n; ++i) {
-        int a = geti();
-        f ^= 1;
-        for (int j = 0; j < K; ++j) ans += (long long)(c[f][j] = a & 1 << j ? i - c[!f][j] : c[!f][j]) << j;
+        int b = mp[geti()];
+        if (b > f[ans])
+            f[++ans] = b;
+        else {
+            int p = lower_bound(f + 1, f + 1 + ans, b) - f;
+            f[p] = min(f[p], b);
+        }
     }
     putln(ans);
     return 0;
