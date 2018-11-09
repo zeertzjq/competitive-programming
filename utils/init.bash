@@ -23,5 +23,5 @@ a() {
 }
 
 d() {
-    diff "${PWD##*/}$1.ans" "${PWD##*/}.out"
+    diff -q "${PWD##*/}$1.ans" "${PWD##*/}.out" || vimdiff "${PWD##*/}$1.ans" "${PWD##*/}.out"
 }
