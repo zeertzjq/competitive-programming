@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
 inline int geti() {
     int x, f = 0;
-    int c;
+    char c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
@@ -11,15 +12,39 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline unsigned getu() {
-    unsigned x;
-    int c;
+inline long long getll() {
+    int f = 0;
+    long long x;
+    char c;
     while (!isdigit(c = getchar()))
-        ;
+        if (c == '-') f = 1;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
         ;
-    return x;
+    return f ? -x : x;
 }
+
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
+    putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
+}
+//}}}
 
 const int N = 2010, M = 3010, INF = 2147483647;
 int n, m;
@@ -72,14 +97,14 @@ int detect() {
 }
 
 int main() {
-    int T = getu();
+    int T = geti();
     while (T--) {
-        n = getu();
-        m = getu();
+        n = geti();
+        m = geti();
         int ecnt = 0;
         for (int i = 1; i <= n; ++i) e0[i] = 0;
         while (m--) {
-            int a = getu(), b = getu(), w0 = geti();
+            int a = geti(), b = geti(), w0 = geti();
             e1[++ecnt] = e0[a];
             e0[a] = ecnt;
             dst[ecnt] = b;

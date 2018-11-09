@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
 inline int geti() {
     int x, f = 0;
     char c;
@@ -12,8 +13,8 @@ inline int geti() {
 }
 
 inline long long getll() {
-    long long x;
     int f = 0;
+    long long x;
     char c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
@@ -43,6 +44,7 @@ void putln(T x) {
     puti(x);
     putchar('\n');
 }
+//}}}
 
 const int N = 101, mod = 1000000007;
 int n, a[2][N][N], r[2][N][N];

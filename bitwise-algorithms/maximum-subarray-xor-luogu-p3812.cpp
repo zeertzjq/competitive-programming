@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
 inline int geti() {
     int x, f = 0;
     char c;
@@ -43,6 +44,7 @@ void putln(T x) {
     puti(x);
     putchar('\n');
 }
+//}}}
 
 const int N = 50;
 int n;

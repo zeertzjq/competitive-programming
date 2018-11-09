@@ -1,8 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
 inline int geti() {
     int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
     char c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
@@ -32,6 +44,7 @@ void putln(T x) {
     puti(x);
     putchar('\n');
 }
+//}}}
 
 int gcd(int a, int b) {
     return a && b ? a & 1 ? b & 1 ? a > b ? gcd(b, a - b) : gcd(a, b - a) : gcd(a, b >> 1) : b & 1 ? gcd(b, a >> 1) : gcd(a >> 1, b >> 1) << 1 : a | b;

@@ -1,8 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
 inline int geti() {
     int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
     char c;
     while (!isdigit(c = getchar()))
         if (c == '-') f = 1;
@@ -32,6 +44,7 @@ void putln(T x) {
     puti(x);
     putchar('\n');
 }
+//}}}
 
 const int N = 2000010;
 int n, m, e0[N], e1[N], dst[N], dfn[N], low[N], disc = 0, stk[N], top = 0, ord[N], scc = 0;
