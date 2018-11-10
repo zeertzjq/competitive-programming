@@ -47,7 +47,7 @@ void putln(T x) {
 //}}}
 
 const int N = 10010;
-int dad[N], rnk[N];
+int dad[N], rk[N];
 
 int finds(int x) {
     return dad[x] == x ? x : dad[x] = finds(dad[x]);
@@ -55,8 +55,8 @@ int finds(int x) {
 
 inline void unions(int x, int y) {
     if (x == y) return;  // IMPORTANT: the two sets must not be the same
-    if (rnk[x] == rnk[y]) ++rnk[x];
-    if (rnk[x] > rnk[y])
+    if (rk[x] == rk[y]) ++rk[x];
+    if (rk[x] > rk[y])
         dad[y] = x;
     else
         dad[x] = y;

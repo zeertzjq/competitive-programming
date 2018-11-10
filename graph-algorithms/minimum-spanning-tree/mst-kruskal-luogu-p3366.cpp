@@ -56,12 +56,12 @@ struct edge {
     }
 } e[M];
 
-int n, m, rnk[N], dad[N], len = 0, ecnt = 0;
+int n, m, rk[N], dad[N], len = 0, ecnt = 0;
 
 inline void unions(int x, int y) {
     if (x == y) return;
-    if (rnk[x] == rnk[y]) ++rnk[x];
-    if (rnk[x] > rnk[y])
+    if (rk[x] == rk[y]) ++rk[x];
+    if (rk[x] > rk[y])
         dad[y] = x;
     else
         dad[x] = y;

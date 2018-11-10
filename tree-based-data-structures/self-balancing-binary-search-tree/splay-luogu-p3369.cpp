@@ -49,33 +49,24 @@ void putln(T x) {
 const int INF = 2147483647;
 
 struct node {
-    node *son[2];
+    node *c[2];
     int key, cnt, sz;
 
     node(int k) {
         key = k;
         sz = cnt = 1;
-        son[0] = son[1] = NULL;
+        c[0] = c[1] = NULL;
     }
 
-    void update() {
-        sz = cnt;
-        if (son[0]) sz += son[0]->sz;
-        if (son[1]) sz += son[1]->sz;
+    inline void update() {
+        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;
     }
 };
 
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->son[0]);
-    destroy(rt->son[1]);
-    delete rt;
-}
-
-node *rotate(node *p, bool dir) {
-    node *s = p->son[!dir], *t = s->son[dir];
-    s->son[dir] = p;
-    p->son[!dir] = t;
+inline node *rotate(node *p, bool dir) {
+    node *s = p->c[!dir], *t = s->c[dir];
+    s->c[dir] = p;
+    p->c[!dir] = t;
     p->update();
     s->update();
     return s;
@@ -84,25 +75,25 @@ node *rotate(node *p, bool dir) {
 node *splay(node *rt, int key) {
     if (!rt || key == rt->key) return rt;
     if (key < rt->key) {
-        if (!rt->son[0]) return rt;
-        if (key < rt->son[0]->key) {
-            rt->son[0]->son[0] = splay(rt->son[0]->son[0], key);
+        if (!rt->c[0]) return rt;
+        if (key < rt->c[0]->key) {
+            rt->c[0]->c[0] = splay(rt->c[0]->c[0], key);
             rt = rotate(rt, 1);
-        } else if (key > rt->son[0]->key) {
-            rt->son[0]->son[1] = splay(rt->son[0]->son[1], key);
-            if (rt->son[0]->son[1]) rt->son[0] = rotate(rt->son[0], 0);
+        } else if (key > rt->c[0]->key) {
+            rt->c[0]->c[1] = splay(rt->c[0]->c[1], key);
+            if (rt->c[0]->c[1]) rt->c[0] = rotate(rt->c[0], 0);
         }
-        if (rt->son[0]) rt = rotate(rt, 1);
+        if (rt->c[0]) rt = rotate(rt, 1);
     } else {
-        if (!rt->son[1]) return rt;
-        if (key > rt->son[1]->key) {
-            rt->son[1]->son[1] = splay(rt->son[1]->son[1], key);
+        if (!rt->c[1]) return rt;
+        if (key > rt->c[1]->key) {
+            rt->c[1]->c[1] = splay(rt->c[1]->c[1], key);
             rt = rotate(rt, 0);
-        } else if (key < rt->son[1]->key) {
-            rt->son[1]->son[0] = splay(rt->son[1]->son[0], key);
-            if (rt->son[1]->son[0]) rt->son[1] = rotate(rt->son[1], 1);
+        } else if (key < rt->c[1]->key) {
+            rt->c[1]->c[0] = splay(rt->c[1]->c[0], key);
+            if (rt->c[1]->c[0]) rt->c[1] = rotate(rt->c[1], 1);
         }
-        if (rt->son[1]) rt = rotate(rt, 0);
+        if (rt->c[1]) rt = rotate(rt, 0);
     }
     return rt;
 }
@@ -116,17 +107,17 @@ node *insitem(node *rt, int key) {
         return rt;
     } else if (rt->key < key) {
         node *nrt = new node(key);
-        nrt->son[0] = rt;
-        nrt->son[1] = rt->son[1];
-        rt->son[1] = NULL;
+        nrt->c[0] = rt;
+        nrt->c[1] = rt->c[1];
+        rt->c[1] = NULL;
         rt->update();
         nrt->update();
         return nrt;
     } else {
         node *nrt = new node(key);
-        nrt->son[1] = rt;
-        nrt->son[0] = rt->son[0];
-        rt->son[0] = NULL;
+        nrt->c[1] = rt;
+        nrt->c[0] = rt->c[0];
+        rt->c[0] = NULL;
         rt->update();
         nrt->update();
         return nrt;
@@ -142,12 +133,12 @@ node *delitem(node *rt, int key) {
         --rt->sz;
         return rt;
     } else {
-        node *nrt = rt->son[0];
+        node *nrt = rt->c[0];
         if (!nrt)
-            nrt = rt->son[1];
+            nrt = rt->c[1];
         else {
             nrt = splay(nrt, key);
-            nrt->son[1] = rt->son[1];
+            nrt->c[1] = rt->c[1];
             nrt->update();
         }
         delete rt;
@@ -155,16 +146,23 @@ node *delitem(node *rt, int key) {
     }
 }
 
-int getnth(node *rt, int rank) {
+int getnth(node *rt, int rk) {
     if (!rt) return INF;
     int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
-    if (rank <= lsz)
-        return getnth(rt->son[0], rank);
-    else if (rank <= lsz + rt->cnt)
+    if (rt->c[0]) lsz = rt->c[0]->sz;
+    if (rk <= lsz)
+        return getnth(rt->c[0], rk);
+    else if (rk <= lsz + rt->cnt)
         return rt->key;
     else
-        return getnth(rt->son[1], rank - lsz - rt->cnt);
+        return getnth(rt->c[1], rk - lsz - rt->cnt);
+}
+
+void destroy(node *rt) {
+    if (!rt) return;
+    destroy(rt->c[0]);
+    destroy(rt->c[1]);
+    delete rt;
 }
 
 int main() {
@@ -179,19 +177,19 @@ int main() {
         else if (opt == 3) {
             rt = splay(rt, x);
             int lsz = 0;
-            if (rt->son[0]) lsz = rt->son[0]->sz;
+            if (rt->c[0]) lsz = rt->c[0]->sz;
             putln(lsz + 1);
         } else if (opt == 4) {
             putln(getnth(rt, x));
         } else if (opt == 5) {
             rt = splay(rt, x);
             node *res = rt;
-            if (res->key >= x) res = rt->son[0] = splay(rt->son[0], x);
+            if (res->key >= x) res = rt->c[0] = splay(rt->c[0], x);
             putln(res->key);
         } else if (opt == 6) {
             rt = splay(rt, x);
             node *res = rt;
-            if (res->key <= x) res = rt->son[1] = splay(rt->son[1], x);
+            if (res->key <= x) res = rt->c[1] = splay(rt->c[1], x);
             putln(res->key);
         }
     }

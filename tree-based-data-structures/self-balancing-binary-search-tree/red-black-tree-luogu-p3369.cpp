@@ -51,56 +51,47 @@ const int INF = 2147483647;
 struct node {
     int key, cnt, sz;
     bool red;
-    node *son[2], *dad;
+    node *c[2], *dad;
 
     node(int k, node *p) {
         key = k;
         cnt = sz = 1;
-        son[0] = son[1] = NULL;
+        c[0] = c[1] = NULL;
         red = true;
         dad = p;
     }
 
-    bool sdir(node *s) {
-        return son[0] == s ? 0 : 1;
+    inline bool sdir(node *s) {
+        return c[1] == s;
     }
 
-    void update() {
-        sz = cnt;
-        if (son[0]) sz += son[0]->sz;
-        if (son[1]) sz += son[1]->sz;
+    inline void update() {
+        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;
     }
 
-    node *stpred() {
-        if (!son[0]) return NULL;
-        node *ret = son[0];
-        while (ret->son[1]) ret = ret->son[1];
+    inline node *stpred() {
+        if (!c[0]) return NULL;
+        node *ret = c[0];
+        while (ret->c[1]) ret = ret->c[1];
         return ret;
     }
 
-    node *stsucc() {
-        if (!son[1]) return NULL;
-        node *ret = son[1];
-        while (ret->son[0]) ret = ret->son[0];
+    inline node *stsucc() {
+        if (!c[1]) return NULL;
+        node *ret = c[1];
+        while (ret->c[0]) ret = ret->c[0];
         return ret;
     }
 };
 
 node *rt = NULL;
 
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->son[0]);
-    destroy(rt->son[1]);
-    delete rt;
-}
-
-void rotate(node *p, bool dir) {
+inline void rotate(node *p, bool dir) {
     node *dad = p->dad;
-    node *s = p->son[!dir], *t = s->son[dir];
-    if (dad) dad->son[dad->sdir(p)] = s;
-    s->son[dir] = p;
-    p->son[!dir] = t;
+    node *s = p->c[!dir], *t = s->c[dir];
+    if (dad) dad->c[dad->sdir(p)] = s;
+    s->c[dir] = p;
+    p->c[!dir] = t;
     s->dad = dad;
     p->dad = s;
     if (t) t->dad = p;
@@ -111,12 +102,12 @@ void rotate(node *p, bool dir) {
 bool vired = false, viblack = false, vidir;
 node *vicur, *vidad;
 
-void svired(node *cur) {
+inline void svired(node *cur) {
     vired = true;
     vicur = cur;
 }
 
-void sviblack(node *dad, bool pdir) {
+inline void sviblack(node *dad, bool pdir) {
     viblack = true;
     vidad = dad;
     vidir = pdir;
@@ -133,7 +124,7 @@ void vred(node *cur) {
     if (!p->red) return;
     node *gp = p->dad;
     bool pdir = p->sdir(cur), gpdir = gp->sdir(p);
-    node *u = gp->son[!gpdir];
+    node *u = gp->c[!gpdir];
     if (!u || !u->red) {
         if (pdir != gpdir) {
             rotate(p, gpdir);
@@ -153,16 +144,16 @@ void vred(node *cur) {
 void vblack(node *dad, bool pdir) {
     viblack = false;
     if (!dad) return;
-    node *sib = dad->son[!pdir];
+    node *sib = dad->c[!pdir];
     if (sib->red) {
         rotate(dad, pdir);
         if (rt == dad) rt = dad->dad;
-        sib = dad->son[!pdir];
+        sib = dad->c[!pdir];
         dad->red = true;
         dad->dad->red = false;
     }
-    bool rot1 = sib->son[!pdir] ? sib->son[!pdir]->red : false;
-    bool rot2 = sib->son[pdir] ? sib->son[pdir]->red : false;
+    bool rot1 = sib->c[!pdir] ? sib->c[!pdir]->red : false;
+    bool rot2 = sib->c[pdir] ? sib->c[pdir]->red : false;
     if (!rot1 && !rot2) {
         sib->red = true;
         if (dad->red)
@@ -177,7 +168,7 @@ void vblack(node *dad, bool pdir) {
         rotate(dad, pdir);
         if (rt == dad) rt = dad->dad;
         sib->red = dad->red;
-        sib->son[!pdir]->red = dad->red = false;
+        sib->c[!pdir]->red = dad->red = false;
     }
 }
 
@@ -197,7 +188,7 @@ node *insitem(node *rt, node *dad, int key) {
     }
     bool dir = 0;
     if (key > rt->key) dir = 1;
-    rt->son[dir] = insitem(rt->son[dir], rt, key);
+    rt->c[dir] = insitem(rt->c[dir], rt, key);
     rt->update();
     return rt;
 }
@@ -209,9 +200,9 @@ node *delitem(node *rt, node *dad, int key) {
             --rt->cnt;
             --rt->sz;
             return rt;
-        } else if (!rt->son[0] || !rt->son[1]) {
+        } else if (!rt->c[0] || !rt->c[1]) {
             bool ndir = rt->sdir(NULL);
-            node *np = rt->son[!ndir];
+            node *np = rt->c[!ndir];
             node *ort = rt;
             rt = np;
             if (np) np->dad = dad;
@@ -229,7 +220,7 @@ node *delitem(node *rt, node *dad, int key) {
     }
     bool dir = 1;
     if (key < rt->key) dir = 0;
-    rt->son[dir] = delitem(rt->son[dir], rt, key);
+    rt->c[dir] = delitem(rt->c[dir], rt, key);
     rt->update();
     return rt;
 }
@@ -237,25 +228,25 @@ node *delitem(node *rt, node *dad, int key) {
 int getlesscnt(node *rt, int key) {
     if (!rt) return 0;
     int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
+    if (rt->c[0]) lsz = rt->c[0]->sz;
     if (key < rt->key)
-        return getlesscnt(rt->son[0], key);
+        return getlesscnt(rt->c[0], key);
     else if (key == rt->key)
         return lsz;
     else
-        return lsz + rt->cnt + getlesscnt(rt->son[1], key);
+        return lsz + rt->cnt + getlesscnt(rt->c[1], key);
 }
 
-int getnth(node *rt, int rank) {
+int getnth(node *rt, int rk) {
     if (!rt) return -INF;
     int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
-    if (rank <= lsz)
-        return getnth(rt->son[0], rank);
-    else if (rank <= lsz + rt->cnt)
+    if (rt->c[0]) lsz = rt->c[0]->sz;
+    if (rk <= lsz)
+        return getnth(rt->c[0], rk);
+    else if (rk <= lsz + rt->cnt)
         return rt->key;
     else
-        return getnth(rt->son[1], rank - lsz - rt->cnt);
+        return getnth(rt->c[1], rk - lsz - rt->cnt);
 }
 
 int pred(node *rt, int key) {
@@ -267,9 +258,9 @@ int pred(node *rt, int key) {
         else
             return p->key;
     } else if (key < rt->key)
-        return pred(rt->son[0], key);
+        return pred(rt->c[0], key);
     else
-        return max(rt->key, pred(rt->son[1], key));
+        return max(rt->key, pred(rt->c[1], key));
 }
 
 int succ(node *rt, int key) {
@@ -281,9 +272,16 @@ int succ(node *rt, int key) {
         else
             return p->key;
     } else if (key > rt->key)
-        return succ(rt->son[1], key);
+        return succ(rt->c[1], key);
     else
-        return min(rt->key, succ(rt->son[0], key));
+        return min(rt->key, succ(rt->c[0], key));
+}
+
+void destroy(node *rt) {
+    if (!rt) return;
+    destroy(rt->c[0]);
+    destroy(rt->c[1]);
+    delete rt;
 }
 
 int main() {

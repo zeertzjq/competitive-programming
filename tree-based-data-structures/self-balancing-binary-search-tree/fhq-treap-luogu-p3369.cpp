@@ -49,36 +49,34 @@ void putln(T x) {
 const int INF = 2147483647;
 int seed = 19260817;
 
-int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) % 2147483648;
+inline int ran() {
+    return seed = (seed * 1103515245LL + 12345LL) % 2147483648LL;
 }
 
 struct node {
-    int key, val, sz;
-    node *son[2];
+    int key, pri, sz;
+    node *c[2];
 
     node(int k) {
         key = k;
-        val = ran();
+        pri = ran();
         sz = 1;
-        son[0] = son[1] = NULL;
+        c[0] = c[1] = NULL;
     }
 
-    void update() {
-        sz = 1;
-        if (son[0]) sz += son[0]->sz;
-        if (son[1]) sz += son[1]->sz;
+    inline void update() {
+        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + 1;
     }
 
-    int min() {
+    inline int min() {
         node *cur = this;
-        while (cur->son[0]) cur = cur->son[0];
+        while (cur->c[0]) cur = cur->c[0];
         return cur->key;
     }
 
-    int max() {
+    inline int max() {
         node *cur = this;
-        while (cur->son[1]) cur = cur->son[1];
+        while (cur->c[1]) cur = cur->c[1];
         return cur->key;
     }
 };
@@ -90,10 +88,10 @@ void split(node *rt, int key, node *&l, node *&r) {
     }
     if (rt->key <= key) {
         l = rt;
-        split(rt->son[1], key, rt->son[1], r);
+        split(rt->c[1], key, rt->c[1], r);
     } else {
         r = rt;
-        split(rt->son[0], key, l, rt->son[0]);
+        split(rt->c[0], key, l, rt->c[0]);
     }
     rt->update();
 }
@@ -101,32 +99,32 @@ void split(node *rt, int key, node *&l, node *&r) {
 node *merge(node *l, node *r) {
     if (!l) return r;
     if (!r) return l;
-    if (l->val > r->val) {
-        l->son[1] = merge(l->son[1], r);
+    if (l->pri > r->pri) {
+        l->c[1] = merge(l->c[1], r);
         l->update();
         return l;
     } else {
-        r->son[0] = merge(l, r->son[0]);
+        r->c[0] = merge(l, r->c[0]);
         r->update();
         return r;
     }
 }
 
-int getkth(node *rt, int rank) {
+int getkth(node *rt, int rk) {
     int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
-    if (rank <= lsz)
-        return getkth(rt->son[0], rank);
-    else if (rank == lsz + 1)
+    if (rt->c[0]) lsz = rt->c[0]->sz;
+    if (rk <= lsz)
+        return getkth(rt->c[0], rk);
+    else if (rk == lsz + 1)
         return rt->key;
     else
-        return getkth(rt->son[1], rank - lsz - 1);
+        return getkth(rt->c[1], rk - lsz - 1);
 }
 
 void destroy(node *rt) {
     if (!rt) return;
-    destroy(rt->son[0]);
-    destroy(rt->son[1]);
+    destroy(rt->c[0]);
+    destroy(rt->c[1]);
     delete rt;
 }
 
@@ -143,7 +141,7 @@ int main() {
             node *t1, *t2, *t3;
             split(rt, x, t1, t3);
             split(t1, x - 1, t1, t2);
-            rt = merge(merge(t1, merge(t2->son[0], t2->son[1])), t3);
+            rt = merge(merge(t1, merge(t2->c[0], t2->c[1])), t3);
         } else if (opt == 3) {
             node *t1, *t2;
             split(rt, x - 1, t1, t2);

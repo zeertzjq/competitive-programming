@@ -50,52 +50,43 @@ const int INF = 2147483647;
 int seed = 19260817;
 
 int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) % 2147483648;
+    return seed = (seed * 1103515245LL + 12345LL) % 2147483648LL;
 }
 
 struct node {
-    int key, val, cnt, sz;
-    node *son[2];
+    int key, pri, cnt, sz;
+    node *c[2];
 
     node(int k) {
         key = k;
-        val = ran();
+        pri = ran();
         sz = cnt = 1;
-        son[0] = son[1] = NULL;
+        c[0] = c[1] = NULL;
     }
 
-    void update() {
-        sz = cnt;
-        if (son[0]) sz += son[0]->sz;
-        if (son[1]) sz += son[1]->sz;
+    inline void update() {
+        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;
     }
 
-    node *stpred() {
-        if (!son[0]) return NULL;
-        node *ret = son[0];
-        while (ret->son[1]) ret = ret->son[1];
+    inline node *stpred() {
+        if (!c[0]) return NULL;
+        node *ret = c[0];
+        while (ret->c[1]) ret = ret->c[1];
         return ret;
     }
 
-    node *stsucc() {
-        if (!son[1]) return NULL;
-        node *ret = son[1];
-        while (ret->son[0]) ret = ret->son[0];
+    inline node *stsucc() {
+        if (!c[1]) return NULL;
+        node *ret = c[1];
+        while (ret->c[0]) ret = ret->c[0];
         return ret;
     }
 };
 
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->son[0]);
-    destroy(rt->son[1]);
-    delete rt;
-}
-
-node *rotate(node *p, bool dir) {
-    node *s = p->son[!dir], *t = s->son[dir];
-    s->son[dir] = p;
-    p->son[!dir] = t;
+inline node *rotate(node *p, bool dir) {
+    node *s = p->c[!dir], *t = s->c[dir];
+    s->c[dir] = p;
+    p->c[!dir] = t;
     p->update();
     s->update();
     return s;
@@ -110,20 +101,20 @@ node *insitem(node *rt, int key) {
     }
     bool dir = 0;
     if (key > rt->key) dir = 1;
-    rt->son[dir] = insitem(rt->son[dir], key);
+    rt->c[dir] = insitem(rt->c[dir], key);
     rt->update();
-    if (rt->son[dir]->val > rt->val) rt = rotate(rt, !dir);
+    if (rt->c[dir]->pri > rt->pri) rt = rotate(rt, !dir);
     return rt;
 }
 
 node *delitem(node *rt, int key) {
     if (!rt) return rt;
     if (key < rt->key) {
-        rt->son[0] = delitem(rt->son[0], key);
+        rt->c[0] = delitem(rt->c[0], key);
         rt->update();
         return rt;
     } else if (key > rt->key) {
-        rt->son[1] = delitem(rt->son[1], key);
+        rt->c[1] = delitem(rt->c[1], key);
         rt->update();
         return rt;
     } else {
@@ -131,19 +122,19 @@ node *delitem(node *rt, int key) {
             --rt->cnt;
             --rt->sz;
             return rt;
-        } else if (!rt->son[0]) {
-            node *tmp = rt->son[1];
+        } else if (!rt->c[0]) {
+            node *tmp = rt->c[1];
             delete rt;
             return tmp;
-        } else if (!rt->son[1]) {
-            node *tmp = rt->son[0];
+        } else if (!rt->c[1]) {
+            node *tmp = rt->c[0];
             delete rt;
             return tmp;
         } else {
             bool dir = 0;
-            if (rt->son[!dir]->val > rt->son[dir]->val) dir ^= 1;
+            if (rt->c[!dir]->pri > rt->c[dir]->pri) dir ^= 1;
             rt = rotate(rt, !dir);
-            rt->son[!dir] = delitem(rt->son[!dir], key);
+            rt->c[!dir] = delitem(rt->c[!dir], key);
             rt->update();
             return rt;
         }
@@ -153,25 +144,25 @@ node *delitem(node *rt, int key) {
 int getlesscnt(node *rt, int key) {
     if (!rt) return 0;
     int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
+    if (rt->c[0]) lsz = rt->c[0]->sz;
     if (key < rt->key)
-        return getlesscnt(rt->son[0], key);
+        return getlesscnt(rt->c[0], key);
     else if (key == rt->key)
         return lsz;
     else
-        return lsz + rt->cnt + getlesscnt(rt->son[1], key);
+        return lsz + rt->cnt + getlesscnt(rt->c[1], key);
 }
 
-int getnth(node *rt, int rank) {
+int getnth(node *rt, int rk) {
     if (!rt) return -INF;
     int lsz = 0;
-    if (rt->son[0]) lsz = rt->son[0]->sz;
-    if (rank <= lsz)
-        return getnth(rt->son[0], rank);
-    else if (rank <= lsz + rt->cnt)
+    if (rt->c[0]) lsz = rt->c[0]->sz;
+    if (rk <= lsz)
+        return getnth(rt->c[0], rk);
+    else if (rk <= lsz + rt->cnt)
         return rt->key;
     else
-        return getnth(rt->son[1], rank - lsz - rt->cnt);
+        return getnth(rt->c[1], rk - lsz - rt->cnt);
 }
 
 int pred(node *rt, int key) {
@@ -183,9 +174,9 @@ int pred(node *rt, int key) {
         else
             return p->key;
     } else if (key < rt->key)
-        return pred(rt->son[0], key);
+        return pred(rt->c[0], key);
     else
-        return max(rt->key, pred(rt->son[1], key));
+        return max(rt->key, pred(rt->c[1], key));
 }
 
 int succ(node *rt, int key) {
@@ -197,9 +188,16 @@ int succ(node *rt, int key) {
         else
             return p->key;
     } else if (key > rt->key)
-        return succ(rt->son[1], key);
+        return succ(rt->c[1], key);
     else
-        return min(rt->key, succ(rt->son[0], key));
+        return min(rt->key, succ(rt->c[0], key));
+}
+
+void destroy(node *rt) {
+    if (!rt) return;
+    destroy(rt->c[0]);
+    destroy(rt->c[1]);
+    delete rt;
 }
 
 int main() {
