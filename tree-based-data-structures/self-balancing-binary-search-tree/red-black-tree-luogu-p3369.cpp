@@ -1,6 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
+inline int geti() {
+    int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
+    putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
+}
+//}}}
+
 const int INF = 2147483647;
 
 struct node {
@@ -241,46 +286,24 @@ int succ(node *rt, int key) {
         return min(rt->key, succ(rt->son[0], key));
 }
 
-void print2DUtil(node *root, int space) {
-    const int COUNT = 10;
-    if (root == NULL)
-        return;
-    space += COUNT;
-    print2DUtil(root->son[1], space);
-    fprintf(stderr, "\n");
-    for (int i = COUNT; i < space; i++)
-        fprintf(stderr, " ");
-    if (root->red) std::clog << "\x1b[0;31m";
-    fprintf(stderr, ("%d" + std::string(std::max(80 - space, 0), '=') + '\n').c_str(), root->key);
-    if (root->red) std::clog << "\x1b[0m";
-    print2DUtil(root->son[0], space);
-}
-
 int main() {
-    int n;
-    scanf("%d", &n);
-    for (int _ = 1; _ <= n; ++_) {
-        char opt;
-        int x;
-        scanf("%hhd%d", &opt, &x);
+    int _ = geti();
+    while (_--) {
+        int opt = geti(), x = geti();
         if (opt == 1) {
             rt = insitem(rt, NULL, x);
             if (vired) vred(vicur);
-            // print2DUtil(::rt, 0);
-            // std::clog << std::string(80, '=');
         } else if (opt == 2) {
             rt = delitem(rt, NULL, x);
             if (viblack) vblack(vidad, vidir);
-            // print2DUtil(::rt, 0);
-            // std::clog << std::string(80, '=');
         } else if (opt == 3)
-            printf("%d\n", 1 + getlesscnt(rt, x));
+            putln(1 + getlesscnt(rt, x));
         else if (opt == 4)
-            printf("%d\n", getnth(rt, x));
+            putln(getnth(rt, x));
         else if (opt == 5)
-            printf("%d\n", pred(rt, x));
+            putln(pred(rt, x));
         else if (opt == 6)
-            printf("%d\n", succ(rt, x));
+            putln(succ(rt, x));
     }
     destroy(rt);
     return 0;

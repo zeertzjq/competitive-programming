@@ -1,6 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
+inline int geti() {
+    int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
+    putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
+}
+//}}}
+
 const int INF = 2147483647;
 int seed = 19260817;
 
@@ -67,13 +112,6 @@ node *merge(node *l, node *r) {
     }
 }
 
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->son[0]);
-    destroy(rt->son[1]);
-    delete rt;
-}
-
 int getkth(node *rt, int rank) {
     int lsz = 0;
     if (rt->son[0]) lsz = rt->son[0]->sz;
@@ -85,14 +123,18 @@ int getkth(node *rt, int rank) {
         return getkth(rt->son[1], rank - lsz - 1);
 }
 
+void destroy(node *rt) {
+    if (!rt) return;
+    destroy(rt->son[0]);
+    destroy(rt->son[1]);
+    delete rt;
+}
+
 int main() {
-    int n;
-    scanf("%d", &n);
+    int _ = geti();
     node *rt = NULL;
-    for (int _ = 1; _ <= n; ++_) {
-        char opt;
-        int x;
-        scanf("%hhd%d", &opt, &x);
+    while (_--) {
+        int opt = geti(), x = geti();
         if (opt == 1) {
             node *t1, *t2;
             split(rt, x, t1, t2);
@@ -105,19 +147,19 @@ int main() {
         } else if (opt == 3) {
             node *t1, *t2;
             split(rt, x - 1, t1, t2);
-            printf("%d\n", t1 ? t1->sz + 1 : 1);
+            putln(t1 ? t1->sz + 1 : 1);
             rt = merge(t1, t2);
         } else if (opt == 4) {
-            printf("%d\n", getkth(rt, x));
+            putln(getkth(rt, x));
         } else if (opt == 5) {
             node *t1, *t2;
             split(rt, x - 1, t1, t2);
-            printf("%d\n", t1->max());
+            putln(t1->max());
             rt = merge(t1, t2);
         } else if (opt == 6) {
             node *t1, *t2;
             split(rt, x, t1, t2);
-            printf("%d\n", t2->min());
+            putln(t2->min());
             rt = merge(t1, t2);
         }
     }

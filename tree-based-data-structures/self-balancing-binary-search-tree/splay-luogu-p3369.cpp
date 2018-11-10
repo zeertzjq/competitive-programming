@@ -1,6 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
+inline int geti() {
+    int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
+    putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
+}
+//}}}
+
 const int INF = 2147483647;
 
 struct node {
@@ -123,13 +168,10 @@ int getnth(node *rt, int rank) {
 }
 
 int main() {
-    int n;
+    int _ = geti();
     node *rt = NULL;
-    scanf("%d", &n);
-    while (n--) {
-        char opt;
-        int x;
-        scanf("%hhd%d", &opt, &x);
+    while (_--) {
+        int opt = geti(), x = geti();
         if (opt == 1)
             rt = insitem(rt, x);
         else if (opt == 2)
@@ -138,19 +180,19 @@ int main() {
             rt = splay(rt, x);
             int lsz = 0;
             if (rt->son[0]) lsz = rt->son[0]->sz;
-            printf("%d\n", lsz + 1);
+            putln(lsz + 1);
         } else if (opt == 4) {
-            printf("%d\n", getnth(rt, x));
+            putln(getnth(rt, x));
         } else if (opt == 5) {
             rt = splay(rt, x);
             node *res = rt;
             if (res->key >= x) res = rt->son[0] = splay(rt->son[0], x);
-            printf("%d\n", res->key);
+            putln(res->key);
         } else if (opt == 6) {
             rt = splay(rt, x);
             node *res = rt;
             if (res->key <= x) res = rt->son[1] = splay(rt->son[1], x);
-            printf("%d\n", res->key);
+            putln(res->key);
         }
     }
     destroy(rt);

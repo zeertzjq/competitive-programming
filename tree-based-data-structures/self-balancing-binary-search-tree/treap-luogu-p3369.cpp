@@ -1,6 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//{{{
+inline int geti() {
+    int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
+    putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
+}
+//}}}
+
 const int INF = 2147483647;
 int seed = 19260817;
 
@@ -158,25 +203,22 @@ int succ(node *rt, int key) {
 }
 
 int main() {
-    int n;
-    scanf("%d", &n);
+    int _ = geti();
     node *rt = NULL;
-    for (int _ = 1; _ <= n; ++_) {
-        char opt;
-        int x;
-        scanf("%hhd%d", &opt, &x);
+    while (_--) {
+        int opt = geti(), x = geti();
         if (opt == 1)
             rt = insitem(rt, x);
         else if (opt == 2)
             rt = delitem(rt, x);
         else if (opt == 3)
-            printf("%d\n", 1 + getlesscnt(rt, x));
+            putln(1 + getlesscnt(rt, x));
         else if (opt == 4)
-            printf("%d\n", getnth(rt, x));
+            putln(getnth(rt, x));
         else if (opt == 5)
-            printf("%d\n", pred(rt, x));
+            putln(pred(rt, x));
         else if (opt == 6)
-            printf("%d\n", succ(rt, x));
+            putln(succ(rt, x));
     }
     destroy(rt);
     return 0;
