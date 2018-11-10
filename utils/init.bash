@@ -31,5 +31,5 @@ a() {
 }
 
 v() {
-    diff -q "${PWD##*/}$1.ans" "${PWD##*/}.out" || vimdiff "${PWD##*/}$1.ans" "${PWD##*/}.out"
+    diff -qZ "${PWD##*/}$1.ans" "${PWD##*/}.out" || vimdiff "${PWD##*/}$1.ans" "${PWD##*/}.out"
 }
