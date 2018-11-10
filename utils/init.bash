@@ -1,3 +1,7 @@
+e() {
+    vim "${PWD##*/}.cpp"
+}
+
 c() {
     g++ $@ -Wall -Wextra -g -o "${PWD##*/}" "${PWD##*/}.cpp"
 }
@@ -8,6 +12,10 @@ u() {
 
 x() {
     "./${PWD##*/}" && less "${PWD##*/}.out"
+}
+
+d() {
+    gdb "${PWD##*/}"
 }
 
 i() {
@@ -22,6 +30,6 @@ a() {
     vim "${PWD##*/}$1.ans"
 }
 
-d() {
+v() {
     diff -q "${PWD##*/}$1.ans" "${PWD##*/}.out" || vimdiff "${PWD##*/}$1.ans" "${PWD##*/}.out"
 }
