@@ -65,10 +65,10 @@ void prim() {
         len += dist[u];
         ++vcnt;
         if (vcnt == n) return;
-        for (int i = e0[u]; i; i = e1[i]) {
-            int v = dst[i];
-            if (z[i] < dist[v]) {
-                dist[v] = z[i];
+        for (int e = e0[u]; e; e = e1[e]) {
+            int v = dst[e];
+            if (z[e] < dist[v]) {
+                dist[v] = z[e];
                 pq.push(make_pair(dist[v], v));
             }
         }
@@ -80,13 +80,13 @@ int main() {
     m = geti();
     for (int i = 1; i <= m; ++i) {
         int x = geti(), y = geti();
-        z[(i << 1) - 1] = z[i << 1] = geti();
-        dst[(i << 1) - 1] = y;
-        dst[i << 1] = x;
-        e1[(i << 1) - 1] = e0[x];
-        e1[i << 1] = e0[y];
-        e0[x] = (i << 1) - 1;
-        e0[y] = i << 1;
+        z[i << 1] = z[i << 1 | 1] = geti();
+        e1[i << 1] = e0[x];
+        e0[x] = i << 1;
+        dst[i << 1] = y;
+        e1[i << 1 | 1] = e0[y];
+        e0[y] = i << 1 | 1;
+        dst[i << 1 | 1] = x;
     }
     prim();
     if (vcnt == n)

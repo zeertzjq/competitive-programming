@@ -54,9 +54,9 @@ void tarjan(int u, int fa) {
     low[u] = dfn[u] = ++disc;
     vis[u] = true;
     int ccnt = 0;
-    for (int i = e0[u]; i; i = e1[i]) {
-        int v = dst[i];
-        if (v == fa) continue;  // IMPORTANT: skip the parent node
+    for (int e = e0[u]; e; e = e1[e]) {
+        int v = dst[e];
+        if (v == fa) continue;
         if (!dfn[v]) {
             tarjan(v, u);
             low[u] = min(low[u], low[v]);
@@ -76,12 +76,12 @@ int main() {
     m = geti();
     for (int i = 1; i <= m; ++i) {
         int x = geti(), y = geti();
-        e1[(i << 1) - 1] = e0[x];
-        e1[i << 1] = e0[y];
-        e0[x] = (i << 1) - 1;
-        e0[y] = i << 1;
-        dst[(i << 1) - 1] = y;
-        dst[i << 1] = x;
+        e1[i << 1] = e0[x];
+        e0[x] = i << 1;
+        dst[i << 1] = y;
+        e1[i << 1 | 1] = e0[y];
+        e0[y] = i << 1 | 1;
+        dst[i << 1 | 1] = x;
     }
     for (int i = 1; i <= n; ++i)
         if (!dfn[i]) tarjan(i, 0);

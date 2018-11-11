@@ -47,7 +47,7 @@ void putln(T x) {
 //}}}
 
 const int N = 500010;
-int n, m, s, e0[N], e1[N << 1], anc[N][22], dep[N], dest[N << 1];
+int n, m, s, e0[N], e1[N << 1], anc[N][22], dep[N], dst[N << 1];
 
 inline int log2(int x) {
     int ret = 0;
@@ -59,8 +59,8 @@ void dfs(int x) {
     int log2d = log2(dep[x]);
     for (int i = 1; i <= log2d; ++i)
         anc[x][i] = anc[anc[x][i - 1]][i - 1];
-    for (int i = e0[x]; i; i = e1[i]) {
-        int v = dest[i];
+    for (int e = e0[x]; e; e = e1[e]) {
+        int v = dst[e];
         if (v == anc[x][0]) continue;  // IMPORTANT: skip parent node
         anc[v][0] = x;
         dep[v] = dep[x] + 1;
@@ -85,14 +85,14 @@ int main() {
     n = geti();
     m = geti();
     s = geti();
-    for (int i = 1; i < n; ++i) {  // IMPORTANT: edge indexes CANNOT start at 0
+    for (int i = 1; i < n; ++i) {
         int x = geti(), y = geti();
-        dest[(i << 1) - 1] = y;
-        dest[i << 1] = x;
-        e1[(i << 1) - 1] = e0[x];
-        e1[i << 1] = e0[y];
-        e0[x] = (i << 1) - 1;
-        e0[y] = i << 1;
+        e1[i << 1] = e0[x];
+        e0[x] = i << 1;
+        dst[i << 1] = y;
+        e1[i << 1 | 1] = e0[y];
+        e0[y] = i << 1 | 1;
+        dst[i << 1 | 1] = x;
     }
     dfs(s);
     while (m--) {
