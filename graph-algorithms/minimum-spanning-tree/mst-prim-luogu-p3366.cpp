@@ -46,20 +46,22 @@ void putln(T x) {
 }
 //}}}
 
-typedef pair<int, int> qitem;
+typedef pair<int, int> hitem;
 
 const int N = 5010, M = 200010, INF = 2147483647;
-int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dist[N], len = 0, vcnt = 0;
-priority_queue<qitem, vector<qitem>, greater<qitem> > pq;  // IMPORTANT: pq should be a min-heap
+int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dist[N], len = 0, vcnt = 0, hsz = 0;
+hitem h[M];
+greater<hitem> cmp;
 bool vis[N];
 
 void prim() {
     fill(dist + 1, dist + 1 + n, INF);
     dist[1] = 0;
-    pq.push(make_pair(0, 1));
-    while (!pq.empty()) {
-        int u = pq.top().second;
-        pq.pop();
+    h[hsz++] = make_pair(0, 1);
+    push_heap(h, h + hsz, cmp);
+    while (hsz) {
+        pop_heap(h, h + hsz--, cmp);
+        int u = h[hsz].second;
         if (vis[u]) continue;
         vis[u] = true;  // IMPORTANT: mark u as visited
         len += dist[u];
@@ -69,7 +71,8 @@ void prim() {
             int v = dst[e];
             if (z[e] < dist[v]) {
                 dist[v] = z[e];
-                pq.push(make_pair(dist[v], v));
+                h[hsz++] = make_pair(dist[v], v);
+                push_heap(h, h + hsz, cmp);
             }
         }
     }

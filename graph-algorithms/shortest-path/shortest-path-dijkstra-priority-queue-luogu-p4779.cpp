@@ -46,24 +46,25 @@ void putln(T x) {
 }
 //}}}
 
-typedef pair<int, int> qitem;
+typedef pair<int, int> hitem;
 
 const int N = 100010, M = 200010;
 const long long INF = 100000000000;
-int n, m, s, e0[N], e1[M], dst[M], w[M];
+int n, m, s, e0[N], e1[M], dst[M], w[M], hsz = 0;
+hitem h[M];
+greater<hitem> cmp;
 long long dist[N];
-priority_queue<qitem, vector<qitem>, greater<qitem> > pq;  // IMPORTANT: pq should be a min-heap
 bool vis[N];
 
 // IMPORTANT: for acyclic graphs with non-negative edge weights ONLY
 void dijkstra() {
     fill(dist + 1, dist + 1 + n, INF);
     dist[s] = 0;
-    while (!pq.empty()) pq.pop();
-    pq.push(make_pair(0, s));
-    while (!pq.empty()) {
-        int u = pq.top().second;
-        pq.pop();
+    h[hsz++] = make_pair(0, s);
+    push_heap(h, h + hsz, cmp);
+    while (hsz) {
+        pop_heap(h, h + hsz--, cmp);
+        int u = h[hsz].second;
         if (vis[u]) continue;
         vis[u] = true;  // IMPORTANT: mark u as visited
         for (int e = e0[u]; e; e = e1[e]) {
@@ -71,7 +72,8 @@ void dijkstra() {
             long long ndist = dist[u] + w[e];
             if (ndist < dist[v]) {
                 dist[v] = ndist;
-                pq.push(make_pair(ndist, v));
+                h[hsz++] = make_pair(ndist, v);
+                push_heap(h, h + hsz, cmp);
             }
         }
     }
