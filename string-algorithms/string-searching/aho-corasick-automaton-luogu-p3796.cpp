@@ -60,12 +60,12 @@ struct node {
 
 const int S = 75, N = 155, T = 1000010;
 node *rt, *q[N * S];
-int n, len[N], head, tail, maxcnt, cnt[N];
+int n, head, tail, maxcnt, cnt[N];
 char s[N][S], t[T];
 
 void build(int n) {
     node *cur = rt;
-    for (int i = 0; i < len[n]; ++i) {
+    for (int i = 0; s[n][i]; ++i) {
         char c = s[n][i] - 'a';
         if (!cur->c[c]) cur->c[c] = new node();
         cur = cur->c[c];
@@ -98,16 +98,14 @@ int main() {
         rt = new node();
         for (int i = 1; i <= n; ++i) {
             scanf("%s", s[i]);
-            len[i] = strlen(s[i]);
             build(i);
         }
         gfail();
         scanf("%s", t);
-        int lt = strlen(t);
         fill(cnt + 1, cnt + 1 + n, 0);
         maxcnt = 0;
         node *u = rt;
-        for (int i = 0; i < lt; ++i) {
+        for (int i = 0; t[i]; ++i) {
             u = u->c[t[i] - 'a'];
             for (node *v = u; v != rt; v = v->fail)
                 if (v->end) maxcnt = max(maxcnt, ++cnt[v->end]);
