@@ -67,13 +67,13 @@ inline int qry(int *bit, int k) {
 
 inline void upds(int l, int r, int v) {
     upd(bit1, l, v);
-    upd(bit2, l, (long long)v * l % p);
+    upd(bit2, l, 1LL * v * l % p);
     upd(bit1, r + 1, -v);
-    upd(bit2, r + 1, (long long)-v * (r + 1) % p);
+    upd(bit2, r + 1, 1LL * -v * (r + 1) % p);
 }
 
 inline int qrys(int l, int r) {
-    return ((long long)(r + 1) * qry(bit1, r) - qry(bit2, r) - (long long)l * qry(bit1, l - 1) + qry(bit2, l - 1)) % p;
+    return (1LL * (r + 1) * qry(bit1, r) - qry(bit2, r) - 1LL * l * qry(bit1, l - 1) + qry(bit2, l - 1)) % p;
 }
 
 void dfs1(int u) {

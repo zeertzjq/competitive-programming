@@ -73,8 +73,8 @@ inline int phi(int n) {
 inline int pow(int n, int k, int p) {
     int ans = 1;
     while (k) {
-        if (k & 1) ans = (long long)ans * n % p;
-        n = (long long)n * n % p;
+        if (k & 1) ans = 1LL * ans * n % p;
+        n = 1LL * n * n % p;
         k >>= 1;
     }
     return ans;
