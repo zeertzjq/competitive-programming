@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-int phi(int n) {
+inline int phi(int n) {
     int ans = n;
     for (int i = 2; i * i <= n; ++i)
         if (!(n % i)) {
@@ -57,7 +57,7 @@ int phi(int n) {
     return ans;
 }
 
-int pow(int n, int k, int p) {
+inline int pow(int n, int k, int p) {
     int ans = 1;
     while (k) {
         if (k & 1) ans = (long long)ans * n % p;
