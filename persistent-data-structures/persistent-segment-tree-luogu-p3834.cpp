@@ -48,13 +48,13 @@ void putln(T x) {
 
 const int N = 200010;
 
-int n, m, a[N], a0[N], rg, lc[N * 20], rc[N * 20], v[N * 20], rt[N], idx = 0;
+int n, m, a[N], a0[N], rg, lc[N * 20], rc[N * 20], v[N * 20], rt[N], tot = 0;
 
 inline int mk(int val, int l, int r) {
-    v[++idx] = ~val ? val : v[l] + v[r];
-    lc[idx] = l;
-    rc[idx] = r;
-    return idx;
+    v[++tot] = ~val ? val : v[l] + v[r];
+    lc[tot] = l;
+    rc[tot] = r;
+    return tot;
 }
 
 int add(int rt, int l, int r, int x) {
