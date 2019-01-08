@@ -46,43 +46,46 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 200010;
-
-int n, m, a[N], a0[N], rg, lc[N * 20], rc[N * 20], val[N * 20], rt[N], tot = 0;
+const int N = 1000010;
+int n, m, a[N], rt[N], lc[N * 20], rc[N * 20], val[N * 20], tot = 0;
 
 inline int mk(int v, int l, int r) {
-    val[++tot] = ~v ? v : val[l] + val[r];
+    val[++tot] = v;
     lc[tot] = l;
     rc[tot] = r;
     return tot;
 }
 
-int add(int rt, int l, int r, int x) {
-    if (x < l || x > r) return rt;
-    if (l == r) return mk(val[rt] + 1, 0, 0);
+int build(int l, int r) {
+    if (l == r) return mk(a[l], 0, 0);
     int m = (l + r) >> 1;
-    return mk(-1, add(lc[rt], l, m, x), add(rc[rt], m + 1, r, x));
+    return mk(0, build(l, m), build(m + 1, r));
 }
 
-int qry(int rt1, int rt2, int l, int r, int k) {
-    if (l == r) return l;
-    int cnt = val[lc[rt2]] - val[lc[rt1]];
+int upd(int rt, int l, int r, int x, int v) {
+    if (x < l || x > r) return rt;
+    if (l == r) return mk(v, 0, 0);
     int m = (l + r) >> 1;
-    return k <= cnt ? qry(lc[rt1], lc[rt2], l, m, k) : qry(rc[rt1], rc[rt2], m + 1, r, k - cnt);
+    return mk(0, upd(lc[rt], l, m, x, v), upd(rc[rt], m + 1, r, x, v));
+}
+
+int qry(int rt, int l, int r, int x) {
+    if (l == r) return val[rt];
+    int m = (l + r) >> 1;
+    return x <= m ? qry(lc[rt], l, m, x) : qry(rc[rt], m + 1, r, x);
 }
 
 int main() {
     n = geti();
     m = geti();
     for (int i = 1; i <= n; ++i) a[i] = geti();
-    copy(a + 1, a + 1 + n, a0 + 1);
-    sort(a + 1, a + 1 + n);
-    rg = unique(a + 1, a + 1 + n) - a - 1;
-    rt[0] = mk(0, 0, 0);
-    for (int i = 1; i <= n; ++i) rt[i] = add(rt[i - 1], 1, rg, lower_bound(a + 1, a + 1 + rg, a0[i]) - a);
-    while (m--) {
-        int l = geti(), r = geti();
-        putln(a[qry(rt[l - 1], rt[r], 1, rg, geti())]);
+    rt[0] = build(1, n);
+    for (int i = 1; i <= m; ++i) {
+        int v = geti(), o = geti(), x = geti();
+        if (o == 1)
+            rt[i] = upd(rt[v], 1, n, x, geti());
+        else
+            putln(qry(rt[i] = rt[v], 1, n, x));
     }
     return 0;
 }
