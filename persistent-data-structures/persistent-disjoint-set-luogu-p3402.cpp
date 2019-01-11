@@ -1,0 +1,113 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//{{{
+inline int geti() {
+    int x, f = 0;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+inline long long getll() {
+    int f = 0;
+    long long x;
+    char c;
+    while (!isdigit(c = getchar()))
+        if (c == '-') f = 1;
+    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
+        ;
+    return f ? -x : x;
+}
+
+template <typename T>
+void puti(T x) {
+    if (x < 0) {
+        putchar('-');
+        x = -x;
+    }
+    if (x > 9) puti(x / 10);
+    putchar(x % 10 + '0');
+}
+
+template <typename T>
+void putsp(T x) {
+    puti(x);
+    putchar(' ');
+}
+
+template <typename T>
+void putln(T x) {
+    puti(x);
+    putchar('\n');
+}
+//}}}
+
+const int N = 200010;
+int n, m, rt[N], lc[N * 36], rc[N * 36], fa[N * 36], rk[N * 36], tot = 0;
+
+inline int mk(int f, int k, int l, int r) {
+    fa[++tot] = f;
+    rk[tot] = k;
+    lc[tot] = l;
+    rc[tot] = r;
+    return tot;
+}
+
+int build(int l, int r) {
+    if (l == r) return mk(l, 0, 0, 0);
+    int m = (l + r) >> 1;
+    return mk(0, 0, build(l, m), build(m + 1, r));
+}
+
+int upd(int rt, int l, int r, int x, int f) {
+    if (x < l || x > r) return rt;
+    if (l == r) return mk(f, rk[rt], 0, 0);
+    int m = (l + r) >> 1;
+    return mk(0, 0, upd(lc[rt], l, m, x, f), upd(rc[rt], m + 1, r, x, f));
+}
+
+int add(int rt, int l, int r, int x) {
+    if (x < l || x > r) return rt;
+    if (l == r) return mk(fa[rt], rk[rt] + 1, 0, 0);
+    int m = (l + r) >> 1;
+    return mk(0, 0, add(lc[rt], l, m, x), add(rc[rt], m + 1, r, x));
+}
+
+int nqry(int rt, int l, int r, int x) {
+    if (l == r) return rt;
+    int m = (l + r) >> 1;
+    return x <= m ? nqry(lc[rt], l, m, x) : nqry(rc[rt], m + 1, r, x);
+}
+
+int finds(int rt, int x) {
+    int nf = nqry(rt, 1, n, x);
+    return fa[nf] == x ? nf : finds(rt, fa[nf]);
+}
+
+int main() {
+    n = geti();
+    m = geti();
+    rt[0] = build(1, n);
+    for (int i = 1; i <= m; ++i) {
+        int o = geti();
+        if (o == 1) {
+            int na = finds(rt[i - 1], geti()), nb = finds(rt[i - 1], geti());
+            if (fa[na] == fa[nb]) {  // IMPORTANT: the two sets must not be the same
+                rt[i] = rt[i - 1];
+                continue;
+            }
+            if (rk[na] < rk[nb]) swap(na, nb);
+            rt[i] = upd(rt[i - 1], 1, n, fa[nb], fa[na]);
+            if (rk[na] == rk[nb]) rt[i] = add(rt[i], 1, n, fa[na]);
+        } else if (o == 3) {
+            rt[i] = rt[i - 1];
+            puts(fa[finds(rt[i], geti())] == fa[finds(rt[i], geti())] ? "1" : "0");
+        } else
+            rt[i] = rt[geti()];
+    }
+    return 0;
+}
