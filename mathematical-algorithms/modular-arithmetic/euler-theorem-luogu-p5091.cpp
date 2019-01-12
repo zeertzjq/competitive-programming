@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-inline int mgeti(int p) {
+inline int mgi(int p) {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -81,7 +81,7 @@ inline int pow(int n, int k, int p) {
 }
 
 int main() {
-    int a = geti(), m = geti(), b = mgeti(phi(m));
+    int a = gi(), m = gi(), b = mgi(phi(m));
     a %= m;
     putln(pow(a, b, m));
 }

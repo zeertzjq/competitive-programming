@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -50,10 +50,10 @@ const int N = 100010;
 int n, mp[N], f[N], ans = 0;
 
 int main() {
-    n = geti();
-    for (int i = 1; i <= n; ++i) mp[geti()] = i;
+    n = gi();
+    for (int i = 1; i <= n; ++i) mp[gi()] = i;
     for (int i = 1; i <= n; ++i) {
-        int b = mp[geti()];
+        int b = mp[gi()];
         if (b > f[ans])
             f[++ans] = b;
         else {

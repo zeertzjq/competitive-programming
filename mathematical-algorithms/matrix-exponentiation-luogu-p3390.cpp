@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -72,12 +72,12 @@ inline void multaa() {
 }
 
 int main() {
-    n = geti();
-    k = getll();
+    n = gi();
+    k = gll();
     for (int i = 1; i <= n; ++i) r[fr][i][i] = 1;
     for (int i = 1; i <= n; ++i)
         for (int j = 1; j <= n; ++j)
-            a[fa][i][j] = geti();
+            a[fa][i][j] = gi();
     while (k) {
         if (k & 1) multra();
         multaa();

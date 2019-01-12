@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -55,8 +55,8 @@ int getinv(int x) {
 }
 
 int main() {
-    n = geti();
-    p = geti();
+    n = gi();
+    p = gi();
     inv[1] = 1;
     for (int i = 1; i <= n; ++i) putln(getinv(i));
     return 0;

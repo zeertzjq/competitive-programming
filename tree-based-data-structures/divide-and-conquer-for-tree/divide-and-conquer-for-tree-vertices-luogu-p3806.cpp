@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -110,11 +110,11 @@ void solve(int u) {
 }
 
 int main() {
-    tot = n = geti();
-    m = geti();
+    tot = n = gi();
+    m = gi();
     for (int i = 1; i < n; ++i) {
-        int a = geti(), b = geti();
-        c[i << 1] = c[i << 1 | 1] = geti();
+        int a = gi(), b = gi();
+        c[i << 1] = c[i << 1 | 1] = gi();
         e1[i << 1] = e0[a];
         e0[a] = i << 1;
         dst[i << 1] = b;
@@ -122,7 +122,7 @@ int main() {
         e0[b] = i << 1 | 1;
         dst[i << 1 | 1] = a;
     }
-    for (int i = 1; i <= m; ++i) k[i] = geti();
+    for (int i = 1; i <= m; ++i) k[i] = gi();
     grt(1, 0);
     solve(rt);
     for (int i = 1; i <= m; ++i) puts(ans[i] ? "AYE" : "NAY");

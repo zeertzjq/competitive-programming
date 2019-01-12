@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -89,13 +89,13 @@ int finds(int rt, int x) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     rt[0] = build(1, n);
     for (int i = 1; i <= m; ++i) {
-        int o = geti();
+        int o = gi();
         if (o == 1) {
-            int na = finds(rt[i - 1], geti()), nb = finds(rt[i - 1], geti());
+            int na = finds(rt[i - 1], gi()), nb = finds(rt[i - 1], gi());
             if (fa[na] == fa[nb]) {  // IMPORTANT: the two sets must not be the same
                 rt[i] = rt[i - 1];
                 continue;
@@ -105,9 +105,9 @@ int main() {
             if (rk[na] == rk[nb]) rt[i] = add(rt[i], 1, n, fa[na]);
         } else if (o == 3) {
             rt[i] = rt[i - 1];
-            puts(fa[finds(rt[i], geti())] == fa[finds(rt[i], geti())] ? "1" : "0");
+            puts(fa[finds(rt[i], gi())] == fa[finds(rt[i], gi())] ? "1" : "0");
         } else
-            rt[i] = rt[geti()];
+            rt[i] = rt[gi()];
     }
     return 0;
 }

@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -115,12 +115,12 @@ void cdq(int l, int r) {
 }
 
 int main() {
-    int n0 = geti();
-    k = geti();
+    int n0 = gi();
+    k = gi();
     for (int i = 1; i <= n0; ++i) {
-        o[i].a = geti();
-        o[i].b = geti();
-        o[i].c = geti();
+        o[i].a = gi();
+        o[i].b = gi();
+        o[i].c = gi();
     }
     sort(o + 1, o + n0 + 1);
     int n = 0;

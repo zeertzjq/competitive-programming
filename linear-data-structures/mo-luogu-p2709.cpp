@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -58,13 +58,13 @@ struct query {
 } q[N];
 
 int main() {
-    n = geti();
-    m = geti();
-    k = geti();
+    n = gi();
+    m = gi();
+    k = gi();
     int bs = sqrt(n);
-    for (int i = 1; i <= n; ++i) a[i] = geti();
+    for (int i = 1; i <= n; ++i) a[i] = gi();
     for (int i = 1; i <= m; ++i) {
-        int l = geti(), r = geti();
+        int l = gi(), r = gi();
         q[i].id = l / bs;
         q[i].l = l;
         q[i].r = r;

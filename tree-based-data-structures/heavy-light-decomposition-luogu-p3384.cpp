@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -103,13 +103,13 @@ void dfs2(int u) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
-    r = geti();
-    p = geti();
-    for (int i = 1; i <= n; ++i) a[i] = geti() % p;
+    n = gi();
+    m = gi();
+    r = gi();
+    p = gi();
+    for (int i = 1; i <= n; ++i) a[i] = gi() % p;
     for (int i = 1; i < n; ++i) {
-        int x = geti(), y = geti();
+        int x = gi(), y = gi();
         e1[i << 1] = e0[x];
         e0[x] = i << 1;
         dst[i << 1] = y;
@@ -122,9 +122,9 @@ int main() {
     dfs2(r);
     for (int i = 1; i <= n; ++i) upds(id[i], id[i], a[i]);
     while (m--) {
-        int o = geti();
+        int o = gi();
         if (o == 1) {
-            int x = geti(), y = geti(), z = geti() % p;
+            int x = gi(), y = gi(), z = gi() % p;
             while (top[x] != top[y]) {
                 if (depth[top[x]] < depth[top[y]]) swap(x, y);
                 upds(id[top[x]], id[x], z);
@@ -133,7 +133,7 @@ int main() {
             if (depth[x] < depth[y]) swap(x, y);
             upds(id[y], id[x], z);
         } else if (o == 2) {
-            int x = geti(), y = geti(), ans = 0;
+            int x = gi(), y = gi(), ans = 0;
             while (top[x] != top[y]) {
                 if (depth[top[x]] < depth[top[y]]) swap(x, y);
                 ans = (ans + qrys(id[top[x]], id[x])) % p;
@@ -142,10 +142,10 @@ int main() {
             if (depth[x] < depth[y]) swap(x, y);
             putln(((ans + qrys(id[y], id[x])) % p + p) % p);
         } else if (o == 3) {
-            int x = geti(), z = geti() % p;
+            int x = gi(), z = gi() % p;
             upds(id[x], id[x] + sz[x] - 1, z);
         } else {
-            int x = geti();
+            int x = gi();
             putln((qrys(id[x], id[x] + sz[x] - 1) % p + p) % p);
         }
     }

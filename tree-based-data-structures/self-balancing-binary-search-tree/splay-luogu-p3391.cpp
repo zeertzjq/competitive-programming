@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -149,11 +149,11 @@ void destroy(node *rt) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     node *rt = build(0, n + 1);
     while (m--) {
-        int l = geti(), r = geti();
+        int l = gi(), r = gi();
         rt = splay(rt, r + 2);
         rt->c[0] = splay(rt->c[0], l);
         rt->c[0]->c[1]->tag ^= 1;

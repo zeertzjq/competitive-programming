@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -67,14 +67,14 @@ inline long long qry(long long *bit, int k) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     long long sum = 0;
-    for (int i = 1; i <= n; ++i) s[i] = sum += getll();
+    for (int i = 1; i <= n; ++i) s[i] = sum += gll();
     while (m--) {
-        int o = geti(), x = geti(), y = geti();
+        int o = gi(), x = gi(), y = gi();
         if (o == 1) {
-            long long k = getll();
+            long long k = gll();
             add(bit1, x, k);
             add(bit1, y + 1, -k);
             add(bit2, x, k * x);

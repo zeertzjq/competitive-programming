@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -49,11 +49,11 @@ void putln(T x) {
 priority_queue<int, vector<int>, greater<int> > pq;
 
 int main() {
-    int n = geti();
+    int n = gi();
     while (n--)
-        switch (geti()) {
+        switch (gi()) {
             case 1:
-                pq.push(geti());
+                pq.push(gi());
                 break;
             case 2:
                 putln(pq.top());

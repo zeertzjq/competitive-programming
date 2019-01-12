@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -201,10 +201,10 @@ void destroy(node *rt) {
 }
 
 int main() {
-    int _ = geti();
+    int _ = gi();
     node *rt = NULL;
     while (_--) {
-        int opt = geti(), x = geti();
+        int opt = gi(), x = gi();
         if (opt == 1)
             rt = insitem(rt, x);
         else if (opt == 2)

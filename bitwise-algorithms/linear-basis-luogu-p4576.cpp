@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -63,8 +63,8 @@ inline bool ins(int x) {
 }
 
 int main() {
-    k = geti();
-    for (int i = 1; i <= k; ++i) a[i] = geti();
+    k = gi();
+    for (int i = 1; i <= k; ++i) a[i] = gi();
     sort(a + 1, a + 1 + k, greater<int>());
     for (int i = 1; i <= k; ++i)
         if (!ins(a[i])) ans += a[i];

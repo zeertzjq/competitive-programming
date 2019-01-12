@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -83,13 +83,13 @@ void kruskal() {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     for (int i = 1; i <= n; ++i) dad[i] = i;
     for (int i = 1; i <= m; ++i) {
-        e[i].x = geti();
-        e[i].y = geti();
-        e[i].z = geti();
+        e[i].x = gi();
+        e[i].y = gi();
+        e[i].z = gi();
     }
     sort(e + 1, e + 1 + m);
     kruskal();

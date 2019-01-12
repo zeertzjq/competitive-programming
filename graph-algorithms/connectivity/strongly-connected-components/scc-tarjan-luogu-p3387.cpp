@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -92,11 +92,11 @@ int dfs(int u) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
-    for (int i = 1; i <= n; ++i) val[i] = geti();
+    n = gi();
+    m = gi();
+    for (int i = 1; i <= n; ++i) val[i] = gi();
     for (int i = 1; i <= m; ++i) {
-        int u = geti(), v = geti();
+        int u = gi(), v = gi();
         e1[i] = e0[u];
         e0[u] = i;
         if (!ee[u]) ee[u] = i;

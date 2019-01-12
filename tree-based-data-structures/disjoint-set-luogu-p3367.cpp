@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -63,10 +63,10 @@ inline void unions(int x, int y) {
 }
 
 int main() {
-    int n = geti(), m = geti();
+    int n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) dad[i] = i;
     while (m--) {
-        int z = geti(), x = geti(), y = geti();
+        int z = gi(), x = gi(), y = gi();
         if (z == 1)
             unions(finds(x), finds(y));
         else

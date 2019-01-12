@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -76,15 +76,15 @@ void spfa() {
 }
 
 int main() {
-    n = geti();
-    m = geti();
-    s = geti();
+    n = gi();
+    m = gi();
+    s = gi();
     for (int i = 1; i <= m; ++i) {
-        int f = geti();
+        int f = gi();
         e1[i] = e0[f];
         e0[f] = i;
-        dst[i] = geti();
-        w[i] = geti();
+        dst[i] = gi();
+        w[i] = gi();
     }
     spfa();
     for (int i = 1; i <= n; ++i) putsp(dist[i]);

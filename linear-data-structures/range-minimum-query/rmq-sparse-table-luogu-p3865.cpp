@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -67,13 +67,13 @@ inline int stquery(int l, int r) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     log2n = log2(n);
-    for (int i = 1; i <= n; ++i) stmax[i][0] = geti();
+    for (int i = 1; i <= n; ++i) stmax[i][0] = gi();
     stinit();
     while (m--) {
-        int l = geti(), r = geti();
+        int l = gi(), r = gi();
         putln(stquery(l, r));
     }
     return 0;

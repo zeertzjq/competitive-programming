@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -136,11 +136,11 @@ void destroy(node *rt) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     node *rt = build(1, n, 1);
     while (m--) {
-        int l = geti(), r = geti();
+        int l = gi(), r = gi();
         node *t1, *t2, *t3;
         split(rt, r, t1, t3);
         split(t1, l - 1, t1, t2);

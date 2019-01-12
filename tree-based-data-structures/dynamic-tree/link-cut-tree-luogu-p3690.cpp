@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -150,11 +150,11 @@ void cut(int x, int y) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
-    for (int i = 1; i <= n; ++i) v[i] = s[i] = geti();
+    n = gi();
+    m = gi();
+    for (int i = 1; i <= n; ++i) v[i] = s[i] = gi();
     while (m--) {
-        int opt = geti(), x = geti(), y = geti();
+        int opt = gi(), x = gi(), y = gi();
         if (opt == 0) {
             mkrt(x);
             access(y);

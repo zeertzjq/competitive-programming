@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -60,7 +60,7 @@ int exgcd(int a, int b, int &x, int &y) {
 }
 
 int main() {
-    int a = geti(), b = geti(), x, y;
+    int a = gi(), b = gi(), x, y;
     a %= b;
     exgcd(a, b, x, y);
     putln((x % b + b) % b);

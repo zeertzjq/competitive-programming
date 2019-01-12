@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -50,12 +50,12 @@ const int N = 1000000;
 int heap[N], sz = 0;
 
 int main() {
-    int n = geti();
+    int n = gi();
     greater<int> cmp;
     while (n--)
-        switch (geti()) {
+        switch (gi()) {
             case 1:
-                heap[sz++] = geti();
+                heap[sz++] = gi();
                 push_heap(heap, heap + sz, cmp);
                 break;
             case 2:

@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -127,29 +127,29 @@ int merge(int l, int r) {
 }
 
 int main() {
-    n = geti();
+    n = gi();
     for (int i = 1; i <= n; ++i) {
-        int v = geti(), o = geti();
+        int v = gi(), o = gi();
         if (o == 1) {
-            int p = geti() ^ lastans, x = geti() ^ lastans;
+            int p = gi() ^ lastans, x = gi() ^ lastans;
             int t1, t2;
             split(rt[v], p, t1, t2);
             rt[i] = merge(merge(t1, mk(x)), t2);
         } else if (o == 2) {
-            int p = geti() ^ lastans;
+            int p = gi() ^ lastans;
             int t1, t2, t3;
             split(rt[v], p, t1, t3);
             split(t1, p - 1, t1, t2);
             rt[i] = merge(t1, t3);
         } else if (o == 3) {
-            int l = geti() ^ lastans, r = geti() ^ lastans;
+            int l = gi() ^ lastans, r = gi() ^ lastans;
             int t1, t2, t3;
             split(rt[v], r, t1, t3);
             split(t1, l - 1, t1, t2);
             rev[t2] ^= 1;
             rt[i] = merge(merge(t1, t2), t3);
         } else if (o == 4) {
-            int l = geti() ^ lastans, r = geti() ^ lastans;
+            int l = gi() ^ lastans, r = gi() ^ lastans;
             int t1, t2, t3;
             split(rt[v], r, t1, t3);
             split(t1, l - 1, t1, t2);

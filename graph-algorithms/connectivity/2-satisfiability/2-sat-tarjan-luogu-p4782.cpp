@@ -2,7 +2,7 @@
 using namespace std;
 
 //{{{
-inline int geti() {
+inline int gi() {
     int x, f = 0;
     char c;
     while (!isdigit(c = getchar()))
@@ -12,7 +12,7 @@ inline int geti() {
     return f ? -x : x;
 }
 
-inline long long getll() {
+inline long long gll() {
     int f = 0;
     long long x;
     char c;
@@ -73,10 +73,10 @@ void tarjan(int u) {
 }
 
 int main() {
-    n = geti();
-    m = geti();
+    n = gi();
+    m = gi();
     for (int e = 1; e <= m; ++e) {
-        int i = geti(), a = geti(), j = geti(), b = geti();
+        int i = gi(), a = gi(), j = gi(), b = gi();
         int x1 = i << 1 ^ a, x2 = j << 1 ^ b;
         e1[e << 1] = e0[x1 ^ 1];
         e0[x1 ^ 1] = e << 1;
