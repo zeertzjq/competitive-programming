@@ -46,20 +46,43 @@ void putln(T x) {
 }
 //}}}
 
+struct qi {
+    int val;
+    qi *next;
+
+    qi(int v, qi *n) : val(v), next(n) {}
+};
+
 const int N = 10010, M = 500010, INF = 2147483647;
 int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N];
-queue<int> q;
 bool vis[N];
+qi *head = NULL, *tail = NULL;
+
+inline void pf(int v) {
+    head = new qi(v, head);
+    if (!tail) tail = head;
+}
+
+inline void pb(int v) {
+    tail = tail->next = new qi(v, NULL);
+}
+
+inline int pop() {
+    qi *h = head;
+    int ret = h->val;
+    head = h->next;
+    if (h == tail) tail = NULL;
+    delete h;
+    return ret;
+}
 
 void spfa() {
     fill(dist + 1, dist + 1 + n, INF);
     dist[s] = 0;
-    while (!q.empty()) q.pop();
-    q.push(s);
+    pf(s);
     vis[s] = 1;
-    while (!q.empty()) {
-        int u = q.front();
-        q.pop();
+    while (head) {
+        int u = pop();
         vis[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
@@ -67,7 +90,10 @@ void spfa() {
             if (ndist < dist[v]) {
                 dist[v] = ndist;
                 if (!vis[v]) {
-                    q.push(v);
+                    if (!head || ndist < dist[head->val])
+                        pf(v);
+                    else
+                        pb(v);
                     vis[v] = 1;
                 }
             }
