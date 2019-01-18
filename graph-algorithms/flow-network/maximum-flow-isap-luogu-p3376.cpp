@@ -46,20 +46,21 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 200010, INF = 2147483647;
+const int N = 10010, M = 200010, INF = 2147483640;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], dep[N], q[N], head, tail, cur[N], cnt[N], pre[N];
 
 void bfs() {
     head = 1;
     tail = 0;
-    dep[t] = 1;
+    fill(dep + 1, dep + 1 + n, -1);
+    dep[t] = 0;
     q[++tail] = t;
     while (head <= tail) {
         int u = q[head++];
         ++cnt[dep[u]];
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            if (dep[v] || !w[e ^ 1]) continue;
+            if (~dep[v] || !w[e ^ 1]) continue;
             dep[v] = dep[u] + 1;
             q[++tail] = v;
         }
@@ -81,11 +82,19 @@ inline int flow() {
     return ans;
 }
 
+inline void relabel(int u) {
+    dep[u] = n;
+    for (int e = e0[u]; e; e = e1[e]) {
+        int v = dst[e];
+        if (w[e]) dep[u] = min(dep[u], dep[v] + 1);
+    }
+}
+
 int isap() {
     bfs();
     copy(e0 + 1, e0 + 1 + n, cur + 1);
     int ans = 0, u = s;
-    while (dep[s] <= n) {
+    while (dep[s] < n) {
         if (u == t) {
             ans += flow();
             u = s;
@@ -101,11 +110,9 @@ int isap() {
             }
         }
         if (!f) {
-            int mins = n;
-            for (int e = e0[u]; e; e = e1[e])
-                if (w[e]) mins = min(mins, dep[dst[e]]);
             if (!--cnt[dep[u]]) return ans;
-            ++cnt[dep[u] = mins + 1];
+            relabel(u);
+            ++cnt[dep[u]];
             cur[u] = e0[u];
             if (u != s) u = dst[pre[u] ^ 1];
         }

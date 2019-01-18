@@ -106,7 +106,7 @@ void splay(int x) {
     }
 }
 
-void access(int x) {
+inline void access(int x) {
     for (int s = 0; x; s = x, x = f[x]) {
         splay(x);
         rev(x);
@@ -115,13 +115,13 @@ void access(int x) {
     }
 }
 
-void mkrt(int x) {
+inline void mkrt(int x) {
     access(x);
     splay(x);
     r[x] ^= 1;
 }
 
-int frt(int x) {
+inline int frt(int x) {
     access(x);
     splay(x);
     rev(x);
@@ -132,14 +132,14 @@ int frt(int x) {
     return x;
 }
 
-void link(int x, int y) {
+inline void link(int x, int y) {
     mkrt(x);
     splay(x);
     if (frt(y) == x) return;
     f[x] = y;
 }
 
-void cut(int x, int y) {
+inline void cut(int x, int y) {
     mkrt(x);
     access(y);
     splay(y);

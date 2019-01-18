@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int INF = 2147483647;
+const int INF = 2147483640;
 int seed = 19260817;
 
 int ran() {

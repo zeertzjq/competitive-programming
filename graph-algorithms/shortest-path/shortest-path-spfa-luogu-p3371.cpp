@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 500010, INF = 2147483647;
+const int N = 10010, M = 500010, INF = 2147483640;
 int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N << 4], head = 1, tail = 0;
 bool vis[N];
 

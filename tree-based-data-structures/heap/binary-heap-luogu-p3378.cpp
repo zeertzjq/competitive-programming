@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 1000000, INF = 2147483647;
+const int N = 1000000, INF = 2147483640;
 int h[N + 1];
 
 #define sz h[0]
