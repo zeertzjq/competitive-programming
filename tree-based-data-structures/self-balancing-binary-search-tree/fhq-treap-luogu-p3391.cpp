@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int INF = 2147483640;
+const int INF = 2147483647;
 int n, m;
 
 struct node {

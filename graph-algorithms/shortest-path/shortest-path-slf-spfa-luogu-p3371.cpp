@@ -53,9 +53,9 @@ struct qi {
     qi(int v, qi *n) : val(v), next(n) {}
 };
 
-const int N = 10010, M = 500010, INF = 2147483640;
+const int N = 10010, M = 500010, INF = 2147483647;
 int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N];
-bool vis[N];
+bool inq[N];
 qi *head = NULL, *tail = NULL;
 
 inline void pf(int v) {
@@ -80,21 +80,21 @@ void spfa() {
     fill(dist + 1, dist + 1 + n, INF);
     dist[s] = 0;
     pf(s);
-    vis[s] = 1;
+    inq[s] = 1;
     while (head) {
         int u = pop();
-        vis[u] = 0;
+        inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             int ndist = dist[u] + w[e];
             if (ndist < dist[v]) {
                 dist[v] = ndist;
-                if (!vis[v]) {
+                if (!inq[v]) {
                     if (!head || ndist < dist[head->val])
                         pf(v);
                     else
                         pb(v);
-                    vis[v] = 1;
+                    inq[v] = 1;
                 }
             }
         }

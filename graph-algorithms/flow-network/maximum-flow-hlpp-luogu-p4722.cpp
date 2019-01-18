@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 1210, M = 240010, INF = 2147483640;
+const int N = 1210, M = 240010, INF = 2147483647;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], h[N], q[N], head, tail, fe[N], pq[N], pqsz = 0, cnt[N << 1];
 bool inq[N], inpq[N];
 

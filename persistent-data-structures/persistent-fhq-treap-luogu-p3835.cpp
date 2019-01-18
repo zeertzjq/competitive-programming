@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 500010, INF = 2147483640;
+const int N = 500010, INF = 2147483647;
 int seed = 19260817, n, rt[N], key[N * 38], c[N * 38][2], pri[N * 38], sz[N * 38], tot = 0;
 
 inline int ran() {

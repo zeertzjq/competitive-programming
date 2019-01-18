@@ -46,7 +46,7 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 200010, INF = 2147483640;
+const int N = 10010, M = 200010, INF = 2147483647;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], dep[N], q[N], head, tail, cur[N], cnt[N], pre[N];
 
 inline void bfs() {
@@ -68,18 +68,13 @@ inline void bfs() {
 }
 
 inline int flow() {
-    int ans = INF, u = t;
-    while (u != s) {
-        ans = min(ans, w[pre[u]]);
-        u = dst[pre[u] ^ 1];
+    int f = INF;
+    for (int u = t; u != s; u = dst[pre[u] ^ 1]) f = min(f, w[pre[u]]);
+    for (int u = t; u != s; u = dst[pre[u] ^ 1]) {
+        w[pre[u]] -= f;
+        w[pre[u] ^ 1] += f;
     }
-    u = t;
-    while (u != s) {
-        w[pre[u]] -= ans;
-        w[pre[u] ^ 1] += ans;
-        u = dst[pre[u] ^ 1];
-    }
-    return ans;
+    return f;
 }
 
 inline void relabel(int u) {

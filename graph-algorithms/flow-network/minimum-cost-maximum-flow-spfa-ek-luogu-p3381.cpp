@@ -46,41 +46,48 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 200010, INF = 2147483647;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], flow[N], pre[N], q[N], head, tail;
+const int N = 5010, M = 100010, INF = 2147483647;
+int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dist[N], pre[N], q[N], head, tail, flow = 0, cost = 0;
+bool inq[N];
 
-inline int bfs() {
+bool spfa() {
     head = 1;
     tail = 0;
-    fill(pre + 1, pre + 1 + n, 0);
-    flow[s] = INF;
-    q[++tail] = s;
-    while (head <= tail) {
+    fill(dist + 1, dist + 1 + n, INF);
+    dist[s] = 0;
+    q[++tail %= N] = s;
+    inq[s] = 1;
+    while (head != tail + 1) {
         int u = q[head++];
+        head %= N;  // IMPORTANT: a vertex may be pushed into the queue multiple times
+        inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            if (pre[v] || !w[e]) continue;
-            pre[v] = e;
-            flow[v] = min(flow[u], w[e]);
-            if (v == t) return flow[t];
-            q[++tail] = v;
+            if (!w[e]) continue;
+            if (dist[u] + c[e] < dist[v]) {
+                dist[v] = dist[u] + c[e];
+                pre[v] = e;
+                if (!inq[v]) {
+                    q[++tail %= N] = v;
+                    inq[v] = 1;
+                }
+            }
         }
     }
-    return 0;
+    return dist[t] != INF;
 }
 
-inline int ek() {
-    int ans = 0;
-    while (int f = bfs()) {
-        int u = t;
-        while (u != s) {
+inline void mcmf() {
+    while (spfa()) {
+        int f = INF;
+        for (int u = t; u != s; u = dst[pre[u] ^ 1]) f = min(f, w[pre[u]]);
+        for (int u = t; u != s; u = dst[pre[u] ^ 1]) {
             w[pre[u]] -= f;
             w[pre[u] ^ 1] += f;
-            u = dst[pre[u] ^ 1];
         }
-        ans += f;
+        flow += f;
+        cost += f * dist[t];
     }
-    return ans;
 }
 
 int main() {
@@ -98,7 +105,12 @@ int main() {
         e0[v] = i << 1 | 1;
         dst[i << 1 | 1] = u;
         w[i << 1 | 1] = 0;
+        int f = gi();
+        c[i << 1] = f;
+        c[i << 1 | 1] = -f;
     }
-    putln(ek());
+    mcmf();
+    putsp(flow);
+    putln(cost);
     return 0;
 }

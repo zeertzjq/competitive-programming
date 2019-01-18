@@ -46,26 +46,27 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 500010, INF = 2147483640;
-int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N << 4], head = 1, tail = 0;
-bool vis[N];
+const int N = 10010, M = 500010, INF = 2147483647;
+int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N], head = 1, tail = 0;
+bool inq[N];
 
 void spfa() {
     fill(dist + 1, dist + 1 + n, INF);
     dist[s] = 0;
-    q[++tail] = s;
-    vis[s] = 1;
-    while (head <= tail) {
+    q[++tail %= N] = s;
+    inq[s] = 1;
+    while (head != tail + 1) {
         int u = q[head++];
-        vis[u] = 0;
+        head %= N;  // IMPORTANT: a vertex may be pushed into the queue multiple times
+        inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             int ndist = dist[u] + w[e];
             if (ndist < dist[v]) {
                 dist[v] = ndist;
-                if (!vis[v]) {
-                    q[++tail] = v;
-                    vis[v] = 1;
+                if (!inq[v]) {
+                    q[++tail %= N] = v;
+                    inq[v] = 1;
                 }
             }
         }

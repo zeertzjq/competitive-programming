@@ -46,9 +46,9 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 2010, M = 3010, INF = 2147483640;
+const int N = 2010, M = 3010, INF = 2147483647;
 int n, m;
-int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dist[N], cnt[N], vis[N];
+int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dist[N], cnt[N], inq[N];
 
 queue<int> q;
 
@@ -58,20 +58,20 @@ inline void clear() {
         dist[i] = INF;
     }
     while (!q.empty()) {
-        vis[q.front()] = 0;
+        inq[q.front()] = 0;
         q.pop();
     }
 }
 
 inline void push(int v) {
     ++cnt[v];
-    vis[v] = 1;
+    inq[v] = 1;
     q.push(v);
 }
 
 inline int pop() {
     int v = q.front();
-    vis[v] = 0;
+    inq[v] = 0;
     q.pop();
     return v;
 }
@@ -87,7 +87,7 @@ int detect() {
             int ndist = dist[u] + w[e];
             if (ndist < dist[v]) {
                 dist[v] = ndist;
-                if (vis[v]) continue;
+                if (inq[v]) continue;
                 if (cnt[v] >= n) return true;
                 push(v);
             }
