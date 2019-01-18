@@ -46,43 +46,24 @@ void putln(T x) {
 }
 //}}}
 
-struct qi {
-    int val;
-    qi *next;
-
-    qi(int v, qi *n) : val(v), next(n) {}
-};
-
 const int N = 10010, M = 500010, INF = 2147483647;
-int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N];
+int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N], head, tail;
 bool inq[N];
-qi *head = NULL, *tail = NULL;
 
-inline void pf(int v) {
-    head = new qi(v, head);
-    if (!tail) tail = head;
-}
-
-inline void pb(int v) {
-    tail = tail->next = new qi(v, NULL);
-}
-
-inline int pop() {
-    qi *h = head;
-    int ret = h->val;
-    head = h->next;
-    if (h == tail) tail = NULL;
-    delete h;
-    return ret;
+inline int &qo(int &x) {
+    return x == N ? x = 0 : x == -1 ? x = N - 1 : x;
 }
 
 void spfa() {
+    head = 1;
+    tail = 0;
     fill(dist + 1, dist + 1 + n, INF);
     dist[s] = 0;
-    pf(s);
+    q[++tail] = s;
     inq[s] = 1;
-    while (head) {
-        int u = pop();
+    while (head != tail + 1) {
+        int u = q[head++];
+        qo(head);
         inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
@@ -90,10 +71,10 @@ void spfa() {
             if (ndist < dist[v]) {
                 dist[v] = ndist;
                 if (!inq[v]) {
-                    if (!head || ndist < dist[head->val])
-                        pf(v);
+                    if (ndist < dist[q[head]])
+                        q[qo(--head)] = v;
                     else
-                        pb(v);
+                        q[qo(++tail)] = v;
                     inq[v] = 1;
                 }
             }

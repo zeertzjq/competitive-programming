@@ -50,14 +50,18 @@ const int N = 10010, M = 500010, INF = 2147483647;
 int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N], head = 1, tail = 0;
 bool inq[N];
 
+inline int &qo(int &x) {
+    return x == N ? x = 0 : x;  // IMPORTANT: a vertex may be pushed into the queue multiple times
+}
+
 void spfa() {
     fill(dist + 1, dist + 1 + n, INF);
     dist[s] = 0;
-    q[++tail %= N] = s;
+    q[++tail] = s;
     inq[s] = 1;
     while (head != tail + 1) {
         int u = q[head++];
-        head %= N;  // IMPORTANT: a vertex may be pushed into the queue multiple times
+        qo(head);
         inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
@@ -65,7 +69,7 @@ void spfa() {
             if (ndist < dist[v]) {
                 dist[v] = ndist;
                 if (!inq[v]) {
-                    q[++tail %= N] = v;
+                    q[qo(++tail)] = v;
                     inq[v] = 1;
                 }
             }

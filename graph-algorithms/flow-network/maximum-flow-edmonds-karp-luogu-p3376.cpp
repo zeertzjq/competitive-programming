@@ -72,11 +72,9 @@ inline int bfs() {
 inline int ek() {
     int ans = 0;
     while (int f = bfs()) {
-        int u = t;
-        while (u != s) {
+        for (int u = t; u != s; u = dst[pre[u] ^ 1]) {
             w[pre[u]] -= f;
             w[pre[u] ^ 1] += f;
-            u = dst[pre[u] ^ 1];
         }
         ans += f;
     }
