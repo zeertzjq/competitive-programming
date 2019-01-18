@@ -47,7 +47,7 @@ void putln(T x) {
 //}}}
 
 const int N = 100010, E = N << 1;
-int n, m, r, p, e0[N], e1[E], dst[E], a[N], bit1[N], bit2[N], depth[N], fa[N], h[N], sz[N], top[N], id[N], cnt = 0;
+int n, m, r, p, e0[N], e1[E], dst[E], a[N], bit1[N], bit2[N], dep[N], fa[N], h[N], sz[N], top[N], id[N], cnt = 0;
 
 inline void upd(int *bit, int k, int v) {
     while (k <= n) {
@@ -81,7 +81,7 @@ void dfs1(int u) {
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (v == fa[u]) continue;
-        depth[v] = depth[u] + 1;
+        dep[v] = dep[u] + 1;
         fa[v] = u;
         dfs1(v);
         if (sz[v] > sz[h[u]]) h[u] = v;
@@ -126,20 +126,20 @@ int main() {
         if (o == 1) {
             int x = gi(), y = gi(), z = gi() % p;
             while (top[x] != top[y]) {
-                if (depth[top[x]] < depth[top[y]]) swap(x, y);
+                if (dep[top[x]] < dep[top[y]]) swap(x, y);
                 upds(id[top[x]], id[x], z);
                 x = fa[top[x]];
             }
-            if (depth[x] < depth[y]) swap(x, y);
+            if (dep[x] < dep[y]) swap(x, y);
             upds(id[y], id[x], z);
         } else if (o == 2) {
             int x = gi(), y = gi(), ans = 0;
             while (top[x] != top[y]) {
-                if (depth[top[x]] < depth[top[y]]) swap(x, y);
+                if (dep[top[x]] < dep[top[y]]) swap(x, y);
                 ans = (ans + qrys(id[top[x]], id[x])) % p;
                 x = fa[top[x]];
             }
-            if (depth[x] < depth[y]) swap(x, y);
+            if (dep[x] < dep[y]) swap(x, y);
             putln(((ans + qrys(id[y], id[x])) % p + p) % p);
         } else if (o == 3) {
             int x = gi(), z = gi() % p;
