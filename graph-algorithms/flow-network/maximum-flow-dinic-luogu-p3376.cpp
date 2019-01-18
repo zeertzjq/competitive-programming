@@ -49,7 +49,7 @@ void putln(T x) {
 const int N = 10010, M = 200010, INF = 2147483640;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], dep[N], q[N], head, tail, cur[N];
 
-bool bfs() {
+inline bool bfs() {
     head = 1;
     tail = 0;
     fill(dep + 1, dep + 1 + n, 0);
