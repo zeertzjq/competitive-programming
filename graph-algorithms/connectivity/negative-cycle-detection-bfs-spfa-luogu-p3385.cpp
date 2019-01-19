@@ -88,12 +88,12 @@ int detect() {
             if (ndist < dist[v]) {
                 dist[v] = ndist;
                 if (inq[v]) continue;
-                if (cnt[v] >= n) return true;
+                if (cnt[v] >= n) return 1;
                 push(v);
             }
         }
     }
-    return false;
+    return 0;
 }
 
 int main() {

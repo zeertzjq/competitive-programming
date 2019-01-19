@@ -53,7 +53,7 @@ bool vis[N], ans[N];
 void tarjan(int u) {
     dfn[u] = low[u] = ++disc;
     stk[++top] = u;
-    vis[u] = true;
+    vis[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (!dfn[v]) {
@@ -66,7 +66,7 @@ void tarjan(int u) {
         ++scc;
         while (int v = stk[top--]) {
             ord[v] = scc;
-            vis[v] = false;
+            vis[v] = 0;
             if (v == u) break;
         }
     }

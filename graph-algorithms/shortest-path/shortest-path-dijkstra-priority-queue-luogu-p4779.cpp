@@ -66,7 +66,7 @@ void dijkstra() {
         pop_heap(h, h + hsz--, cmp);
         int u = h[hsz].second;
         if (vis[u]) continue;
-        vis[u] = true;  // IMPORTANT: mark u as visited
+        vis[u] = 1;  // IMPORTANT: mark u as visited
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             long long ndist = dist[u] + w[e];

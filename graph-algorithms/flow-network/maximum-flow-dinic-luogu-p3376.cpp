@@ -61,11 +61,11 @@ inline bool bfs() {
             int v = dst[e];
             if (dep[v] || !w[e]) continue;
             dep[v] = dep[u] + 1;
-            if (v == t) return true;
+            if (v == t) return 1;
             q[++tail] = v;
         }
     }
-    return false;
+    return 0;
 }
 
 int dfs(int u, int lim) {

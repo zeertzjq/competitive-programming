@@ -57,17 +57,17 @@ bool dfs(int x) {
             if (!ym[y] || dfs(ym[y])) {
                 xm[x] = y;
                 ym[y] = x;
-                return true;
+                return 1;
             }
         }
-    return false;
+    return 0;
 }
 
 int main() {
     n = gi();
     m = gi();
     e = gi();
-    while (e--) g[gi()][gi()] = true;
+    while (e--) g[gi()][gi()] = 1;
     for (int x = 1; x <= n; ++x) {
         fill(vis + 1, vis + 1 + m, 0);
         ans += dfs(x);

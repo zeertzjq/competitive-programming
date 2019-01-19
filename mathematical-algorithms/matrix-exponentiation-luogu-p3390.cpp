@@ -49,7 +49,7 @@ void putln(T x) {
 const int N = 101, mod = 1000000007;
 int n, a[2][N][N], r[2][N][N];
 long long k;
-bool fa = false, fr = false;
+bool fa = 0, fr = 0;
 
 inline void multra() {
     fr ^= 1;

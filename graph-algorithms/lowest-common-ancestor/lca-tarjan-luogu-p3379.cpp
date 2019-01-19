@@ -60,7 +60,7 @@ void tarjan(int u, int fa) {
         if (v == fa) continue;
         tarjan(v, u);
         dad[finds(v)] = u;
-        vis[v] = true;
+        vis[v] = 1;
     }
     for (int q = q0[u]; q; q = q1[q]) {
         int a = aidx[q], v = qi[q];

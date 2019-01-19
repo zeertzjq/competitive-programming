@@ -46,48 +46,57 @@ void putln(T x) {
 }
 //}}}
 
-const int N = 100010, E = N << 1;
-int n, m, e0[N], e1[E], dst[E], dfn[N], low[N], disc = 0;
-bool ap[N], vis[N];
+const int N = 10010, M = 50010;
+int n, m, e0[N], e1[M], dst[M], dfn[N], low[N], disc = 0, stk[N], top = 0, cnt[N], scc = 0, id[N], deg[N], ans = 0;
+bool vis[N];
 
-void tarjan(int u, int fa) {
-    low[u] = dfn[u] = ++disc;
+void tarjan(int u) {
+    dfn[u] = low[u] = ++disc;
+    stk[++top] = u;
     vis[u] = 1;
-    int ccnt = 0;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
-        if (v == fa) continue;
         if (!dfn[v]) {
-            tarjan(v, u);
+            tarjan(v);
             low[u] = min(low[u], low[v]);
-            if (fa && low[v] >= dfn[u])
-                ap[u] = 1;
-            else if (!fa)
-                ++ccnt;
         } else if (vis[v])
             low[u] = min(low[u], dfn[v]);
     }
-    vis[u] = 0;
-    if (!fa && ccnt > 1) ap[u] = 1;  // IMPORTANT: the root node is an articulation point if it has a least two children
+    if (dfn[u] == low[u]) {
+        ++scc;
+        while (int v = stk[top--]) {
+            id[v] = scc;
+            ++cnt[scc];
+            vis[v] = 0;
+            if (v == u) break;
+        }
+    }
 }
 
 int main() {
     n = gi();
     m = gi();
     for (int i = 1; i <= m; ++i) {
-        int x = gi(), y = gi();
-        e1[i << 1] = e0[x];
-        e0[x] = i << 1;
-        dst[i << 1] = y;
-        e1[i << 1 | 1] = e0[y];
-        e0[y] = i << 1 | 1;
-        dst[i << 1 | 1] = x;
+        int a = gi(), b = gi();
+        e1[i] = e0[a];
+        e0[a] = i;
+        dst[i] = b;
     }
     for (int i = 1; i <= n; ++i)
-        if (!dfn[i]) tarjan(i, 0);
-    putln(accumulate(ap + 1, ap + 1 + n, 0));
-    for (int i = 1; i <= n; ++i)
-        if (ap[i]) putsp(i);
-    putchar('\n');
+        if (!dfn[i]) tarjan(i);
+    for (int u = 1; u <= n; ++u)
+        for (int e = e0[u]; e; e = e1[e]) {
+            int v = dst[e];
+            if (id[v] != id[u]) ++deg[id[u]];
+        }
+    for (int i = 1; i <= scc; ++i)
+        if (!deg[i]) {
+            if (ans) {
+                puts("0");
+                return 0;
+            } else
+                ans = i;
+        }
+    putln(cnt[ans]);
     return 0;
 }

@@ -57,7 +57,7 @@ struct node {
         key = k;
         cnt = sz = 1;
         c[0] = c[1] = NULL;
-        red = true;
+        red = 1;
         dad = p;
     }
 
@@ -99,26 +99,26 @@ inline void rotate(node *p, bool dir) {
     s->update();
 }
 
-bool vired = false, viblack = false, vidir;
+bool vired = 0, viblack = 0, vidir;
 node *vicur, *vidad;
 
 inline void svired(node *cur) {
-    vired = true;
+    vired = 1;
     vicur = cur;
 }
 
 inline void sviblack(node *dad, bool pdir) {
-    viblack = true;
+    viblack = 1;
     vidad = dad;
     vidir = pdir;
 }
 
 void vred(node *cur) {
-    vired = false;
+    vired = 0;
     if (!cur->red) return;
     node *p = cur->dad;
     if (!p) {
-        cur->red = false;
+        cur->red = 0;
         return;
     }
     if (!p->red) return;
@@ -132,32 +132,32 @@ void vred(node *cur) {
         };
         rotate(gp, !gpdir);
         if (gp == rt) rt = gp->dad;
-        p->red = false;
-        gp->red = true;
+        p->red = 0;
+        gp->red = 1;
     } else {
-        p->red = u->red = false;
-        gp->red = true;
+        p->red = u->red = 0;
+        gp->red = 1;
         vred(gp);
     }
 }
 
 void vblack(node *dad, bool pdir) {
-    viblack = false;
+    viblack = 0;
     if (!dad) return;
     node *sib = dad->c[!pdir];
     if (sib->red) {
         rotate(dad, pdir);
         if (rt == dad) rt = dad->dad;
         sib = dad->c[!pdir];
-        dad->red = true;
-        dad->dad->red = false;
+        dad->red = 1;
+        dad->dad->red = 0;
     }
-    bool rot1 = sib->c[!pdir] ? sib->c[!pdir]->red : false;
-    bool rot2 = sib->c[pdir] ? sib->c[pdir]->red : false;
+    bool rot1 = sib->c[!pdir] ? sib->c[!pdir]->red : 0;
+    bool rot2 = sib->c[pdir] ? sib->c[pdir]->red : 0;
     if (!rot1 && !rot2) {
-        sib->red = true;
+        sib->red = 1;
         if (dad->red)
-            dad->red = false;
+            dad->red = 0;
         else if (dad->dad)
             vblack(dad->dad, dad->dad->sdir(dad));
     } else {
@@ -168,7 +168,7 @@ void vblack(node *dad, bool pdir) {
         rotate(dad, pdir);
         if (rt == dad) rt = dad->dad;
         sib->red = dad->red;
-        sib->c[!pdir]->red = dad->red = false;
+        sib->c[!pdir]->red = dad->red = 0;
     }
 }
 
@@ -176,7 +176,7 @@ node *insitem(node *rt, node *dad, int key) {
     if (!rt) {
         rt = new node(key, dad);
         if (!dad)
-            rt->red = false;
+            rt->red = 0;
         else if (dad->red)
             svired(rt);
         return rt;
@@ -207,7 +207,7 @@ node *delitem(node *rt, node *dad, int key) {
             rt = np;
             if (np) np->dad = dad;
             if (np && np->red)
-                np->red = false;
+                np->red = 0;
             else if (dad && !ort->red)
                 sviblack(dad, dad->sdir(ort));
             delete ort;

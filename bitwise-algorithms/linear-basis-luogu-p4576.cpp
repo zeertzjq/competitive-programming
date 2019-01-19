@@ -55,11 +55,11 @@ inline bool ins(int x) {
         if (x & 1 << i) {
             if (!lb[i]) {
                 lb[i] = x;
-                return true;
+                return 1;
             } else
                 x ^= lb[i];
         }
-    return false;
+    return 0;
 }
 
 int main() {
