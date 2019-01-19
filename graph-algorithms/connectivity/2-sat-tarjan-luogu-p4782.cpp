@@ -64,10 +64,10 @@ void tarjan(int u) {
     }
     if (dfn[u] == low[u]) {
         ++scc;
-        while (int p = stk[top--]) {
-            ord[p] = scc;
-            vis[p] = false;
-            if (p == u) break;
+        while (int v = stk[top--]) {
+            ord[v] = scc;
+            vis[v] = false;
+            if (v == u) break;
         }
     }
 }

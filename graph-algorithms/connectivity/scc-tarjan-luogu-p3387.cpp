@@ -64,18 +64,18 @@ void tarjan(int u) {
             low[u] = min(low[u], dfn[v]);
     }
     if (dfn[u] == low[u])
-        while (int p = stk[top--]) {
-            rep[p] = u;
-            vis[p] = false;
-            if (p == u) break;
-            val[u] += val[p];
-            if (e0[p]) {
+        while (int v = stk[top--]) {
+            rep[v] = u;
+            vis[v] = false;
+            if (v == u) break;
+            val[u] += val[v];
+            if (e0[v]) {
                 if (ee[u]) {
-                    e1[ee[u]] = e0[p];
-                    ee[u] = ee[p];
+                    e1[ee[u]] = e0[v];
+                    ee[u] = ee[v];
                 } else {
-                    e0[u] = e0[p];
-                    ee[u] = ee[p];
+                    e0[u] = e0[v];
+                    ee[u] = ee[v];
                 }
             }
         }
