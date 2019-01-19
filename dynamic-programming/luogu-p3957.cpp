@@ -59,7 +59,7 @@ bool ck(int g) {
     int j = 0;
     for (int i = 1; i <= n; ++i) {
         while (j < i && x[i] - x[j] >= d - g) {
-            if (dp[j] != -INF) {
+            if (dp[j] != -INFLL) {
                 while (head <= tail && dp[q[tail]] <= dp[j]) --tail;
                 q[++tail] = j;
             }
