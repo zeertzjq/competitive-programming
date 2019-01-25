@@ -34,13 +34,13 @@ void puti(T x) {
 }
 
 template <typename T>
-void putsp(T x) {
+inline void putsp(T x) {
     puti(x);
     putchar(' ');
 }
 
 template <typename T>
-void putln(T x) {
+inline void putln(T x) {
     puti(x);
     putchar('\n');
 }
