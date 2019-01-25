@@ -1,0 +1,22 @@
+se cin
+se sw=4
+se ts=4
+se et
+se nu
+se udf
+se fdm=marker
+nn <f2> :w<cr>
+ino <f2> <c-o>:w<cr>
+ino { {}<esc>i
+ino [ []<esc>i
+ino ( ()<esc>i
+ino ' ''<esc>i
+ino " ""<esc>i
+ino {} {}
+ino [] []
+ino () ()
+ino '' ''
+ino "" ""
+ino {<cr> {<cr>}<c-o>o
+ino [<cr> [<cr>]<c-o>o
+ino (<cr> (<cr>)<c-o>o

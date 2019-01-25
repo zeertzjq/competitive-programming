@@ -1,4 +1,4 @@
 #!/bin/bash
 [[ -n "$1" ]] || exit
 [[ -e "$1" ]] || mkdir "$1"
-sed -e "s/%%/$1/" template.cpp > "$1/$1.cpp"
+sed "s/%%/$1/" template.cpp > "$1/$1.cpp"
