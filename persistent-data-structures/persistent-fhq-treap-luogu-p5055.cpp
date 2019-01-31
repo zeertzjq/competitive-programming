@@ -52,7 +52,7 @@ bool rev[N * 90];
 long long s[N * 90], lastans = 0;
 
 inline int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) % 2147483648LL;
+    return seed = (seed * 1103515245LL + 12345LL) & 2147483647;
 }
 
 inline int mk(int v) {

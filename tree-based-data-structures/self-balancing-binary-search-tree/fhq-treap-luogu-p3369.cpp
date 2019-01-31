@@ -50,7 +50,7 @@ const int INF = 2147483647;
 int seed = 19260817;
 
 inline int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) % 2147483648LL;
+    return seed = (seed * 1103515245LL + 12345LL) & 2147483647;
 }
 
 struct node {
