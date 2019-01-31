@@ -66,7 +66,7 @@ inline void upd(int x) {
     s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]];
 }
 
-inline bool ckrt(int x) {
+inline bool isrt(int x) {
     return !f[x] || (c[f[x]][0] != x && c[f[x]][1] != x);
 }
 
@@ -86,16 +86,16 @@ inline int rot(int p, bool d) {
 }
 
 void splay(int x) {
-    while (!ckrt(x)) {
+    while (!isrt(x)) {
         int p = f[x], gp = f[p];
         rev(gp);
         rev(p);
         bool pd = c[p][1] == x;
-        if (ckrt(p))
+        if (isrt(p))
             rot(p, !pd);
         else {
             int ggp = f[gp];
-            bool gpd = c[gp][1] == p, gprt = ckrt(gp), ggpd = gprt || c[ggp][1] == gp;
+            bool gpd = c[gp][1] == p, gprt = isrt(gp), ggpd = gprt || c[ggp][1] == gp;
             if (pd != gpd)
                 c[gp][gpd] = rot(p, gpd);
             else
