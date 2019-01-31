@@ -69,8 +69,7 @@ inline long long qry(long long *bit, int k) {
 int main() {
     n = gi();
     m = gi();
-    long long sum = 0;
-    for (int i = 1; i <= n; ++i) s[i] = sum += gll();
+    for (int i = 1; i <= n; ++i) s[i] = s[i - 1] + gll();
     while (m--) {
         int o = gi(), x = gi(), y = gi();
         if (o == 1) {
