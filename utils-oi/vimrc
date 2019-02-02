@@ -3,6 +3,7 @@ se sw=4
 se ts=4
 se et
 se nu
+se bk
 se udf
 se fdm=marker
 nn <f2> :w<cr>
