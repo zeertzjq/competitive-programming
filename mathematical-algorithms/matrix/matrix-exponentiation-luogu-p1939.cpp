@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 101, mod = 1000000007;
+const int N = 3, mod = 1000000007;
 
 struct mat {
     int a, b, m[N][N];
@@ -74,21 +74,25 @@ struct mat {
 };
 
 int main() {
-    int n = gi();
-    long long k = gll();
-    mat a(n, n), ans(n, n);
-    for (int i = 0; i < n; ++i) ans.m[i][i] = 1;
-    for (int i = 0; i < n; ++i)
-        for (int j = 0; j < n; ++j)
-            a.m[i][j] = gi() % mod;
-    while (k) {
-        if (k & 1) ans *= a;
-        a *= a;
-        k >>= 1;
-    }
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) putsp(ans.m[i][j]);
-        putchar('\n');
+    int _ = gi();
+    while (_--) {
+        int n = gi();
+        if (n <= 3) {
+            puts("1");
+            continue;
+        }
+        n -= 3;
+        mat b(3, 3), p(3, 3), a(3, 1);
+        b.m[0][0] = b.m[0][2] = b.m[1][0] = b.m[2][1] = 1;
+        for (int i = 0; i < 3; ++i) p.m[i][i] = 1;
+        while (n) {
+            if (n & 1) p *= b;
+            b *= b;
+            n >>= 1;
+        }
+        for (int i = 0; i < 3; ++i) a.m[i][0] = 1;
+        p *= a;
+        putln(p.m[0][0]);
     }
     return 0;
 }
