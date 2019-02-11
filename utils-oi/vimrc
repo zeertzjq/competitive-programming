@@ -5,6 +5,7 @@ se et
 se nu
 se bk
 se udf
+se mouse=a
 se fdm=marker
 nn <f2> :w<cr>
 ino <f2> <c-o>:w<cr>
