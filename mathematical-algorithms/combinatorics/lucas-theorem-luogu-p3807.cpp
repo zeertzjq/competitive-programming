@@ -46,18 +46,30 @@ inline void putln(T x) {
 }
 //}}}
 
-int n;
-long long p;
-int inv[20000529];
+const int N = 100010;
+int n, m, p, f[N], inv[N];
 
 int getinv(int x) {
-    return inv[x] ? inv[x] : inv[x] = (p - p / x * getinv(p % x) % p) % p;
+    return inv[x] ? inv[x] : inv[x] = (p - 1LL * p / x * getinv(p % x) % p) % p;
+}
+
+int C(int n, int m) {
+    if (n < m) return 0;
+    if (n < p) return 1LL * f[n] * getinv(f[m]) * getinv(f[n - m]) % p;
+    return 1LL * C(n % p, m % p) * C(n / p, m / p) % p;
 }
 
 int main() {
-    n = gi();
-    p = gi();
-    inv[1] = 1;
-    for (int i = 1; i <= n; ++i) putln(getinv(i));
+    int _ = gi();
+    while (_--) {
+        n = gi();
+        m = gi();
+        p = gi();
+        f[0] = 1;
+        for (int i = 1; i < p; ++i) f[i] = 1LL * f[i - 1] * i % p;
+        fill(inv + 1, inv + p, 0);
+        inv[1] = 1;
+        putln(C(n + m, m));
+    }
     return 0;
 }
