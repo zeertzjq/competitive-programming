@@ -46,11 +46,11 @@ inline void putln(T x) {
 }
 //}}}
 
-const int INF = 2147483647;
+const int INF = ~0U >> 1;
 int seed = 19260817;
 
 inline int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) & 2147483647;
+    return seed = (seed * 1103515245LL + 12345LL) & INF;
 }
 
 struct node {

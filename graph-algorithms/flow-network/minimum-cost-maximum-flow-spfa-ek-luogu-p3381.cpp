@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 5010, M = 100010, INF = 2147483647;
+const int N = 5010, M = 100010, INF = ~0U >> 1;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dist[N], pre[N], q[N], head, tail, flow = 0, cost = 0;
 bool inq[N];
 

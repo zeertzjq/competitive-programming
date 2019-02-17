@@ -46,8 +46,8 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 500010, INF = 2147483647;
-const long long INFLL = 1LL << 60;
+const int N = 500010, INF = ~0U >> 1;
+const long long INFLL = ~0ULL >> 1;
 int n, d, k, x[N], s[N], ming = INF, maxg = 0, q[N], head, tail;
 long long tot = 0, dp[N];
 

@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int INF = 2147483647, U = -2147483648;
+const int INF = ~0U >> 1, U = ~INF;
 int n, m, a[10][10], b[10][10], f[1 << 20];
 
 int dfs(int s, int ff) {
