@@ -46,14 +46,14 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 1210, M = 240010, INF = ~0U >> 1;
+const int N = 1210, M = 240010, inf = ~0U >> 1;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], h[N], q[N], head, tail, fe[N], pq[N], pqsz = 0, cnt[N << 1];
 bool inq[N], inpq[N];
 
 inline bool bfs() {
     head = 1;
     tail = 0;
-    fill(h + 1, h + 1 + n, INF);
+    fill(h + 1, h + 1 + n, inf);
     h[t] = 0;
     q[++tail] = t;
     inq[t] = 1;
@@ -70,7 +70,7 @@ inline bool bfs() {
             }
         }
     }
-    return h[s] != INF;
+    return h[s] != inf;
 }
 
 inline void push(int u) {
@@ -93,7 +93,7 @@ inline void push(int u) {
 }
 
 inline void relabel(int u) {
-    h[u] = INF;
+    h[u] = inf;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (w[e]) h[u] = min(h[u], h[v] + 1);
@@ -104,7 +104,7 @@ int hlpp() {
     if (!bfs()) return 0;
     h[s] = n;
     for (int v = 1; v <= n; ++v)
-        if (h[v] != INF) ++cnt[h[v]];
+        if (h[v] != inf) ++cnt[h[v]];
     inpq[s] = inpq[t] = 1;
     for (int e = e0[s]; e; e = e1[e]) {
         int v = dst[e];

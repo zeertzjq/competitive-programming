@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 500010, INF = ~0U >> 1;
+const int N = 10010, M = 500010, inf = ~0U >> 1;
 int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N], head, tail;
 bool inq[N];
 
@@ -57,7 +57,7 @@ inline int &qo(int &x) {
 void spfa() {
     head = 1;
     tail = 0;
-    fill(dist + 1, dist + 1 + n, INF);
+    fill(dist + 1, dist + 1 + n, inf);
     dist[s] = 0;
     q[++tail] = s;
     inq[s] = 1;

@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int INF = ~0U >> 1;
+const int inf = ~0U >> 1;
 
 struct node {
     node *c[2];
@@ -147,7 +147,7 @@ node *delitem(node *rt, int key) {
 }
 
 int getnth(node *rt, int rk) {
-    if (!rt) return INF;
+    if (!rt) return inf;
     int lsz = 0;
     if (rt->c[0]) lsz = rt->c[0]->sz;
     if (rk <= lsz)

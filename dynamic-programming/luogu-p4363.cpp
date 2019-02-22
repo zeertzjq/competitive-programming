@@ -46,12 +46,12 @@ inline void putln(T x) {
 }
 //}}}
 
-const int INF = ~0U >> 1, U = ~INF;
+const int inf = ~0U >> 1, U = ~inf;
 int n, m, a[10][10], b[10][10], f[1 << 20];
 
 int dfs(int s, int ff) {
     if (f[s] != U) return f[s];
-    f[s] = ff ? -INF : INF;
+    f[s] = ff ? -inf : inf;
     int x = n, y = 0;
     for (int i = 0; i < m + n - 1; ++i) {
         s >> i & 1 ? --x : ++y;

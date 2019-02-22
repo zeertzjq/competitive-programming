@@ -46,14 +46,14 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 200010, INF = ~0U >> 1;
+const int N = 10010, M = 200010, inf = ~0U >> 1;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], flow[N], pre[N], q[N], head, tail;
 
 inline int bfs() {
     head = 1;
     tail = 0;
     fill(pre + 1, pre + 1 + n, 0);
-    flow[s] = INF;
+    flow[s] = inf;
     q[++tail] = s;
     while (head <= tail) {
         int u = q[head++];

@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int INF = ~0U >> 1;
+const int inf = ~0U >> 1;
 int n, m;
 
 struct node {

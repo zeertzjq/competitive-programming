@@ -46,11 +46,11 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 500010, INF = ~0U >> 1;
+const int N = 500010, inf = ~0U >> 1;
 int seed = 19260817, n, rt[N], key[N * 38], c[N * 38][2], pri[N * 38], sz[N * 38], tot = 0;
 
 inline int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) & INF;
+    return seed = (seed * 1103515245LL + 12345LL) & inf;
 }
 
 inline int mk(int k) {
@@ -149,12 +149,12 @@ int main() {
         } else if (o == 5) {
             int t1, t2;
             split(rt[v], x - 1, t1, t2);
-            putln(t1 ? maxn(t1) : -INF);
+            putln(t1 ? maxn(t1) : -inf);
             rt[i] = rt[v];
         } else {
             int t1, t2;
             split(rt[v], x, t1, t2);
-            putln(t2 ? minn(t2) : INF);
+            putln(t2 ? minn(t2) : inf);
             rt[i] = rt[v];
         }
     }

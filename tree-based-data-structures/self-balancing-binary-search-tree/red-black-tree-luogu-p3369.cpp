@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int INF = ~0U >> 1;
+const int inf = ~0U >> 1;
 
 struct node {
     int key, cnt, sz;
@@ -238,7 +238,7 @@ int getlesscnt(node *rt, int key) {
 }
 
 int getnth(node *rt, int rk) {
-    if (!rt) return -INF;
+    if (!rt) return -inf;
     int lsz = 0;
     if (rt->c[0]) lsz = rt->c[0]->sz;
     if (rk <= lsz)
@@ -250,11 +250,11 @@ int getnth(node *rt, int rk) {
 }
 
 int pred(node *rt, int key) {
-    if (!rt) return -INF;
+    if (!rt) return -inf;
     if (key == rt->key) {
         node *p = rt->stpred();
         if (!p)
-            return -INF;
+            return -inf;
         else
             return p->key;
     } else if (key < rt->key)
@@ -264,11 +264,11 @@ int pred(node *rt, int key) {
 }
 
 int succ(node *rt, int key) {
-    if (!rt) return INF;
+    if (!rt) return inf;
     if (key == rt->key) {
         node *p = rt->stsucc();
         if (!p)
-            return INF;
+            return inf;
         else
             return p->key;
     } else if (key > rt->key)

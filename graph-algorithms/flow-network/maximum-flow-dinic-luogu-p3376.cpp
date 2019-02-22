@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 200010, INF = ~0U >> 1;
+const int N = 10010, M = 200010, inf = ~0U >> 1;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], dep[N], q[N], head, tail, cur[N];
 
 inline bool bfs() {
@@ -88,7 +88,7 @@ inline int dinic() {
     int ans = 0;
     while (bfs()) {
         copy(e0 + 1, e0 + 1 + n, cur + 1);
-        while (int f = dfs(s, INF)) ans += f;
+        while (int f = dfs(s, inf)) ans += f;
     }
     return ans;
 }

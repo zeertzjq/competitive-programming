@@ -46,20 +46,20 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 500010, INF = ~0U >> 1;
-const long long INFLL = ~0ULL >> 1;
-int n, d, k, x[N], s[N], ming = INF, maxg = 0, q[N], head, tail;
+const int N = 500010, inf = ~0U >> 1;
+const long long infll = ~0ULL >> 1;
+int n, d, k, x[N], s[N], ming = inf, maxg = 0, q[N], head, tail;
 long long tot = 0, dp[N];
 
 bool ck(int g) {
-    fill(dp, dp + n + 1, -INFLL);
+    fill(dp, dp + n + 1, -infll);
     head = 1;
     tail = 0;
     dp[0] = 0;
     int j = 0;
     for (int i = 1; i <= n; ++i) {
         while (j < i && x[i] - x[j] >= d - g) {
-            if (dp[j] != -INFLL) {
+            if (dp[j] != -infll) {
                 while (head <= tail && dp[q[tail]] <= dp[j]) --tail;
                 q[++tail] = j;
             }

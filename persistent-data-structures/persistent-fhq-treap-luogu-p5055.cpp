@@ -46,13 +46,13 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 200010, INF = ~0U >> 1;
+const int N = 200010, inf = ~0U >> 1;
 int seed = 19260817, n, rt[N], val[N * 90], c[N * 90][2], pri[N * 90], sz[N * 90], tot = 0;
 bool rev[N * 90];
 long long s[N * 90], lastans = 0;
 
 inline int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) & INF;
+    return seed = (seed * 1103515245LL + 12345LL) & inf;
 }
 
 inline int mk(int v) {

@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 5010, M = 100010, INF = ~0U >> 1;
+const int N = 5010, M = 100010, inf = ~0U >> 1;
 int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dist[N], pre[N], q[N], head, tail, flow = 0, cost = 0;
 bool inq[N];
 
@@ -57,7 +57,7 @@ inline int &qo(int &x) {
 bool spfa() {
     head = 1;
     tail = 0;
-    fill(dist + 1, dist + 1 + n, INF);
+    fill(dist + 1, dist + 1 + n, inf);
     dist[s] = 0;
     q[++tail] = s;
     inq[s] = 1;
@@ -82,12 +82,12 @@ bool spfa() {
             }
         }
     }
-    return dist[t] != INF;
+    return dist[t] != inf;
 }
 
 inline void mcmf() {
     while (spfa()) {
-        int f = INF;
+        int f = inf;
         for (int u = t; u != s; u = dst[pre[u] ^ 1]) f = min(f, w[pre[u]]);
         for (int u = t; u != s; u = dst[pre[u] ^ 1]) {
             w[pre[u]] -= f;

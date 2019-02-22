@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 1000000, INF = ~0U >> 1;
+const int N = 1000000, inf = ~0U >> 1;
 int h[N + 1];
 
 #define sz h[0]
@@ -55,7 +55,7 @@ int h[N + 1];
 #define dad (x >> 1)
 
 inline int minson(int x) {
-    int l = lson <= sz ? h[lson] : INF, r = rson <= sz ? h[rson] : INF;
+    int l = lson <= sz ? h[lson] : inf, r = rson <= sz ? h[rson] : inf;
     return l < r ? lson : rson;
 }
 

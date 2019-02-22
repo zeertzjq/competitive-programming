@@ -49,7 +49,7 @@ inline void putln(T x) {
 typedef pair<int, int> hitem;
 
 const int N = 100010, M = 200010;
-const long long INF = 100000000000;
+const long long inf = 100000000000;
 int n, m, s, e0[N], e1[M], dst[M], w[M], hsz = 0;
 hitem h[M];
 greater<hitem> cmp;
@@ -58,7 +58,7 @@ bool vis[N];
 
 // IMPORTANT: for acyclic graphs with non-negative edge weights ONLY
 void dijkstra() {
-    fill(dist + 1, dist + 1 + n, INF);
+    fill(dist + 1, dist + 1 + n, inf);
     dist[s] = 0;
     h[hsz++] = make_pair(0, s);
     push_heap(h, h + hsz, cmp);

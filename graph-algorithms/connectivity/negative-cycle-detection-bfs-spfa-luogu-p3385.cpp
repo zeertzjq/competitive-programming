@@ -46,7 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 2010, M = 3010, INF = ~0U >> 1;
+const int N = 2010, M = 3010, inf = ~0U >> 1;
 int n, m;
 int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dist[N], cnt[N], inq[N];
 
@@ -55,7 +55,7 @@ queue<int> q;
 inline void clear() {
     for (int i = 1; i <= n; ++i) {
         cnt[i] = 0;
-        dist[i] = INF;
+        dist[i] = inf;
     }
     while (!q.empty()) {
         inq[q.front()] = 0;
