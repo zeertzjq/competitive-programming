@@ -62,14 +62,13 @@ int aidx = 0;
 long long sum[N << 2], tag[N << 2];
 bool dirty[N << 2];
 
-inline void upd(int p) {
-    sum[p] = sum[p << 1] + sum[p << 1 | 1];
-}
+inline void upd(int p) { sum[p] = sum[p << 1] + sum[p << 1 | 1]; }
 
 inline void push(int p, int l, int r) {
     if (dirty[p]) {
         dirty[p << 1] = dirty[p << 1 | 1] = 1;
-        dirty[p] = sum[p << 1] = sum[p << 1 | 1] = tag[p << 1] = tag[p << 1 | 1] = 0;
+        dirty[p] = sum[p << 1] = sum[p << 1 | 1] = tag[p << 1] =
+            tag[p << 1 | 1] = 0;
     }
     if (tag[p]) {
         int m = (l + r) >> 1;
@@ -125,7 +124,8 @@ void solve(int ql, int qr, int l, int r) {
             } else
                 q1[++p1] = q[i];
         } else {
-            long long more = query(1, 1, n, q[i].l, q[i].r);  // IMPORTANT: DON'T use int
+            long long more =
+                query(1, 1, n, q[i].l, q[i].r);  // IMPORTANT: DON'T use int
             if (q[i].c > more) {
                 q[i].c -= more;
                 q1[++p1] = q[i];

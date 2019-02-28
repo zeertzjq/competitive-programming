@@ -69,11 +69,9 @@ int main() {
     n = gi();
     m = gi();
     for (int i = 0; i < n; ++i)
-        for (int j = 0; j < m; ++j)
-            a[i][j] = gi();
+        for (int j = 0; j < m; ++j) a[i][j] = gi();
     for (int i = 0; i < n; ++i)
-        for (int j = 0; j < m; ++j)
-            b[i][j] = gi();
+        for (int j = 0; j < m; ++j) b[i][j] = gi();
     fill(f, f + (1 << (n + m)), U);
     f[((1 << n) - 1) << m] = 0;
     putln(dfs((1 << n) - 1, 1));

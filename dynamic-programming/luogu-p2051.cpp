@@ -49,9 +49,7 @@ inline void putln(T x) {
 const int N = 101, mod = 9999973;
 int n, m, dp[N][N][N];
 
-inline int c2(int x) {
-    return x * (x - 1) >> 1;
-}
+inline int c2(int x) { return x * (x - 1) >> 1; }
 
 int main() {
     n = gi();
@@ -62,11 +60,21 @@ int main() {
             for (int k = 0; j + k <= m; ++k)
                 if (long long f0 = dp[i][j][k]) {  // IMPORTANT: use long long
                     dp[i + 1][j][k] = (dp[i + 1][j][k] + f0) % mod;
-                    if (j + k + 1 <= m) dp[i + 1][j + 1][k] = (dp[i + 1][j + 1][k] + f0 * (m - j - k)) % mod;
-                    if (j) dp[i + 1][j - 1][k + 1] = (dp[i + 1][j - 1][k + 1] + f0 * j) % mod;
-                    if (j + k + 2 <= m) dp[i + 1][j + 2][k] = (dp[i + 1][j + 2][k] + f0 * c2(m - j - k)) % mod;
-                    if (j && j + k + 1 <= m) dp[i + 1][j][k + 1] = (dp[i + 1][j][k + 1] + f0 * j * (m - j - k)) % mod;
-                    if (j >= 2) dp[i + 1][j - 2][k + 2] = (dp[i + 1][j - 2][k + 2] + f0 * c2(j)) % mod;
+                    if (j + k + 1 <= m)
+                        dp[i + 1][j + 1][k] =
+                            (dp[i + 1][j + 1][k] + f0 * (m - j - k)) % mod;
+                    if (j)
+                        dp[i + 1][j - 1][k + 1] =
+                            (dp[i + 1][j - 1][k + 1] + f0 * j) % mod;
+                    if (j + k + 2 <= m)
+                        dp[i + 1][j + 2][k] =
+                            (dp[i + 1][j + 2][k] + f0 * c2(m - j - k)) % mod;
+                    if (j && j + k + 1 <= m)
+                        dp[i + 1][j][k + 1] =
+                            (dp[i + 1][j][k + 1] + f0 * j * (m - j - k)) % mod;
+                    if (j >= 2)
+                        dp[i + 1][j - 2][k + 2] =
+                            (dp[i + 1][j - 2][k + 2] + f0 * c2(j)) % mod;
                 }
     int ans = 0;
     for (int j = 0; j <= m; ++j)

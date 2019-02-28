@@ -68,7 +68,9 @@ void tarjan(int u, int fa) {
             low[u] = min(low[u], dfn[v]);
     }
     vis[u] = 0;
-    if (!fa && ccnt > 1) ap[u] = 1;  // IMPORTANT: the root node is an articulation point if it has a least two children
+    if (!fa && ccnt > 1)
+        ap[u] = 1;  // IMPORTANT: the root node is an articulation point if it
+                    // has a least two children
 }
 
 int main() {

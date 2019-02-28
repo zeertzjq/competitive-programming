@@ -47,12 +47,11 @@ inline void putln(T x) {
 //}}}
 
 const int N = 5010, M = 100010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dist[N], pre[N], q[N], head, tail, flow = 0, cost = 0;
+int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dist[N], pre[N], q[N], head,
+    tail, flow = 0, cost = 0;
 bool inq[N];
 
-inline int &qo(int &x) {
-    return x == N ? x = 0 : x == -1 ? x = N - 1 : x;
-}
+inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 
 bool spfa() {
     head = 1;

@@ -61,9 +61,7 @@ struct node {
         dad = p;
     }
 
-    inline bool sdir(node *s) {
-        return c[1] == s;
-    }
+    inline bool sdir(node *s) { return c[1] == s; }
 
     inline void update() {
         sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;

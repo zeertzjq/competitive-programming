@@ -62,9 +62,7 @@ inline void rev(int x) {
 }
 
 // IMPORTANT: call upd(x) whenever the subtree rooted at x is modified
-inline void upd(int x) {
-    s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]];
-}
+inline void upd(int x) { s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]]; }
 
 inline bool isrt(int x) {
     return !f[x] || (c[f[x]][0] != x && c[f[x]][1] != x);
@@ -95,7 +93,8 @@ void splay(int x) {
             rot(p, !pd);
         else {
             int ggp = f[gp];
-            bool gpd = c[gp][1] == p, gprt = isrt(gp), ggpd = gprt || c[ggp][1] == gp;
+            bool gpd = c[gp][1] == p, gprt = isrt(gp),
+                 ggpd = gprt || c[ggp][1] == gp;
             if (pd != gpd)
                 c[gp][gpd] = rot(p, gpd);
             else

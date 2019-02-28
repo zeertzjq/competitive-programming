@@ -47,7 +47,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 100010, E = N << 1;
-int n, m, r, p, e0[N], e1[E], dst[E], a[N], bit1[N], bit2[N], dep[N], fa[N], h[N], sz[N], top[N], id[N], cnt = 0;
+int n, m, r, p, e0[N], e1[E], dst[E], a[N], bit1[N], bit2[N], dep[N], fa[N],
+    h[N], sz[N], top[N], id[N], cnt = 0;
 
 inline void upd(int *bit, int k, int v) {
     while (k <= n) {
@@ -73,7 +74,9 @@ inline void upds(int l, int r, int v) {
 }
 
 inline int qrys(int l, int r) {
-    return (1LL * (r + 1) * qry(bit1, r) - qry(bit2, r) - 1LL * l * qry(bit1, l - 1) + qry(bit2, l - 1)) % p;
+    return (1LL * (r + 1) * qry(bit1, r) - qry(bit2, r) -
+            1LL * l * qry(bit1, l - 1) + qry(bit2, l - 1)) %
+           p;
 }
 
 void dfs1(int u) {

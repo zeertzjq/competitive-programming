@@ -50,14 +50,11 @@ const int N = 2010;
 int n, m, w[N][N], stk[N], top, ub[N], a1 = 0, a2 = 0;
 bool mp[N][N];
 
-inline int sq(int x) {
-    return x * x;
-}
+inline int sq(int x) { return x * x; }
 
 void solve() {
     for (int i = 1; i <= n; ++i)
-        for (int j = 1; j <= m; ++j)
-            w[i][j] = mp[i][j] ? w[i][j - 1] + 1 : 0;
+        for (int j = 1; j <= m; ++j) w[i][j] = mp[i][j] ? w[i][j - 1] + 1 : 0;
     for (int j = 1; j <= m; ++j) {
         top = 0;
         for (int i = 1; i <= n + 1; ++i) {
@@ -77,12 +74,10 @@ int main() {
     n = gi();
     m = gi();
     for (int i = 1; i <= n; ++i)
-        for (int j = 1; j <= m; ++j)
-            mp[i][j] = gi() ^ (i & 1) ^ (j & 1);
+        for (int j = 1; j <= m; ++j) mp[i][j] = gi() ^ (i & 1) ^ (j & 1);
     solve();
     for (int i = 1; i <= n; ++i)
-        for (int j = 1; j <= m; ++j)
-            mp[i][j] ^= 1;
+        for (int j = 1; j <= m; ++j) mp[i][j] ^= 1;
     solve();
     putln(a1);
     putln(a2);

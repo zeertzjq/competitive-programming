@@ -47,7 +47,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 10010, M = 200010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], dep[N], q[N], head, tail, cur[N], cnt[N], pre[N];
+int n, m, s, t, e0[N], e1[M], dst[M], w[M], dep[N], q[N], head, tail, cur[N],
+    cnt[N], pre[N];
 
 inline void bfs() {
     head = 1;

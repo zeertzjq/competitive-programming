@@ -47,7 +47,10 @@ inline void putln(T x) {
 //}}}
 
 int gcd(int a, int b) {
-    return a && b ? a & 1 ? b & 1 ? a > b ? gcd(b, a - b) : gcd(a, b - a) : gcd(a, b >> 1) : b & 1 ? gcd(b, a >> 1) : gcd(a >> 1, b >> 1) << 1 : a | b;
+    return a && b ? a & 1 ? b & 1 ? a > b ? gcd(b, a - b) : gcd(a, b - a)
+                                  : gcd(a, b >> 1)
+                          : b & 1 ? gcd(b, a >> 1) : gcd(a >> 1, b >> 1) << 1
+                  : a | b;
 }
 
 int main() {

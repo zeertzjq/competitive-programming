@@ -57,9 +57,7 @@ inline int bs(int s) {
     return ret;
 }
 
-inline bool ck(int s) {
-    return !(s & s << 1);
-}
+inline bool ck(int s) { return !(s & s << 1); }
 
 int main() {
     n = gi();
@@ -73,8 +71,10 @@ int main() {
                 int d = bs(s);
                 if (!ck(s) || d > j) continue;
                 for (int ps = 0; ps < 1 << n; ++ps)
-                    if (!(s & ps) && ck(s | ps)) dp[i][j][s] += dp[i - 1][j - d][ps];
+                    if (!(s & ps) && ck(s | ps))
+                        dp[i][j][s] += dp[i - 1][j - d][ps];
             }
-    putln(accumulate(dp[n][k], dp[n][k] + (1 << n), 0LL));  // IMPORTANT: use long long
+    putln(accumulate(dp[n][k], dp[n][k] + (1 << n),
+                     0LL));  // IMPORTANT: use long long
     return 0;
 }

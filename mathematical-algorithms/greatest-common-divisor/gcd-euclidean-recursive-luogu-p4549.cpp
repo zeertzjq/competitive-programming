@@ -46,9 +46,7 @@ inline void putln(T x) {
 }
 //}}}
 
-int gcd(int a, int b) {
-    return b ? gcd(b, a % b) : a;
-}
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
 
 int main() {
     int _ = gi(), __ = 0;

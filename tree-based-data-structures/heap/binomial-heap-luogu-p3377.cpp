@@ -66,7 +66,8 @@ inline int merge(int h1, int h2) {
         sb1[h1 + h2] = last;
         if (last) sb0[last] = h1 + h2;
         for (int i = h1 + h2; i; i = sb0[i])
-            dad[i] = 0;  // IMPORTANT: the root node of a binomial tree must have NO parent
+            dad[i] = 0;  // IMPORTANT: the root node of a binomial tree must
+                         // have NO parent
     }
     return ret;
 }
@@ -76,7 +77,11 @@ inline void adjust(int l) {
     if (!m) return;
     while (l && m) {
         if (deg[l] == deg[m] && !(r && deg[r] == deg[m])) {
-            if (val[l] < val[m] || (val[l] == val[m] && l < m)) {  // IMPORTANT: if the root nodes of the two binomial trees to be merged have identical values, the one whose index is SMALLER should be the new root
+            if (val[l] < val[m] ||
+                (val[l] == val[m] &&
+                 l < m)) {  // IMPORTANT: if the root nodes of the two binomial
+                            // trees to be merged have identical values, the one
+                            // whose index is SMALLER should be the new root
                 swap(sb0[l], sb0[m]);
                 swap(sb1[l], sb1[m]);
                 swap(l, m);
@@ -108,7 +113,10 @@ inline int hmin(int h) {
     for (h = sb0[h]; h; h = sb0[h])
         if (val[h] < val[ret])
             ret = h;
-        else if (val[h] == val[ret] && h < ret)  // IMPORTANT: if there are multiple minimum values in the heap, the found node should also have the smallest possible index
+        else if (val[h] == val[ret] &&
+                 h < ret)  // IMPORTANT: if there are multiple minimum values in
+                           // the heap, the found node should also have the
+                           // smallest possible index
             ret = h;
     return ret;
 }
@@ -129,7 +137,10 @@ int main() {
             } else {
                 int h = head(x);
                 int m = hmin(h);
-                if (m == h) h = sb0[m];  // IMPORTANT: the node with the minimum value will NO LONGER be in the heap and thus CANNOT represent the heap
+                if (m == h)
+                    h = sb0[m];  // IMPORTANT: the node with the minimum value
+                                 // will NO LONGER be in the heap and thus
+                                 // CANNOT represent the heap
                 putln(val[m]);
                 val[m] = 0;
                 if (sb1[m]) sb0[sb1[m]] = sb0[m];

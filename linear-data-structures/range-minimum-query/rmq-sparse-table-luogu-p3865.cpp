@@ -58,7 +58,8 @@ inline int log2(int x) {
 inline void stinit() {
     for (int k = 1; k <= log2n; ++k)
         for (int i = 1; i + (1 << k) - 1 <= n; ++i)
-            stmax[i][k] = max(stmax[i][k - 1], stmax[i + (1 << (k - 1))][k - 1]);
+            stmax[i][k] =
+                max(stmax[i][k - 1], stmax[i + (1 << (k - 1))][k - 1]);
 }
 
 inline int stquery(int l, int r) {

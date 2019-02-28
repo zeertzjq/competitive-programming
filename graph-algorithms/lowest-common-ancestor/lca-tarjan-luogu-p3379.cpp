@@ -47,12 +47,11 @@ inline void putln(T x) {
 //}}}
 
 const int N = 500010;
-int n, m, s, e0[N], e1[N << 1], dst[N << 1], q0[N], q1[N << 1], qi[N << 1], aidx[N << 1], ans[N], dad[N];
+int n, m, s, e0[N], e1[N << 1], dst[N << 1], q0[N], q1[N << 1], qi[N << 1],
+    aidx[N << 1], ans[N], dad[N];
 bool vis[N];
 
-int finds(int x) {
-    return dad[x] == x ? x : dad[x] = finds(dad[x]);
-}
+int finds(int x) { return dad[x] == x ? x : dad[x] = finds(dad[x]); }
 
 void tarjan(int u, int fa) {
     for (int e = e0[u]; e; e = e1[e]) {

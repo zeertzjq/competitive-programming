@@ -53,8 +53,7 @@ struct mat {
 
     mat(int a, int b) : a(a), b(b) {
         for (int i = 0; i < a; ++i)
-            for (int j = 0; j < b; ++j)
-                m[i][j] = 0;
+            for (int j = 0; j < b; ++j) m[i][j] = 0;
     }
 
     mat &operator*=(const mat &rhs) {
@@ -63,12 +62,12 @@ struct mat {
         for (int i = 0; i < a; ++i)
             for (int j = 0; j < bb; ++j)
                 for (int k = 0; k < b; ++k)
-                    ret.m[i][j] = (ret.m[i][j] + 1LL * m[i][k] * rhs.m[k][j]) % mod;
+                    ret.m[i][j] =
+                        (ret.m[i][j] + 1LL * m[i][k] * rhs.m[k][j]) % mod;
         a = ret.a;
         b = ret.b;
         for (int i = 0; i < a; ++i)
-            for (int j = 0; j < b; ++j)
-                m[i][j] = ret.m[i][j];
+            for (int j = 0; j < b; ++j) m[i][j] = ret.m[i][j];
         return *this;
     }
 };

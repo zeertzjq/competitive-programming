@@ -68,7 +68,8 @@ int qry(int rt1, int rt2, int l, int r, int k) {
     if (l == r) return l;
     int cnt = val[lc[rt2]] - val[lc[rt1]];
     int m = (l + r) >> 1;
-    return k <= cnt ? qry(lc[rt1], lc[rt2], l, m, k) : qry(rc[rt1], rc[rt2], m + 1, r, k - cnt);
+    return k <= cnt ? qry(lc[rt1], lc[rt2], l, m, k)
+                    : qry(rc[rt1], rc[rt2], m + 1, r, k - cnt);
 }
 
 int main() {
@@ -79,7 +80,9 @@ int main() {
     sort(a + 1, a + 1 + n);
     rg = unique(a + 1, a + 1 + n) - a - 1;
     rt[0] = mk(0, 0, 0);
-    for (int i = 1; i <= n; ++i) rt[i] = add(rt[i - 1], 1, rg, lower_bound(a + 1, a + 1 + rg, a0[i]) - a);
+    for (int i = 1; i <= n; ++i)
+        rt[i] =
+            add(rt[i - 1], 1, rg, lower_bound(a + 1, a + 1 + rg, a0[i]) - a);
     while (m--) {
         int l = gi(), r = gi();
         putln(a[qry(rt[l - 1], rt[r], 1, rg, gi())]);

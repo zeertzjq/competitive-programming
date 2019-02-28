@@ -51,15 +51,13 @@ int n, m, bit[N][N];
 
 inline void add(int x, int y, int v) {
     for (int i = x; i <= n; i += i & -i)
-        for (int j = y; j <= n; j += j & -j)
-            bit[i][j] += v;
+        for (int j = y; j <= n; j += j & -j) bit[i][j] += v;
 }
 
 inline int qry(int x, int y) {
     int ret = 0;
     for (int i = x; i; i &= i - 1)
-        for (int j = y; j; j &= j - 1)
-            ret += bit[i][j];
+        for (int j = y; j; j &= j - 1) ret += bit[i][j];
     return ret;
 }
 

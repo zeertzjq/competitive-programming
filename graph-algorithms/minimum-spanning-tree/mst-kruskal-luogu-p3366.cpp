@@ -51,9 +51,7 @@ const int N = 5010, M = 200010;
 struct edge {
     int x, y, z;
 
-    bool operator<(const edge &rhs) const {
-        return z < rhs.z;
-    }
+    bool operator<(const edge &rhs) const { return z < rhs.z; }
 } e[M];
 
 int n, m, rk[N], dad[N], len = 0, ecnt = 0;
@@ -67,9 +65,7 @@ inline void unions(int x, int y) {
         dad[x] = y;
 }
 
-int finds(int x) {
-    return dad[x] == x ? x : dad[x] = finds(dad[x]);
-}
+int finds(int x) { return dad[x] == x ? x : dad[x] = finds(dad[x]); }
 
 void kruskal() {
     for (int i = 1; i <= m; ++i) {

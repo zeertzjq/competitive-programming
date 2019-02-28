@@ -76,8 +76,7 @@ inline void heapdown(int x) {
 
 int main() {
     int n = gi();
-    while (n--)
-        switch (gi()) {
+    while (n--) switch (gi()) {
             case 1:
                 h[++sz] = gi();
                 heapup(sz);

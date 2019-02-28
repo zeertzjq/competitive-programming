@@ -56,7 +56,8 @@ int main() {
     for (int i = 1; i <= n; ++i) {
         int a = gi();
         f ^= 1;
-        for (int j = 0; j < K; ++j) ans += 1LL * (c[f][j] = a & 1 << j ? i - c[!f][j] : c[!f][j]) << j;
+        for (int j = 0; j < K; ++j)
+            ans += 1LL * (c[f][j] = a & 1 << j ? i - c[!f][j] : c[!f][j]) << j;
     }
     putln(ans);
     return 0;

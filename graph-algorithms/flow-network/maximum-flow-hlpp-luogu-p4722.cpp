@@ -47,7 +47,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 1210, M = 240010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], h[N], q[N], head, tail, fe[N], pq[N], pqsz = 0, cnt[N << 1];
+int n, m, s, t, e0[N], e1[M], dst[M], w[M], h[N], q[N], head, tail, fe[N],
+    pq[N], pqsz = 0, cnt[N << 1];
 bool inq[N], inpq[N];
 
 inline bool bfs() {
@@ -128,7 +129,8 @@ int hlpp() {
         if (fe[u]) {
             if (!--cnt[h[u]])
                 for (int v = 1; v <= n; ++v)
-                    if (v != s && v != t && h[v] > h[u] && h[v] < n + 1) h[v] = n + 1;
+                    if (v != s && v != t && h[v] > h[u] && h[v] < n + 1)
+                        h[v] = n + 1;
             relabel(u);
             ++cnt[h[u]];
             pq[pqsz++] = u;

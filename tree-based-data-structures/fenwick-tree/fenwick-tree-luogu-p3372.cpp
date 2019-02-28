@@ -79,7 +79,8 @@ int main() {
             add(bit2, x, k * x);
             add(bit2, y + 1, -k * (y + 1));
         } else
-            putln(s[y] + (y + 1) * qry(bit1, y) - qry(bit2, y) - s[x - 1] - x * qry(bit1, x - 1) + qry(bit2, x - 1));
+            putln(s[y] + (y + 1) * qry(bit1, y) - qry(bit2, y) - s[x - 1] -
+                  x * qry(bit1, x - 1) + qry(bit2, x - 1));
     }
     return 0;
 }

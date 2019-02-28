@@ -47,7 +47,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 1000010;
-int len[N << 1], lk[N << 1], ch[N << 1][26], cnt[N << 1], idx[N << 1], clen[N], pre = 1, tot = 1;
+int len[N << 1], lk[N << 1], ch[N << 1][26], cnt[N << 1], idx[N << 1], clen[N],
+    pre = 1, tot = 1;
 char s[N];
 long long ans = 0;
 

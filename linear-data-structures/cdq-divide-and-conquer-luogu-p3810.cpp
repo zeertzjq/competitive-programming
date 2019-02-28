@@ -135,8 +135,7 @@ int main() {
         }
     }
     cdq(1, n);
-    for (int i = 1; i <= n; ++i)
-        ans[f[o[i].idx] + o[i].cnt - 1] += o[i].cnt;
+    for (int i = 1; i <= n; ++i) ans[f[o[i].idx] + o[i].cnt - 1] += o[i].cnt;
     for (int i = 0; i < n0; ++i) putln(ans[i]);
     return 0;
 }

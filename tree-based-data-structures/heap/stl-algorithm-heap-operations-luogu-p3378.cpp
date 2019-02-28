@@ -52,8 +52,7 @@ int heap[N], sz = 0;
 int main() {
     int n = gi();
     greater<int> cmp;
-    while (n--)
-        switch (gi()) {
+    while (n--) switch (gi()) {
             case 1:
                 heap[sz++] = gi();
                 push_heap(heap, heap + sz, cmp);

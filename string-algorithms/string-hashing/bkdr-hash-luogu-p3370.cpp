@@ -46,7 +46,8 @@ inline void putln(T x) {
 }
 //}}}
 
-const unsigned long long seed = 131LL, mod = 1111111111111111111LL, N = 10010, M = 1510;
+const unsigned long long seed = 131LL, mod = 1111111111111111111LL, N = 10010,
+                         M = 1510;
 
 unsigned long long uhash(unsigned long long a, char b) {
     return (a * seed + b) % mod;

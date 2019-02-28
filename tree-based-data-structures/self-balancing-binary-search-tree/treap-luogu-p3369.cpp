@@ -49,9 +49,7 @@ inline void putln(T x) {
 const int inf = ~0U >> 1;
 int seed = 19260817;
 
-int ran() {
-    return seed = (seed * 1103515245LL + 12345LL) & inf;
-}
+int ran() { return seed = (seed * 1103515245LL + 12345LL) & inf; }
 
 struct node {
     int key, pri, cnt, sz;

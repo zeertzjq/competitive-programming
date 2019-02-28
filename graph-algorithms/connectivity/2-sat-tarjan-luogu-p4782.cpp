@@ -47,7 +47,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 2000010;
-int n, m, e0[N], e1[N], dst[N], dfn[N], low[N], disc = 0, stk[N], top = 0, ord[N], scc = 0;
+int n, m, e0[N], e1[N], dst[N], dfn[N], low[N], disc = 0, stk[N], top = 0,
+                                                ord[N], scc = 0;
 bool vis[N], ans[N];
 
 void tarjan(int u) {

@@ -53,10 +53,8 @@ char s0[N], s[N];
 void manacher() {
     int pos = 1, r = 1;
     for (int i = 2; i <= tail; ++i) {
-        if (i < r)
-            ext[i] = min(ext[(pos << 1) - i], r - i);
-        while (s[i + ext[i] + 1] == s[i - ext[i] - 1])
-            ++ext[i];
+        if (i < r) ext[i] = min(ext[(pos << 1) - i], r - i);
+        while (s[i + ext[i] + 1] == s[i - ext[i] - 1]) ++ext[i];
         if (i + ext[i] > r) {
             r = i + ext[i];
             pos = i;
@@ -65,7 +63,8 @@ void manacher() {
 }
 
 int main() {
-    s[tail] = '/';  // IMPORTANT: the first character must NOT be a null character
+    s[tail] =
+        '/';  // IMPORTANT: the first character must NOT be a null character
     s[++tail] = '.';
     char c;
     int olen = 0;

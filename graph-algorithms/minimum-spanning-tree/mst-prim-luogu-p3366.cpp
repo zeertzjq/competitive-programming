@@ -49,7 +49,8 @@ inline void putln(T x) {
 typedef pair<int, int> hitem;
 
 const int N = 5010, M = 200010, inf = ~0U >> 1;
-int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dist[N], len = 0, vcnt = 0, hsz = 0;
+int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dist[N], len = 0, vcnt = 0,
+                                                              hsz = 0;
 hitem h[M];
 greater<hitem> cmp;
 bool vis[N];

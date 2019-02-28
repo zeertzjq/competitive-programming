@@ -50,8 +50,7 @@ priority_queue<int, vector<int>, greater<int> > pq;
 
 int main() {
     int n = gi();
-    while (n--)
-        switch (gi()) {
+    while (n--) switch (gi()) {
             case 1:
                 pq.push(gi());
                 break;

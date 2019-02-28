@@ -51,7 +51,8 @@ int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N], head = 1, tail = 0;
 bool inq[N];
 
 inline int &qo(int &x) {
-    return x == N ? x = 0 : x;  // IMPORTANT: a vertex may be pushed into the queue multiple times
+    return x == N ? x = 0 : x;  // IMPORTANT: a vertex may be pushed into the
+                                // queue multiple times
 }
 
 void spfa() {

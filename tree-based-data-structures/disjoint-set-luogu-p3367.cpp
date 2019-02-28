@@ -49,9 +49,7 @@ inline void putln(T x) {
 const int N = 10010;
 int dad[N], rk[N];
 
-int finds(int x) {
-    return dad[x] == x ? x : dad[x] = finds(dad[x]);
-}
+int finds(int x) { return dad[x] == x ? x : dad[x] = finds(dad[x]); }
 
 inline void unions(int x, int y) {
     if (x == y) return;  // IMPORTANT: the two sets must not be the same
