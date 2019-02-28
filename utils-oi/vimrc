@@ -1,12 +1,4 @@
-se cin
-se sw=4
-se ts=4
-se et
-se nu
-se bk
-se udf
-se mouse=a
-se fdm=marker
+se cin sw=4 ts=4 et nu bk udf mouse=a fdm=marker
 nn <f2> :w<cr>
 ino <f2> <c-o>:w<cr>
 ino { {}<esc>i
