@@ -1,6 +1,7 @@
 se cin sw=4 ts=4 et nu bk udf mouse=a fdm=marker
-nn <f2> :w<cr>
-ino <f2> <c-o>:w<cr>
+nm <f2> :up<cr>
+vm <f2> <esc><f2>gv
+im <f2> <c-o><f2>
 ino { {}<esc>i
 ino [ []<esc>i
 ino ( ()<esc>i
