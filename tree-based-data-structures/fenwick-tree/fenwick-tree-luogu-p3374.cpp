@@ -49,7 +49,7 @@ inline void putln(T x) {
 const int N = 500010;
 int n, m, s[N], bit[N];
 
-inline void add(int k, int v) {
+inline void upd(int k, int v) {
     while (k <= n) {
         bit[k] += v;
         k += k & -k;
@@ -57,12 +57,12 @@ inline void add(int k, int v) {
 }
 
 inline int qry(int k) {
-    int ret = 0;
+    int ans = 0;
     while (k) {
-        ret += bit[k];
+        ans += bit[k];
         k &= k - 1;
     }
-    return ret;
+    return ans;
 }
 
 int main() {
@@ -72,7 +72,7 @@ int main() {
     while (m--) {
         int o = gi(), x = gi(), y = gi();
         if (o == 1)
-            add(x, y);
+            upd(x, y);
         else
             putln(s[y] + qry(y) - s[x - 1] - qry(x - 1));
     }

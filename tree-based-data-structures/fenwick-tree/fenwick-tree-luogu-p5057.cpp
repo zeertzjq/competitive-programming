@@ -50,7 +50,7 @@ const int N = 100010;
 int n, m;
 bool bit[N];
 
-inline void add(int k) {
+inline void upd(int k) {
     while (k <= n) {
         bit[k] ^= 1;
         k += k & -k;
@@ -58,12 +58,12 @@ inline void add(int k) {
 }
 
 inline bool qry(int k) {
-    bool ret = 0;
+    bool ans = 0;
     while (k) {
-        ret ^= bit[k];
+        ans ^= bit[k];
         k &= k - 1;
     }
-    return ret;
+    return ans;
 }
 
 int main() {
@@ -72,8 +72,8 @@ int main() {
     while (m--) {
         int t = gi();
         if (t == 1) {
-            add(gi());
-            add(gi() + 1);
+            upd(gi());
+            upd(gi() + 1);
         } else
             putln(qry(gi()));
     }

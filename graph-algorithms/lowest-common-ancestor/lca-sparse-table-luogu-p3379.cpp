@@ -50,9 +50,9 @@ const int N = 500010;
 int n, m, s, e0[N], e1[N << 1], anc[N][22], dep[N], dst[N << 1];
 
 inline int log2(int x) {
-    int ret = 0;
-    while (x >>= 1) ++ret;
-    return ret;
+    int ans = 0;
+    while (x >>= 1) ++ans;
+    return ans;
 }
 
 void dfs(int x) {

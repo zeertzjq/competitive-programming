@@ -50,11 +50,11 @@ int n, k;
 long long dp[10][82][1 << 9];
 
 inline int bs(int s) {
-    int ret = 0;
+    int ans = 0;
     do
-        ret += s & 1;
+        ans += s & 1;
     while (s >>= 1);
-    return ret;
+    return ans;
 }
 
 inline bool ck(int s) { return !(s & s << 1); }

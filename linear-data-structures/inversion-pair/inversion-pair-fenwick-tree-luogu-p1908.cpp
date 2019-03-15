@@ -50,7 +50,7 @@ const int N = 500010;
 int n, a[N], b[N], bit[N];
 long long ans = 0;
 
-inline void add(int k) {
+inline void upd(int k) {
     while (k <= n) {
         ++bit[k];
         k += k & -k;
@@ -58,12 +58,12 @@ inline void add(int k) {
 }
 
 inline int qry(int k) {
-    int ret = 0;
+    int ans = 0;
     while (k) {
-        ret += bit[k];
+        ans += bit[k];
         k &= k - 1;
     }
-    return ret;
+    return ans;
 }
 
 int main() {
@@ -74,7 +74,7 @@ int main() {
     for (int i = 1; i <= n; ++i) a[i] = lower_bound(b + 1, r, a[i]) - b;
     for (int i = 1; i <= n; ++i) {
         ans += i - 1 - qry(a[i]);
-        add(a[i]);
+        upd(a[i]);
     }
     putln(ans);
     return 0;

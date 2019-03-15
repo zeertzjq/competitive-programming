@@ -55,10 +55,10 @@ inline void add(int x, int y, int v) {
 }
 
 inline int qry(int x, int y) {
-    int ret = 0;
+    int ans = 0;
     for (int i = x; i; i &= i - 1)
-        for (int j = y; j; j &= j - 1) ret += bit[i][j];
-    return ret;
+        for (int j = y; j; j &= j - 1) ans += bit[i][j];
+    return ans;
 }
 
 int main() {

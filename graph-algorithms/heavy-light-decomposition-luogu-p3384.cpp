@@ -58,12 +58,12 @@ inline void upd(int *bit, int k, int v) {
 }
 
 inline int qry(int *bit, int k) {
-    int ret = 0;
+    int ans = 0;
     while (k) {
-        ret = (ret + bit[k]) % p;
+        ans = (ans + bit[k]) % p;
         k &= k - 1;
     }
-    return ret;
+    return ans;
 }
 
 inline void upds(int l, int r, int v) {

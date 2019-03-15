@@ -47,69 +47,67 @@ inline void putln(T x) {
 //}}}
 
 const int N = 50010;
-int n, m;
+int n, m, ans[N], aidx = 0;
 
-struct query {
+struct itm {
     bool tp;
-    int l, r;
+    int l, r, id;
     long long c;
-    int aidx;
 } q[N], q1[N], q2[N];
-
-int ans[N];
-int aidx = 0;
 
 long long sum[N << 2], tag[N << 2];
 bool dirty[N << 2];
 
-inline void upd(int p) { sum[p] = sum[p << 1] + sum[p << 1 | 1]; }
+#define L (x << 1)
+#define R (x << 1 | 1)
 
-inline void push(int p, int l, int r) {
-    if (dirty[p]) {
-        dirty[p << 1] = dirty[p << 1 | 1] = 1;
-        dirty[p] = sum[p << 1] = sum[p << 1 | 1] = tag[p << 1] =
-            tag[p << 1 | 1] = 0;
+inline void upd(int x) { sum[x] = sum[L] + sum[R]; }
+
+inline void push(int x, int l, int r) {
+    if (dirty[x]) {
+        dirty[L] = dirty[R] = 1;
+        dirty[x] = sum[L] = sum[R] = tag[L] = tag[R] = 0;
     }
-    if (tag[p]) {
+    if (tag[x]) {
         int m = (l + r) >> 1;
         // IMPORTANT: multiply by length
-        sum[p << 1] += tag[p] * (m - l + 1);
-        sum[p << 1 | 1] += tag[p] * (r - m);
-        tag[p << 1] += tag[p];
-        tag[p << 1 | 1] += tag[p];
-        tag[p] = 0;
+        sum[L] += tag[x] * (m - l + 1);
+        sum[R] += tag[x] * (r - m);
+        tag[L] += tag[x];
+        tag[R] += tag[x];
+        tag[x] = 0;
     }
 }
 
-void add(int p, int l, int r, int ml, int mr) {
+void add(int x, int l, int r, int ml, int mr) {
     if (l > r) return;
     if (mr < l || ml > r) return;
     if (ml <= l && mr >= r) {
-        sum[p] += r - l + 1;  // IMPORTANT: DON'T use ++sum[p]
-        ++tag[p];
+        sum[x] += r - l + 1;  // IMPORTANT: DON'T use ++sum[x]
+        ++tag[x];
         return;
     }
-    push(p, l, r);
+    push(x, l, r);
     int m = (l + r) >> 1;
-    add(p << 1, l, m, ml, mr);
-    add(p << 1 | 1, m + 1, r, ml, mr);
-    upd(p);
+    add(L, l, m, ml, mr);
+    add(R, m + 1, r, ml, mr);
+    upd(x);
 }
 
-long long query(int p, int l, int r, int ql, int qr) {
+long long query(int x, int l, int r, int ql, int qr) {
     if (l > r) return 0;
     if (qr < l || ql > r) return 0;
-    if (ql <= l && qr >= r) return sum[p];
-    push(p, l, r);
+    if (ql <= l && qr >= r) return sum[x];
+    push(x, l, r);
     int m = (l + r) >> 1;
-    return query(p << 1, l, m, ql, qr) + query(p << 1 | 1, m + 1, r, ql, qr);
+    return query(L, l, m, ql, qr) + query(R, m + 1, r, ql, qr);
 }
 
 void solve(int ql, int qr, int l, int r) {
     if (ql > qr || l > r) return;
     if (l == r) {
         for (int i = ql; i <= qr; ++i)
-            if (q[i].tp) ans[q[i].aidx] = l;
+            if (q[i].tp) ans[q[i].id] = l;
         return;
     }
     int m = (l + r) >> 1;
@@ -124,18 +122,18 @@ void solve(int ql, int qr, int l, int r) {
             } else
                 q1[++p1] = q[i];
         } else {
-            long long more =
+            long long gtr =
                 query(1, 1, n, q[i].l, q[i].r);  // IMPORTANT: DON'T use int
-            if (q[i].c > more) {
-                q[i].c -= more;
+            if (q[i].c > gtr) {
+                q[i].c -= gtr;
                 q1[++p1] = q[i];
             } else
                 q2[++p2] = q[i];
         }
-    copy(q1 + 1, q1 + 1 + p1, q + 1);
-    copy(q2 + 1, q2 + 1 + p2, q + 1 + p1);
-    solve(1, p1, l, m);
-    solve(p1 + 1, p1 + p2, m + 1, r);
+    copy(q1 + 1, q1 + 1 + p1, q + ql);
+    copy(q2 + 1, q2 + 1 + p2, q + ql + p1);
+    solve(ql, ql + p1 - 1, l, m);
+    solve(ql + p1, qr, m + 1, r);
 }
 
 int main() {
@@ -146,7 +144,7 @@ int main() {
         q[i].l = gi();
         q[i].r = gi();
         q[i].c = q[i].tp ? gll() : gi();
-        q[i].aidx = q[i].tp ? ++aidx : 0;
+        q[i].id = q[i].tp ? ++aidx : 0;
     }
     solve(1, m, -n, n);
     for (int i = 1; i <= aidx; ++i) putln(ans[i]);

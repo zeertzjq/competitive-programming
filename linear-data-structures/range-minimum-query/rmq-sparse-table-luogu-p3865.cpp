@@ -50,9 +50,9 @@ const int N = 100010;
 int n, m, stmax[N][17], log2n;
 
 inline int log2(int x) {
-    int ret = 0;
-    while (x >>= 1) ++ret;
-    return ret;
+    int ans = 0;
+    while (x >>= 1) ++ans;
+    return ans;
 }
 
 inline void stinit() {
