@@ -39,56 +39,51 @@ inline void putln(T x) {
 }
 //}}}
 
-struct node {
-    node *c[26];
-    node *fail;
-    int end;
-
-    node() {
-        fill(c, c + 26, (node *)NULL);
-        fail = NULL;
-        end = 0;
-    }
-};
-
-const int S = 75, N = 155, T = 1000010;
-node *rt, *q[N * S];
-int n, head, tail, maxcnt, cnt[N];
+const int S = 75, N = 155, W = N * S, T = 1000010;
+int n, rt, head, tail, q[W], tot, c[W][26], fail[W], e[W], mcnt, cnt[N];
 char s[N][S], t[T];
 
-void build(int n) {
-    node *cur = rt;
-    for (int i = 0; s[n][i]; ++i) {
-        char c = s[n][i] - 'a';
-        if (!cur->c[c]) cur->c[c] = new node();
-        cur = cur->c[c];
-    }
-    cur->end = n;
+inline int mk() {
+    fail[++tot] = 0;
+    e[tot] = 0;
+    fill(c[tot], c[tot + 26], 0);
+    return tot;
 }
 
-void gfail() {
+inline void build(int n) {
+    int cur = rt;
+    for (int i = 0; s[n][i]; ++i) {
+        char ch = s[n][i] - 'a';
+        if (!c[cur][ch]) c[cur][ch] = mk();
+        cur = c[cur][ch];
+    }
+    e[cur] = n;
+}
+
+inline void gfail() {
     head = tail = 0;
-    rt->fail = rt;
+    fail[rt] = rt;
     for (int i = 0; i < 26; ++i)
-        if (rt->c[i]) {
-            rt->c[i]->fail = rt;
-            q[tail++] = rt->c[i];
+        if (c[rt][i]) {
+            fail[c[rt][i]] = rt;
+            q[tail++] = c[rt][i];
         } else
-            rt->c[i] = rt;
+            c[rt][i] = rt;
     while (head < tail) {
-        node *u = q[head++];
+        int u = q[head++];
         for (int i = 0; i < 26; ++i)
-            if (u->c[i]) {
-                u->c[i]->fail = u->fail->c[i];
-                q[tail++] = u->c[i];
+            if (c[u][i]) {
+                fail[c[u][i]] = c[fail[u]][i];
+                q[tail++] = c[u][i];
             } else
-                u->c[i] = u->fail->c[i];
+                c[u][i] = c[fail[u]][i];
     }
 }
 
 int main() {
     while (n = gi()) {
-        rt = new node();
+        tot = 0;
+        rt = mk();
         for (int i = 1; i <= n; ++i) {
             scanf("%s", s[i]);
             build(i);
@@ -96,17 +91,16 @@ int main() {
         gfail();
         scanf("%s", t);
         fill(cnt + 1, cnt + 1 + n, 0);
-        maxcnt = 0;
-        node *u = rt;
+        mcnt = 0;
+        int u = rt;
         for (int i = 0; t[i]; ++i) {
-            u = u->c[t[i] - 'a'];
-            for (node *v = u; v != rt; v = v->fail)
-                if (v->end) maxcnt = max(maxcnt, ++cnt[v->end]);
+            u = c[u][t[i] - 'a'];
+            for (int v = u; v != rt; v = fail[v])
+                if (e[v]) mcnt = max(mcnt, ++cnt[e[v]]);
         }
-        putln(maxcnt);
+        putln(mcnt);
         for (int i = 1; i <= n; ++i)
-            if (cnt[i] == maxcnt) printf("%s\n", s[i]);
-        for (int i = 0; i < tail; ++i) delete q[i];
+            if (cnt[i] == mcnt) printf("%s\n", s[i]);
     }
     return 0;
 }
