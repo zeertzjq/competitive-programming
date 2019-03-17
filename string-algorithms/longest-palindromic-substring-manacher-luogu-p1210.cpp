@@ -72,7 +72,7 @@ int main() {
     manacher();
     int mid = max_element(ext + 1, ext + tail + 1) - ext;
     putln(ext[mid]);
-    int l, r, dist = ext[mid] / 2;
+    int l, r, dis = ext[mid] / 2;
     if (orig[mid]) {
         l = orig[mid] - 1;
         r = orig[mid] + 1;
@@ -80,9 +80,9 @@ int main() {
         l = orig[mid - 1];
         r = orig[mid + 1];
     }
-    for (int i = 1; i <= dist; ++i, --l)
+    for (int i = 1; i <= dis; ++i, --l)
         while (!isalpha(s0[l])) --l;
-    for (int i = 1; i <= dist; ++i, ++r)
+    for (int i = 1; i <= dis; ++i, ++r)
         while (!isalpha(s0[r])) ++r;
     s0[r] = '\0';
     puts(s0 + l + 1);

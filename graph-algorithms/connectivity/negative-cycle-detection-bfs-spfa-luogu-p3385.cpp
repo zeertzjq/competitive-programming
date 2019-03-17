@@ -41,14 +41,14 @@ inline void putln(T x) {
 
 const int N = 2010, M = 3010, inf = ~0U >> 1;
 int n, m;
-int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dist[N], cnt[N], inq[N];
+int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dis[N], cnt[N], inq[N];
 
 queue<int> q;
 
 inline void clear() {
     for (int i = 1; i <= n; ++i) {
         cnt[i] = 0;
-        dist[i] = inf;
+        dis[i] = inf;
     }
     while (!q.empty()) {
         inq[q.front()] = 0;
@@ -71,15 +71,15 @@ inline int pop() {
 
 int detect() {
     clear();
-    dist[1] = 0;
+    dis[1] = 0;
     push(1);
     while (!q.empty()) {
         int u = pop();
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            int ndist = dist[u] + w[e];
-            if (ndist < dist[v]) {
-                dist[v] = ndist;
+            int ndis = dis[u] + w[e];
+            if (ndis < dis[v]) {
+                dis[v] = ndis;
                 if (inq[v]) continue;
                 if (cnt[v] >= n) return 1;
                 push(v);

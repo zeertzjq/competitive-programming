@@ -47,18 +47,18 @@ struct edge {
     bool operator<(const edge &rhs) const { return z < rhs.z; }
 } e[M];
 
-int n, m, rk[N], dad[N], len = 0, ecnt = 0;
+int n, m, rk[N], p[N], len = 0, ecnt = 0;
 
 inline void unions(int x, int y) {
     if (x == y) return;
     if (rk[x] == rk[y]) ++rk[x];
     if (rk[x] > rk[y])
-        dad[y] = x;
+        p[y] = x;
     else
-        dad[x] = y;
+        p[x] = y;
 }
 
-int finds(int x) { return dad[x] == x ? x : dad[x] = finds(dad[x]); }
+int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
 
 void kruskal() {
     for (int i = 1; i <= m; ++i) {
@@ -74,7 +74,7 @@ void kruskal() {
 int main() {
     n = gi();
     m = gi();
-    for (int i = 1; i <= n; ++i) dad[i] = i;
+    for (int i = 1; i <= n; ++i) p[i] = i;
     for (int i = 1; i <= m; ++i) {
         e[i].x = gi();
         e[i].y = gi();

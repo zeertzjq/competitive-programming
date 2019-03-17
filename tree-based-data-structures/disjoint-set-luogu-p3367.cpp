@@ -40,22 +40,22 @@ inline void putln(T x) {
 //}}}
 
 const int N = 10010;
-int dad[N], rk[N];
+int p[N], rk[N];
 
-int finds(int x) { return dad[x] == x ? x : dad[x] = finds(dad[x]); }
+int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
 
 inline void unions(int x, int y) {
     if (x == y) return;  // IMPORTANT: the two sets must not be the same
     if (rk[x] == rk[y]) ++rk[x];
     if (rk[x] > rk[y])
-        dad[y] = x;
+        p[y] = x;
     else
-        dad[x] = y;
+        p[x] = y;
 }
 
 int main() {
     int n = gi(), m = gi();
-    for (int i = 1; i <= n; ++i) dad[i] = i;
+    for (int i = 1; i <= n; ++i) p[i] = i;
     while (m--) {
         int z = gi(), x = gi(), y = gi();
         if (z == 1)

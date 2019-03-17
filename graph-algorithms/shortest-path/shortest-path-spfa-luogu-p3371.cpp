@@ -40,7 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 10010, M = 500010, inf = ~0U >> 1;
-int n, m, s, e0[N], e1[M], dst[M], w[M], dist[N], q[N], head = 1, tail = 0;
+int n, m, s, e0[N], e1[M], dst[M], w[M], dis[N], q[N], head = 1, tail = 0;
 bool inq[N];
 
 inline int &qo(int &x) {
@@ -49,8 +49,8 @@ inline int &qo(int &x) {
 }
 
 void spfa() {
-    fill(dist + 1, dist + 1 + n, inf);
-    dist[s] = 0;
+    fill(dis + 1, dis + 1 + n, inf);
+    dis[s] = 0;
     q[++tail] = s;
     inq[s] = 1;
     while (head != tail + 1) {
@@ -59,9 +59,9 @@ void spfa() {
         inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            int ndist = dist[u] + w[e];
-            if (ndist < dist[v]) {
-                dist[v] = ndist;
+            int ndis = dis[u] + w[e];
+            if (ndis < dis[v]) {
+                dis[v] = ndis;
                 if (!inq[v]) {
                     q[qo(++tail)] = v;
                     inq[v] = 1;
@@ -83,7 +83,7 @@ int main() {
         w[i] = gi();
     }
     spfa();
-    for (int i = 1; i <= n; ++i) putsp(dist[i]);
+    for (int i = 1; i <= n; ++i) putsp(dis[i]);
     putchar('\n');
     return 0;
 }

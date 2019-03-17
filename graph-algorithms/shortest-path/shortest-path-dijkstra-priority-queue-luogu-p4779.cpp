@@ -46,13 +46,13 @@ const long long inf = 100000000000;
 int n, m, s, e0[N], e1[M], dst[M], w[M], hsz = 0;
 hitem h[M];
 greater<hitem> cmp;
-long long dist[N];
+long long dis[N];
 bool vis[N];
 
 // IMPORTANT: for acyclic graphs with non-negative edge weights ONLY
 void dijkstra() {
-    fill(dist + 1, dist + 1 + n, inf);
-    dist[s] = 0;
+    fill(dis + 1, dis + 1 + n, inf);
+    dis[s] = 0;
     h[hsz++] = make_pair(0, s);
     push_heap(h, h + hsz, cmp);
     while (hsz) {
@@ -62,10 +62,10 @@ void dijkstra() {
         vis[u] = 1;  // IMPORTANT: mark u as visited
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            long long ndist = dist[u] + w[e];
-            if (ndist < dist[v]) {
-                dist[v] = ndist;
-                h[hsz++] = make_pair(ndist, v);
+            long long ndis = dis[u] + w[e];
+            if (ndis < dis[v]) {
+                dis[v] = ndis;
+                h[hsz++] = make_pair(ndis, v);
                 push_heap(h, h + hsz, cmp);
             }
         }
@@ -84,7 +84,7 @@ int main() {
         w[i] = gi();
     }
     dijkstra();
-    for (int i = 1; i <= n; ++i) putsp(dist[i]);
+    for (int i = 1; i <= n; ++i) putsp(dis[i]);
     putchar('\n');
     return 0;
 }

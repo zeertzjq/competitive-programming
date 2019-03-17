@@ -40,7 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 5010, M = 100010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dist[N], pre[N], q[N], head,
+int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dis[N], pre[N], q[N], head,
     tail, flow = 0, cost = 0;
 bool inq[N];
 
@@ -49,8 +49,8 @@ inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 bool spfa() {
     head = 1;
     tail = 0;
-    fill(dist + 1, dist + 1 + n, inf);
-    dist[s] = 0;
+    fill(dis + 1, dis + 1 + n, inf);
+    dis[s] = 0;
     q[++tail] = s;
     inq[s] = 1;
     while (head != tail + 1) {
@@ -60,12 +60,12 @@ bool spfa() {
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             if (!w[e]) continue;
-            int ndist = dist[u] + c[e];
-            if (ndist < dist[v]) {
-                dist[v] = ndist;
+            int ndis = dis[u] + c[e];
+            if (ndis < dis[v]) {
+                dis[v] = ndis;
                 pre[v] = e;
                 if (!inq[v]) {
-                    if (ndist < dist[q[head]])
+                    if (ndis < dis[q[head]])
                         q[qo(--head)] = v;
                     else
                         q[qo(++tail)] = v;
@@ -74,7 +74,7 @@ bool spfa() {
             }
         }
     }
-    return dist[t] != inf;
+    return dis[t] != inf;
 }
 
 inline void mcmf() {
@@ -86,7 +86,7 @@ inline void mcmf() {
             w[pre[u] ^ 1] += f;
         }
         flow += f;
-        cost += f * dist[t];
+        cost += f * dis[t];
     }
 }
 

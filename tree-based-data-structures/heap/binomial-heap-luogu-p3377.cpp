@@ -41,7 +41,7 @@ inline void putln(T x) {
 
 const int N = 100010;
 
-int val[N], chd[N], dad[N], sb1[N], sb0[N], deg[N], n, m;
+int val[N], c[N], p[N], sb1[N], sb0[N], deg[N], n, m;
 
 inline int merge(int h1, int h2) {
     if (h1 == h2) return h1;
@@ -50,7 +50,7 @@ inline int merge(int h1, int h2) {
     while (h1 && h2) {
         if (deg[h1] > deg[h2]) swap(h1, h2);
         sb1[h1] = last;
-        dad[h1] = 0;
+        p[h1] = 0;
         if (last) sb0[last] = h1;
         last = h1;
         h1 = sb0[h1];
@@ -59,8 +59,8 @@ inline int merge(int h1, int h2) {
         sb1[h1 + h2] = last;
         if (last) sb0[last] = h1 + h2;
         for (int i = h1 + h2; i; i = sb0[i])
-            dad[i] = 0;  // IMPORTANT: the root node of a binomial tree must
-                         // have NO parent
+            p[i] = 0;  // IMPORTANT: the root node of a binomial tree must
+                       // have NO parent
     }
     return ret;
 }
@@ -79,10 +79,10 @@ inline void adjust(int l) {
                 swap(sb1[l], sb1[m]);
                 swap(l, m);
             }
-            dad[l] = m;
-            sb0[l] = chd[m];
-            sb1[chd[m]] = l;
-            chd[m] = l;
+            p[l] = m;
+            sb0[l] = c[m];
+            sb1[c[m]] = l;
+            c[m] = l;
             ++deg[m];  // IMPORTANT: update the degree of the new binomial tree
             sb1[m] = sb1[l];
             if (sb1[m]) sb0[sb1[m]] = m;
@@ -96,7 +96,7 @@ inline void adjust(int l) {
 }
 
 inline int head(int x) {
-    while (dad[x]) x = dad[x];
+    while (p[x]) x = p[x];
     while (sb1[x]) x = sb1[x];
     return x;
 }
@@ -138,7 +138,7 @@ int main() {
                 val[m] = 0;
                 if (sb1[m]) sb0[sb1[m]] = sb0[m];
                 if (sb0[m]) sb1[sb0[m]] = sb1[m];  // IMPORTANT: update siblings
-                adjust(merge(h, chd[m]));
+                adjust(merge(h, c[m]));
             }
         }
     return 0;

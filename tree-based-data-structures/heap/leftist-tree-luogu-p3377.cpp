@@ -41,49 +41,44 @@ inline void putln(T x) {
 
 const int N = 100010;
 
-int dist[N], dad[N], son[N][2], val[N];
+int dis[N], p[N], c[N][2], v[N];
 int n, m;
 
-inline int root(int p) {
-    while (dad[p]) p = dad[p];
-    return p;
-}
+int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
 
 int merge(int l, int r) {
-    if (!l) return r;
-    if (!r) return l;
+    if (!l || !r) return l | r;
     if (l == r) return l;
-    if (val[l] > val[r] || (val[l] == val[r] && l > r)) swap(l, r);
-    son[l][1] = merge(son[l][1], r);
-    dad[son[l][1]] = l;
-    if (!son[l][0] || !son[l][1])
-        dist[l] = 0;
-    else {
-        if (dist[son[l][1]] > dist[son[l][0]]) swap(son[l][1], son[l][0]);
-        dist[l] = dist[son[l][1]] + 1;
-    }
+    if (v[l] > v[r] || (v[l] == v[r] && l > r)) swap(l, r);
+    p[r] = l;
+    c[l][1] = merge(c[l][1], r);
+    if (dis[c[l][0]] > dis[c[l][1]]) swap(c[l][0], c[l][1]);
+    dis[l] = dis[c[l][1]] + 1;
     return l;
 }
 
 int main() {
     n = gi();
     m = gi();
-    for (int i = 1; i <= n; ++i) val[i] = gi();
+    for (int i = 1; i <= n; ++i) v[i] = gi(), p[i] = i;
+    dis[0] = -1;
     while (m--) {
         int op = gi();
         if (op == 1) {
             int x = gi(), y = gi();
-            if (val[x] && val[y]) merge(root(x), root(y));
+            if (v[x] && v[y]) merge(finds(x), finds(y));
         } else {
             int x = gi();
-            if (!val[x]) {
+            if (!v[x]) {
                 puts("-1");
                 continue;
             } else {
-                int rt = root(x);
-                putln(val[rt]);
-                val[rt] = 0;
-                dad[merge(son[rt][0], son[rt][1])] = 0;
+                int rt = finds(x);
+                putln(v[rt]);
+                v[rt] = 0;
+                p[c[rt][0]] = c[rt][0];
+                p[c[rt][1]] = c[rt][1];
+                p[rt] = merge(c[rt][0], c[rt][1]);
             }
         }
     }

@@ -42,15 +42,15 @@ inline void putln(T x) {
 typedef pair<int, int> hitem;
 
 const int N = 5010, M = 200010, inf = ~0U >> 1;
-int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dist[N], len = 0, vcnt = 0,
-                                                              hsz = 0;
+int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dis[N], len = 0, vcnt = 0,
+                                                             hsz = 0;
 hitem h[M];
 greater<hitem> cmp;
 bool vis[N];
 
 void prim() {
-    fill(dist + 1, dist + 1 + n, inf);
-    dist[1] = 0;
+    fill(dis + 1, dis + 1 + n, inf);
+    dis[1] = 0;
     h[hsz++] = make_pair(0, 1);
     push_heap(h, h + hsz, cmp);
     while (hsz) {
@@ -58,14 +58,14 @@ void prim() {
         int u = h[hsz].second;
         if (vis[u]) continue;
         vis[u] = 1;  // IMPORTANT: mark u as visited
-        len += dist[u];
+        len += dis[u];
         ++vcnt;
         if (vcnt == n) return;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            if (z[e] < dist[v]) {
-                dist[v] = z[e];
-                h[hsz++] = make_pair(dist[v], v);
+            if (z[e] < dis[v]) {
+                dis[v] = z[e];
+                h[hsz++] = make_pair(dis[v], v);
                 push_heap(h, h + hsz, cmp);
             }
         }
