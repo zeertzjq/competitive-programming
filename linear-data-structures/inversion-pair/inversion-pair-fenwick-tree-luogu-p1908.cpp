@@ -44,18 +44,12 @@ int n, a[N], b[N], bit[N];
 long long ans = 0;
 
 inline void upd(int k) {
-    while (k <= n) {
-        ++bit[k];
-        k += k & -k;
-    }
+    for (; k <= n; k += k & -k) ++bit[k];
 }
 
 inline int qry(int k) {
     int ans = 0;
-    while (k) {
-        ans += bit[k];
-        k &= k - 1;
-    }
+    for (; k; k &= k - 1) ans += bit[k];
     return ans;
 }
 
@@ -65,10 +59,7 @@ int main() {
     sort(b + 1, b + 1 + n);
     int *r = unique(b + 1, b + 1 + n);
     for (int i = 1; i <= n; ++i) a[i] = lower_bound(b + 1, r, a[i]) - b;
-    for (int i = 1; i <= n; ++i) {
-        ans += i - 1 - qry(a[i]);
-        upd(a[i]);
-    }
+    for (int i = 1; i <= n; ++i) ans += i - 1 - qry(a[i]), upd(a[i]);
     putln(ans);
     return 0;
 }

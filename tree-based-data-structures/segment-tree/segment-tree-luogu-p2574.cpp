@@ -50,25 +50,19 @@ bool a[N], xt[N << 2];
 inline void push(int x, int l, int r) {
     if (!xt[x]) return;
     int m = (l + r) >> 1;
-    sgt[L] = m - l + 1 - sgt[L];
-    sgt[R] = r - m - sgt[R];
-    xt[L] ^= 1;
-    xt[R] ^= 1;
-    xt[x] = 0;
+    sgt[L] = m - l + 1 - sgt[L], sgt[R] = r - m - sgt[R], xt[L] ^= 1,
+    xt[R] ^= 1, xt[x] = 0;
 }
 
 void add(int x, int l, int r, int ll, int rr) {
     if (l > rr || r < ll) return;
     if (l >= ll && r <= rr) {
-        sgt[x] = r - l + 1 - sgt[x];
-        xt[x] ^= 1;
+        sgt[x] = r - l + 1 - sgt[x], xt[x] ^= 1;
         return;
     }
     push(x, l, r);
     int m = (l + r) >> 1;
-    add(L, l, m, ll, rr);
-    add(R, m + 1, r, ll, rr);
-    sgt[x] = sgt[L] + sgt[R];
+    add(L, l, m, ll, rr), add(R, m + 1, r, ll, rr), sgt[x] = sgt[L] + sgt[R];
 }
 
 int qry(int x, int l, int r, int ll, int rr) {
@@ -85,15 +79,11 @@ void build(int x, int l, int r) {
         return;
     }
     int m = (l + r) >> 1;
-    build(L, l, m);
-    build(R, m + 1, r);
-    sgt[x] = sgt[L] + sgt[R];
+    build(L, l, m), build(R, m + 1, r), sgt[x] = sgt[L] + sgt[R];
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    scanf("%s", s + 1);
+    n = gi(), m = gi(), scanf("%s", s + 1);
     for (int i = 1; i <= n; ++i) a[i] = s[i] == '1';
     build(1, 1, n);
     while (m--) {

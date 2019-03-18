@@ -45,9 +45,7 @@ int n, m, dp[N][N][N];
 inline int c2(int x) { return x * (x - 1) >> 1; }
 
 int main() {
-    n = gi();
-    m = gi();
-    dp[0][0][0] = 1;
+    n = gi(), m = gi(), dp[0][0][0] = 1;
     for (int i = 0; i < n; ++i)
         for (int j = 0; j <= m; ++j)
             for (int k = 0; j + k <= m; ++k)

@@ -41,21 +41,16 @@ inline void putln(T x) {
 
 int exgcd(int a, int b, int &x, int &y) {
     if (!b) {
-        x = 1;
-        y = 0;
+        x = 1, y = 0;
         return a;
     }
-    int x0, y0;
-    int c = exgcd(b, a % b, x0, y0);
-    x = y0;
-    y = x0 - a / b * y0;
+    int x0, y0, c = exgcd(b, a % b, x0, y0);
+    x = y0, y = x0 - a / b * y0;
     return c;
 }
 
 int main() {
     int a = gi(), b = gi(), x, y;
-    a %= b;
-    exgcd(a, b, x, y);
-    putln((x % b + b) % b);
+    a %= b, exgcd(a, b, x, y), putln((x % b + b) % b);
     return 0;
 }

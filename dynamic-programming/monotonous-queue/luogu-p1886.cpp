@@ -50,8 +50,7 @@ void push(int k) {
 }
 
 int main() {
-    n = gi();
-    k = gi();
+    n = gi(), k = gi();
     for (int i = 1; i <= n; ++i) a[i] = gi();
     for (int i = 1; i < k; ++i) push(i);
     for (int i = k; i <= n; ++i) {

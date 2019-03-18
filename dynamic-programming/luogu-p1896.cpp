@@ -53,8 +53,7 @@ inline int bs(int s) {
 inline bool ck(int s) { return !(s & s << 1); }
 
 int main() {
-    n = gi();
-    k = gi();
+    n = gi(), k = gi();
     for (int j = 0; j <= min((n + 1) >> 1, k); ++j)
         for (int s = 0; s < 1 << n; ++s)
             if (ck(s) && bs(s) == j) dp[1][j][s] = 1;

@@ -46,31 +46,24 @@ bool vis[N];
 
 void tarjan(int u) {
     if (dfn[u]) return;
-    dfn[u] = low[u] = ++disc;
-    stk[++top] = u;
-    vis[u] = 1;
+    dfn[u] = low[u] = ++disc, stk[++top] = u, vis[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
-        if (!dfn[v]) {
-            tarjan(v);
-            low[u] = min(low[u], low[v]);
-        } else if (vis[v])
+        if (!dfn[v])
+            tarjan(v), low[u] = min(low[u], low[v]);
+        else if (vis[v])
             low[u] = min(low[u], dfn[v]);
     }
     if (dfn[u] == low[u])
         while (int v = stk[top--]) {
-            rep[v] = u;
-            vis[v] = 0;
+            rep[v] = u, vis[v] = 0;
             if (v == u) break;
             val[u] += val[v];
             if (e0[v]) {
-                if (ee[u]) {
-                    e1[ee[u]] = e0[v];
-                    ee[u] = ee[v];
-                } else {
-                    e0[u] = e0[v];
-                    ee[u] = ee[v];
-                }
+                if (ee[u])
+                    e1[ee[u]] = e0[v], ee[u] = ee[v];
+                else
+                    e0[u] = e0[v], ee[u] = ee[v];
             }
         }
 }
@@ -86,13 +79,11 @@ int dfs(int u) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) val[i] = gi();
     for (int i = 1; i <= m; ++i) {
         int u = gi(), v = gi();
-        e1[i] = e0[u];
-        e0[u] = i;
+        e1[i] = e0[u], e0[u] = i;
         if (!ee[u]) ee[u] = i;
         dst[i] = v;
     }

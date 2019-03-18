@@ -44,11 +44,8 @@ char s1[N], s2[N];
 int fail[N], len1, len2;
 
 int main() {
-    scanf("%s", s1 + 1);
-    scanf("%s", s2 + 1);
-    len1 = strlen(s1 + 1);
-    len2 = strlen(s2 + 1);
-    fail[0] = -1;
+    scanf("%s", s1 + 1), len1 = strlen(s1 + 1), scanf("%s", s2 + 1),
+                         len2 = strlen(s2 + 1), fail[0] = -1;
     for (int i = 1; i <= len2; ++i) {
         int j = fail[i - 1];
         while (j >= 0 && s2[j + 1] != s2[i]) j = fail[j];

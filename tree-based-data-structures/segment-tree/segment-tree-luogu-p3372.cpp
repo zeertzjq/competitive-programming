@@ -49,25 +49,20 @@ long long a[N], sgt[N << 2], addt[N << 2];
 inline void push(int x, int l, int r) {
     if (!addt[x]) return;
     int m = (l + r) >> 1;
-    sgt[L] += addt[x] * (m - l + 1);
-    sgt[R] += addt[x] * (r - m);
-    addt[L] += addt[x];
-    addt[R] += addt[x];
-    addt[x] = 0;
+    sgt[L] += addt[x] * (m - l + 1), sgt[R] += addt[x] * (r - m),
+        addt[L] += addt[x], addt[R] += addt[x], addt[x] = 0;
 }
 
 void add(int x, int l, int r, int ll, int rr, long long v) {
     if (l > rr || r < ll) return;
     if (l >= ll && r <= rr) {
-        sgt[x] += v * (r - l + 1);
-        addt[x] += v;
+        sgt[x] += v * (r - l + 1), addt[x] += v;
         return;
     }
     push(x, l, r);
     int m = (l + r) >> 1;
-    add(L, l, m, ll, rr, v);
-    add(R, m + 1, r, ll, rr, v);
-    sgt[x] = sgt[L] + sgt[R];
+    add(L, l, m, ll, rr, v), add(R, m + 1, r, ll, rr, v),
+        sgt[x] = sgt[L] + sgt[R];
 }
 
 long long qry(int x, int l, int r, int ll, int rr) {
@@ -84,14 +79,11 @@ void build(int x, int l, int r) {
         return;
     }
     int m = (l + r) >> 1;
-    build(L, l, m);
-    build(R, m + 1, r);
-    sgt[x] = sgt[L] + sgt[R];
+    build(L, l, m), build(R, m + 1, r), sgt[x] = sgt[L] + sgt[R];
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) a[i] = gll();
     build(1, 1, n);
     while (m--) {

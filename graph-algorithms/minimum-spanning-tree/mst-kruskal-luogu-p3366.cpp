@@ -64,24 +64,16 @@ void kruskal() {
     for (int i = 1; i <= m; ++i) {
         int rt1 = finds(e[i].x), rt2 = finds(e[i].y);
         if (rt1 == rt2) continue;
-        len += e[i].z;
-        ++ecnt;
-        unions(rt1, rt2);
+        len += e[i].z, ++ecnt, unions(rt1, rt2);
         if (ecnt == n - 1) return;
     }
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) p[i] = i;
-    for (int i = 1; i <= m; ++i) {
-        e[i].x = gi();
-        e[i].y = gi();
-        e[i].z = gi();
-    }
-    sort(e + 1, e + 1 + m);
-    kruskal();
+    for (int i = 1; i <= m; ++i) e[i].x = gi(), e[i].y = gi(), e[i].z = gi();
+    sort(e + 1, e + 1 + m), kruskal();
     if (ecnt == n - 1)
         putln(len);
     else

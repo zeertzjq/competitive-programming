@@ -44,11 +44,8 @@ int n, r[N], c0[N], c1[N], p[N], dp[N][2], rt = 1;
 
 void dfs(int u) {
     dp[u][1] = r[u];
-    for (int v = c0[u]; v; v = c1[v]) {
-        dfs(v);
-        dp[u][0] += max(dp[v][0], dp[v][1]);
-        dp[u][1] += dp[v][0];
-    }
+    for (int v = c0[u]; v; v = c1[v])
+        dfs(v), dp[u][0] += max(dp[v][0], dp[v][1]), dp[u][1] += dp[v][0];
 }
 
 int main() {
@@ -56,14 +53,10 @@ int main() {
     for (int i = 1; i <= n; ++i) r[i] = gi();
     for (int i = 1; i < n; ++i) {
         int l = gi(), k = gi();
-        c1[l] = c0[k];
-        c0[k] = l;
-        p[l] = k;
+        c1[l] = c0[k], c0[k] = l, p[l] = k;
     }
-    gi();
-    gi();
+    gi(), gi();
     while (p[rt]) rt = p[rt];
-    dfs(rt);
-    putln(max(dp[rt][0], dp[rt][1]));
+    dfs(rt), putln(max(dp[rt][0], dp[rt][1]));
     return 0;
 }

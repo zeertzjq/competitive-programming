@@ -47,8 +47,7 @@ int main() {
     greater<int> cmp;
     while (n--) switch (gi()) {
             case 1:
-                heap[sz++] = gi();
-                push_heap(heap, heap + sz, cmp);
+                heap[sz++] = gi(), push_heap(heap, heap + sz, cmp);
                 break;
             case 2:
                 putln(heap[0]);

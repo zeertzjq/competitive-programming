@@ -49,41 +49,30 @@ greater<hitem> cmp;
 bool vis[N];
 
 void prim() {
-    fill(dis + 1, dis + 1 + n, inf);
-    dis[1] = 0;
-    h[hsz++] = make_pair(0, 1);
-    push_heap(h, h + hsz, cmp);
+    fill(dis + 1, dis + 1 + n, inf), dis[1] = 0, h[hsz++] = make_pair(0, 1),
+                                     push_heap(h, h + hsz, cmp);
     while (hsz) {
         pop_heap(h, h + hsz--, cmp);
         int u = h[hsz].second;
         if (vis[u]) continue;
-        vis[u] = 1;  // IMPORTANT: mark u as visited
-        len += dis[u];
-        ++vcnt;
+        vis[u] = 1, len += dis[u], ++vcnt;
         if (vcnt == n) return;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
-            if (z[e] < dis[v]) {
-                dis[v] = z[e];
-                h[hsz++] = make_pair(dis[v], v);
+            if (z[e] < dis[v])
+                dis[v] = z[e], h[hsz++] = make_pair(dis[v], v),
                 push_heap(h, h + hsz, cmp);
-            }
         }
     }
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= m; ++i) {
         int x = gi(), y = gi();
-        z[i << 1] = z[i << 1 | 1] = gi();
-        e1[i << 1] = e0[x];
-        e0[x] = i << 1;
-        dst[i << 1] = y;
-        e1[i << 1 | 1] = e0[y];
-        e0[y] = i << 1 | 1;
-        dst[i << 1 | 1] = x;
+        z[i << 1] = z[i << 1 | 1] = gi(), e1[i << 1] = e0[x], e0[x] = i << 1,
+               dst[i << 1] = y, e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1,
+               dst[i << 1 | 1] = x;
     }
     prim();
     if (vcnt == n)

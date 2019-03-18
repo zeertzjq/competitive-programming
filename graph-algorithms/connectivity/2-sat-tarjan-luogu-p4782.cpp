@@ -45,39 +45,31 @@ int n, m, e0[N], e1[N], dst[N], dfn[N], low[N], disc = 0, stk[N], top = 0,
 bool vis[N], ans[N];
 
 void tarjan(int u) {
-    dfn[u] = low[u] = ++disc;
-    stk[++top] = u;
-    vis[u] = 1;
+    dfn[u] = low[u] = ++disc, stk[++top] = u, vis[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
-        if (!dfn[v]) {
-            tarjan(v);
-            low[u] = min(low[u], low[v]);
-        } else if (vis[v])
+        if (!dfn[v])
+            tarjan(v), low[u] = min(low[u], low[v]);
+        else if (vis[v])
             low[u] = min(low[u], dfn[v]);
     }
     if (dfn[u] == low[u]) {
         ++scc;
         while (int v = stk[top--]) {
-            ord[v] = scc;
-            vis[v] = 0;
+            ord[v] = scc, vis[v] = 0;
             if (v == u) break;
         }
     }
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int e = 1; e <= m; ++e) {
         int i = gi(), a = gi(), j = gi(), b = gi();
         int x1 = i << 1 ^ a, x2 = j << 1 ^ b;
-        e1[e << 1] = e0[x1 ^ 1];
-        e0[x1 ^ 1] = e << 1;
-        dst[e << 1] = x2;
-        e1[e << 1 | 1] = e0[x2 ^ 1];
-        e0[x2 ^ 1] = e << 1 | 1;
-        dst[e << 1 | 1] = x1;
+        e1[e << 1] = e0[x1 ^ 1], e0[x1 ^ 1] = e << 1, dst[e << 1] = x2,
+                e1[e << 1 | 1] = e0[x2 ^ 1], e0[x2 ^ 1] = e << 1 | 1,
+                dst[e << 1 | 1] = x1;
     }
     for (int i = 2; i < (n + 1) << 1; ++i)
         if (!dfn[i]) tarjan(i);

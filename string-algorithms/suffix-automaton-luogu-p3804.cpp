@@ -46,10 +46,8 @@ char s[N];
 long long ans = 0;
 
 inline void sam(char c) {
-    int x = ++tot;
-    len[x] = len[pre] + 1;
-    cnt[x] = 1;
-    int p;
+    int x = ++tot, p;
+    len[x] = len[pre] + 1, cnt[x] = 1;
     for (p = pre; p && !ch[p][c]; p = lk[p]) ch[p][c] = x;
     if (p) {
         int q = ch[p][c];
@@ -57,8 +55,7 @@ inline void sam(char c) {
             lk[x] = q;
         else {
             int cq = ++tot;
-            lk[cq] = lk[q];
-            len[cq] = len[p] + 1;
+            lk[cq] = lk[q], len[cq] = len[p] + 1,
             copy(ch[q], ch[q] + 26, ch[cq]);
             for (int i = p; i && ch[i][c] == q; i = lk[i]) ch[i][c] = cq;
             lk[q] = lk[x] = cq;

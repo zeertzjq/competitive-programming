@@ -55,14 +55,9 @@ int C(int n, int m) {
 int main() {
     int _ = gi();
     while (_--) {
-        n = gi();
-        m = gi();
-        p = gi();
-        f[0] = 1;
+        n = gi(), m = gi(), p = gi(), f[0] = 1;
         for (int i = 1; i < p; ++i) f[i] = 1LL * f[i - 1] * i % p;
-        fill(inv + 1, inv + p, 0);
-        inv[1] = 1;
-        putln(C(n + m, m));
+        fill(inv + 1, inv + p, 0), inv[1] = 1, putln(C(n + m, m));
     }
     return 0;
 }

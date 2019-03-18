@@ -47,26 +47,24 @@ inline char gc() {
 }
 
 const int N = 100010;
-int n, m, a[N], aidx = 0, v[N << 1], vidx, ans[N], qidx, bit[N];
+int n, m, a[N], aidx = 0, v[N << 1], vidx, ans[N], tot, bit[N];
 
 struct itm {
     bool tp;
     int l, r, k, id;
 } q[N * 3], q1[N * 3], q2[N * 3];
 
+inline void mk(bool tp, int l, int r, int k, int id) {
+    q[++tot].tp = tp, q[tot].l = l, q[tot].r = r, q[tot].k = k, q[tot].id = id;
+}
+
 inline void upd(int k, int v) {
-    while (k <= n) {
-        bit[k] += v;
-        k += k & -k;
-    }
+    for (; k <= n; k += k & -k) bit[k] += v;
 }
 
 inline int qry(int k) {
     int ans = 0;
-    while (k) {
-        ans += bit[k];
-        k &= k - 1;
-    }
+    for (; k; k &= k - 1) ans += bit[k];
     return ans;
 }
 
@@ -81,59 +79,41 @@ void solve(int ql, int qr, int l, int r) {
     int p1 = 0, p2 = 0;
     for (int i = ql; i <= qr; ++i)
         if (!q[i].tp) {
-            if (q[i].k <= m) {
-                upd(q[i].l, q[i].r);
-                q1[++p1] = q[i];
-            } else
+            if (q[i].k <= m)
+                upd(q[i].l, q[i].r), q1[++p1] = q[i];
+            else
                 q2[++p2] = q[i];
         } else {
             int lss = qry(q[i].r) - qry(q[i].l - 1);
-            if (q[i].k > lss) {
-                q[i].k -= lss;
-                q2[++p2] = q[i];
-            } else
+            if (q[i].k > lss)
+                q[i].k -= lss, q2[++p2] = q[i];
+            else
                 q1[++p1] = q[i];
         }
     for (int i = 1; i <= p1; ++i)
         if (!q1[i].tp) upd(q1[i].l, -q1[i].r);
-    copy(q1 + 1, q1 + 1 + p1, q + ql);
-    copy(q2 + 1, q2 + 1 + p2, q + ql + p1);
-    solve(ql, ql + p1 - 1, l, m);
-    solve(ql + p1, qr, m + 1, r);
+    copy(q1 + 1, q1 + 1 + p1, q + ql), copy(q2 + 1, q2 + 1 + p2, q + ql + p1),
+        solve(ql, ql + p1 - 1, l, m), solve(ql + p1, qr, m + 1, r);
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    for (int i = 1; i <= n; ++i) {
-        q[i].tp = 0;
-        q[i].l = i;
-        q[i].r = 1;
-        a[i] = v[i] = q[i].k = gi();
-    }
-    qidx = vidx = n;
+    n = gi(), m = gi();
+    for (int i = 1; i <= n; ++i)
+        q[i].tp = 0, q[i].l = i, q[i].r = 1, a[i] = v[i] = q[i].k = gi();
+    tot = vidx = n;
     while (m--) {
-        if (q[++qidx].tp = gc() == 'Q') {
-            q[qidx].l = gi();
-            q[qidx].r = gi();
-            q[qidx].k = gi();
-            q[qidx].id = ++aidx;
+        if (gc() == 'Q') {
+            int l = gi(), r = gi(), k = gi();
+            mk(1, l, r, k, ++aidx);
         } else {
-            int p = gi();
-            q[qidx].l = p;
-            q[qidx].r = -1;
-            q[qidx].k = a[p];
-            q[++qidx].tp = 0;
-            q[qidx].l = p;
-            q[qidx].r = 1;
-            a[p] = v[++vidx] = q[qidx].k = gi();
+            int p = gi(), t = gi();
+            mk(0, p, -1, a[p], 0), mk(0, p, 1, t, 0), a[p] = v[++vidx] = t;
         }
     }
-    sort(v + 1, v + 1 + vidx);
-    vidx = unique(v + 1, v + 1 + vidx) - v - 1;
-    for (int i = 1; i <= qidx; ++i)
+    sort(v + 1, v + 1 + vidx), vidx = unique(v + 1, v + 1 + vidx) - v - 1;
+    for (int i = 1; i <= tot; ++i)
         if (!q[i].tp) q[i].k = lower_bound(v + 1, v + 1 + vidx, q[i].k) - v;
-    solve(1, qidx, 1, vidx);
+    solve(1, tot, 1, vidx);
     for (int i = 1; i <= aidx; ++i) putln(v[ans[i]]);
     return 0;
 }

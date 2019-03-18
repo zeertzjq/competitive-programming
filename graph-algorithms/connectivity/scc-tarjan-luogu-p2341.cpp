@@ -45,36 +45,28 @@ int n, m, e0[N], e1[M], dst[M], dfn[N], low[N],
 bool vis[N];
 
 void tarjan(int u) {
-    dfn[u] = low[u] = ++disc;
-    stk[++top] = u;
-    vis[u] = 1;
+    dfn[u] = low[u] = ++disc, stk[++top] = u, vis[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
-        if (!dfn[v]) {
-            tarjan(v);
-            low[u] = min(low[u], low[v]);
-        } else if (vis[v])
+        if (!dfn[v])
+            tarjan(v), low[u] = min(low[u], low[v]);
+        else if (vis[v])
             low[u] = min(low[u], dfn[v]);
     }
     if (dfn[u] == low[u]) {
         ++scc;
         while (int v = stk[top--]) {
-            id[v] = scc;
-            ++cnt[scc];
-            vis[v] = 0;
+            id[v] = scc, ++cnt[scc], vis[v] = 0;
             if (v == u) break;
         }
     }
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= m; ++i) {
         int a = gi(), b = gi();
-        e1[i] = e0[a];
-        e0[a] = i;
-        dst[i] = b;
+        e1[i] = e0[a], e0[a] = i, dst[i] = b;
     }
     for (int i = 1; i <= n; ++i)
         if (!dfn[i]) tarjan(i);

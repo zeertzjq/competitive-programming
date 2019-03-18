@@ -57,8 +57,7 @@ struct mat {
                 for (int k = 0; k < b; ++k)
                     ret.m[i][j] =
                         (ret.m[i][j] + 1LL * m[i][k] * rhs.m[k][j]) % mod;
-        a = ret.a;
-        b = ret.b;
+        a = ret.a, b = ret.b;
         for (int i = 0; i < a; ++i)
             for (int j = 0; j < b; ++j) m[i][j] = ret.m[i][j];
         return *this;
@@ -72,11 +71,7 @@ int main() {
     for (int i = 0; i < n; ++i) ans.m[i][i] = 1;
     for (int i = 0; i < n; ++i)
         for (int j = 0; j < n; ++j) a.m[i][j] = gi() % mod;
-    while (k) {
-        if (k & 1) ans *= a;
-        a *= a;
-        k >>= 1;
-    }
+    for (; k; k >>= 1) k & 1 && (ans *= a), a *= a;
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) putsp(ans.m[i][j]);
         putchar('\n');

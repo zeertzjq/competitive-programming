@@ -55,14 +55,11 @@ inline int qry(int x, int y) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     while (m--) {
         int x1 = gi(), y1 = gi(), x2 = gi(), y2 = gi();
-        add(x1, y1, 1);
-        add(x1, y2 + 1, -1);
-        add(x2 + 1, y1, -1);
-        add(x2 + 1, y2 + 1, 1);
+        add(x1, y1, 1), add(x1, y2 + 1, -1), add(x2 + 1, y1, -1),
+            add(x2 + 1, y2 + 1, 1);
     }
     for (int i = 1; i <= n; ++i) {
         for (int j = 1; j <= n; ++j) putsp(qry(i, j));

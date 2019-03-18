@@ -47,12 +47,7 @@ struct node {
     node *c[2];
     bool tag;
 
-    node(int v) {
-        val = v;
-        sz = 1;
-        tag = 0;
-        c[0] = c[1] = NULL;
-    }
+    node(int v) { val = v, sz = 1, tag = 0, c[0] = c[1] = NULL; }
 
     // IMPORTANT: call upd() whenever the subtree rooted at the node is modified
     inline void upd() {
@@ -74,10 +69,7 @@ inline node *rotate(node *p, bool dir) {
     node *s = p->c[!dir];
     s->rev();
     node *t = s->c[dir];
-    s->c[dir] = p;
-    p->c[!dir] = t;
-    p->upd();
-    s->upd();
+    s->c[dir] = p, p->c[!dir] = t, p->upd(), s->upd();
     return s;
 }
 
@@ -91,25 +83,22 @@ node *splay(node *rt, int rk) {
         // IMPORTANT: DON'T use node *s = rt->c[0]
         rt->c[0]->rev();
         int llsz = rt->c[0]->c[0] ? rt->c[0]->c[0]->sz : 0;
-        if (rk <= llsz) {
-            rt->c[0]->c[0] = splay(rt->c[0]->c[0], rk);
-            rt = rotate(rt, 1);
-        } else if (rk > llsz + 1) {
-            rt->c[0]->c[1] = splay(rt->c[0]->c[1], rk - llsz - 1);
+        if (rk <= llsz)
+            rt->c[0]->c[0] = splay(rt->c[0]->c[0], rk), rt = rotate(rt, 1);
+        else if (rk > llsz + 1)
+            rt->c[0]->c[1] = splay(rt->c[0]->c[1], rk - llsz - 1),
             rt->c[0] = rotate(rt->c[0], 0);
-        }
         if (rt->c[0]) rt = rotate(rt, 1);
     } else {
         // IMPORTANT: DON'T use node *s = rt->c[1]
         rt->c[1]->rev();
         int rlsz = rt->c[1]->c[0] ? lsz + 1 + rt->c[1]->c[0]->sz : lsz + 1;
-        if (rk > rlsz + 1) {
-            rt->c[1]->c[1] = splay(rt->c[1]->c[1], rk - rlsz - 1);
+        if (rk > rlsz + 1)
+            rt->c[1]->c[1] = splay(rt->c[1]->c[1], rk - rlsz - 1),
             rt = rotate(rt, 0);
-        } else if (rk <= rlsz) {
-            rt->c[1]->c[0] = splay(rt->c[1]->c[0], rk - lsz - 1);
+        else if (rk <= rlsz)
+            rt->c[1]->c[0] = splay(rt->c[1]->c[0], rk - lsz - 1),
             rt->c[1] = rotate(rt->c[1], 1);
-        }
         if (rt->c[1]) rt = rotate(rt, 0);
     }
     rt->upd();
@@ -120,39 +109,31 @@ node *build(int l, int r) {
     if (l > r) return NULL;
     int m = (l + r) >> 1;
     node *rt = new node(m);
-    rt->c[0] = build(l, m - 1);
-    rt->c[1] = build(m + 1, r);
-    rt->upd();
+    rt->c[0] = build(l, m - 1), rt->c[1] = build(m + 1, r), rt->upd();
     return rt;
 }
 
 void inorder(node *rt) {
     if (!rt) return;
-    rt->rev();
-    inorder(rt->c[0]);
+    rt->rev(), inorder(rt->c[0]);
     if (rt->val > 0 && rt->val <= n) putsp(rt->val);
     inorder(rt->c[1]);
 }
 
 void destroy(node *rt) {
     if (!rt) return;
-    destroy(rt->c[0]);
-    destroy(rt->c[1]);
+    destroy(rt->c[0]), destroy(rt->c[1]);
     delete rt;
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     node *rt = build(0, n + 1);
     while (m--) {
         int l = gi(), r = gi();
-        rt = splay(rt, r + 2);
-        rt->c[0] = splay(rt->c[0], l);
+        rt = splay(rt, r + 2), rt->c[0] = splay(rt->c[0], l),
         rt->c[0]->c[1]->tag ^= 1;
     }
-    inorder(rt);
-    putchar('\n');
-    destroy(rt);  // IMPORTANT: DESTROY the tree
+    inorder(rt), putchar('\n'), destroy(rt);  // IMPORTANT: DESTROY the tree
     return 0;
 }

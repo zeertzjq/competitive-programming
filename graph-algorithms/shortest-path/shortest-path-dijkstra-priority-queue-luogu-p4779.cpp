@@ -51,10 +51,8 @@ bool vis[N];
 
 // IMPORTANT: for acyclic graphs with non-negative edge weights ONLY
 void dijkstra() {
-    fill(dis + 1, dis + 1 + n, inf);
-    dis[s] = 0;
-    h[hsz++] = make_pair(0, s);
-    push_heap(h, h + hsz, cmp);
+    fill(dis + 1, dis + 1 + n, inf), dis[s] = 0, h[hsz++] = make_pair(0, s),
+                                     push_heap(h, h + hsz, cmp);
     while (hsz) {
         pop_heap(h, h + hsz--, cmp);
         int u = h[hsz].second;
@@ -63,25 +61,18 @@ void dijkstra() {
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             long long ndis = dis[u] + w[e];
-            if (ndis < dis[v]) {
-                dis[v] = ndis;
-                h[hsz++] = make_pair(ndis, v);
+            if (ndis < dis[v])
+                dis[v] = ndis, h[hsz++] = make_pair(ndis, v),
                 push_heap(h, h + hsz, cmp);
-            }
         }
     }
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    s = gi();
+    n = gi(), m = gi(), s = gi();
     for (int i = 1; i <= m; ++i) {
         int f = gi();
-        e1[i] = e0[f];
-        e0[f] = i;
-        dst[i] = gi();
-        w[i] = gi();
+        e1[i] = e0[f], e0[f] = i, dst[i] = gi(), w[i] = gi();
     }
     dijkstra();
     for (int i = 1; i <= n; ++i) putsp(dis[i]);

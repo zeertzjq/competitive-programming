@@ -48,12 +48,7 @@ struct node {
     int key, pri, cnt, sz;
     node *c[2];
 
-    node(int k) {
-        key = k;
-        pri = ran();
-        sz = cnt = 1;
-        c[0] = c[1] = NULL;
-    }
+    node(int k) { key = k, pri = ran(), sz = cnt = 1, c[0] = c[1] = NULL; }
 
     inline void update() {
         sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;
@@ -76,24 +71,19 @@ struct node {
 
 inline node *rotate(node *p, bool dir) {
     node *s = p->c[!dir], *t = s->c[dir];
-    s->c[dir] = p;
-    p->c[!dir] = t;
-    p->update();
-    s->update();
+    s->c[dir] = p, p->c[!dir] = t, p->update(), s->update();
     return s;
 }
 
 node *insitem(node *rt, int key) {
     if (!rt) return new node(key);
     if (key == rt->key) {
-        ++rt->cnt;
-        ++rt->sz;
+        ++rt->cnt, ++rt->sz;
         return rt;
     }
     bool dir = 0;
     if (key > rt->key) dir = 1;
-    rt->c[dir] = insitem(rt->c[dir], key);
-    rt->update();
+    rt->c[dir] = insitem(rt->c[dir], key), rt->update();
     if (rt->c[dir]->pri > rt->pri) rt = rotate(rt, !dir);
     return rt;
 }
@@ -101,17 +91,14 @@ node *insitem(node *rt, int key) {
 node *delitem(node *rt, int key) {
     if (!rt) return rt;
     if (key < rt->key) {
-        rt->c[0] = delitem(rt->c[0], key);
-        rt->update();
+        rt->c[0] = delitem(rt->c[0], key), rt->update();
         return rt;
     } else if (key > rt->key) {
-        rt->c[1] = delitem(rt->c[1], key);
-        rt->update();
+        rt->c[1] = delitem(rt->c[1], key), rt->update();
         return rt;
     } else {
         if (rt->cnt > 1) {
-            --rt->cnt;
-            --rt->sz;
+            --rt->cnt, --rt->sz;
             return rt;
         } else if (!rt->c[0]) {
             node *tmp = rt->c[1];
@@ -124,8 +111,7 @@ node *delitem(node *rt, int key) {
         } else {
             bool dir = 0;
             if (rt->c[!dir]->pri > rt->c[dir]->pri) dir ^= 1;
-            rt = rotate(rt, !dir);
-            rt->c[!dir] = delitem(rt->c[!dir], key);
+            rt = rotate(rt, !dir), rt->c[!dir] = delitem(rt->c[!dir], key),
             rt->update();
             return rt;
         }
@@ -186,8 +172,7 @@ int succ(node *rt, int key) {
 
 void destroy(node *rt) {
     if (!rt) return;
-    destroy(rt->c[0]);
-    destroy(rt->c[1]);
+    destroy(rt->c[0]), destroy(rt->c[1]);
     delete rt;
 }
 

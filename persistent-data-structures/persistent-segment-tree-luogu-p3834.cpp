@@ -44,9 +44,7 @@ const int N = 200010;
 int n, m, a[N], a0[N], rg, lc[N * 20], rc[N * 20], val[N * 20], rt[N], tot = 0;
 
 inline int mk(int v, int l, int r) {
-    val[++tot] = ~v ? v : val[l] + val[r];
-    lc[tot] = l;
-    rc[tot] = r;
+    val[++tot] = ~v ? v : val[l] + val[r], lc[tot] = l, rc[tot] = r;
     return tot;
 }
 
@@ -66,13 +64,10 @@ int qry(int rt1, int rt2, int l, int r, int k) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) a[i] = gi();
-    copy(a + 1, a + 1 + n, a0 + 1);
-    sort(a + 1, a + 1 + n);
-    rg = unique(a + 1, a + 1 + n) - a - 1;
-    rt[0] = mk(0, 0, 0);
+    copy(a + 1, a + 1 + n, a0 + 1), sort(a + 1, a + 1 + n),
+        rg = unique(a + 1, a + 1 + n) - a - 1, rt[0] = mk(0, 0, 0);
     for (int i = 1; i <= n; ++i)
         rt[i] =
             add(rt[i - 1], 1, rg, lower_bound(a + 1, a + 1 + rg, a0[i]) - a);

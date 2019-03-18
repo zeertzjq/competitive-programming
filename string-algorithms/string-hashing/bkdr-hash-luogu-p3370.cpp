@@ -58,7 +58,6 @@ int main() {
         for (a[i] = c; isalnum(c = getchar()); a[i] = uhash(a[i], c))
             ;
     }
-    sort(a + 1, a + 1 + n);
-    putln(unique(a + 1, a + 1 + n) - a - 1);
+    sort(a + 1, a + 1 + n), putln(unique(a + 1, a + 1 + n) - a - 1);
     return 0;
 }

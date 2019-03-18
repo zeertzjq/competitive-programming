@@ -45,10 +45,7 @@ inline int mgi(int p) {
     while (!isdigit(c = getchar()))
         ;
     for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
-        if (x > p) {
-            x %= p;
-            f = 1;
-        }
+        x > p && (x %= p, f = 1);
     return f ? x + p : x;
 }
 
@@ -65,16 +62,11 @@ inline int phi(int n) {
 
 inline int pow(int n, int k, int p) {
     int ans = 1;
-    while (k) {
-        if (k & 1) ans = 1LL * ans * n % p;
-        n = 1LL * n * n % p;
-        k >>= 1;
-    }
+    for (; k; k >>= 1) k & 1 && (ans = 1LL * ans * n % p), n = 1LL * n * n % p;
     return ans;
 }
 
 int main() {
     int a = gi(), m = gi(), b = mgi(phi(m));
-    a %= m;
-    putln(pow(a, b, m));
+    a %= m, putln(pow(a, b, m));
 }

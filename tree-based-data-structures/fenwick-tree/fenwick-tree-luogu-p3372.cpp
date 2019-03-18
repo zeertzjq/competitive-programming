@@ -44,33 +44,24 @@ int n, m;
 long long s[N], bit1[N], bit2[N];
 
 inline void upd(long long *bit, int k, long long v) {
-    while (k <= n) {
-        bit[k] += v;
-        k += k & -k;
-    }
+    for (; k <= n; k += k & -k) bit[k] += v;
 }
 
 inline long long qry(long long *bit, int k) {
     long long ans = 0;
-    while (k) {
-        ans += bit[k];
-        k &= k - 1;
-    }
+    for (; k; k &= k - 1) ans += bit[k];
     return ans;
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) s[i] = s[i - 1] + gll();
     while (m--) {
         int o = gi(), x = gi(), y = gi();
         if (o == 1) {
             long long k = gll();
-            upd(bit1, x, k);
-            upd(bit1, y + 1, -k);
-            upd(bit2, x, k * x);
-            upd(bit2, y + 1, -k * (y + 1));
+            upd(bit1, x, k), upd(bit1, y + 1, -k), upd(bit2, x, k * x),
+                upd(bit2, y + 1, -k * (y + 1));
         } else
             putln(s[y] + (y + 1) * qry(bit1, y) - qry(bit2, y) - s[x - 1] -
                   x * qry(bit1, x - 1) + qry(bit2, x - 1));

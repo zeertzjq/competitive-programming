@@ -57,18 +57,15 @@ bool dirty[N << 2];
 inline void upd(int x) { sum[x] = sum[L] + sum[R]; }
 
 inline void push(int x, int l, int r) {
-    if (dirty[x]) {
-        dirty[L] = dirty[R] = 1;
+    if (dirty[x])
+        dirty[L] = dirty[R] = 1,
         dirty[x] = sum[L] = sum[R] = tag[L] = tag[R] = 0;
-    }
+
     if (tag[x]) {
         int m = (l + r) >> 1;
         // IMPORTANT: multiply by length
-        sum[L] += tag[x] * (m - l + 1);
-        sum[R] += tag[x] * (r - m);
-        tag[L] += tag[x];
-        tag[R] += tag[x];
-        tag[x] = 0;
+        sum[L] += tag[x] * (m - l + 1), sum[R] += tag[x] * (r - m),
+            tag[L] += tag[x], tag[R] += tag[x], tag[x] = 0;
     }
 }
 
@@ -76,15 +73,12 @@ void add(int x, int l, int r, int ml, int mr) {
     if (l > r) return;
     if (mr < l || ml > r) return;
     if (ml <= l && mr >= r) {
-        sum[x] += r - l + 1;  // IMPORTANT: DON'T use ++sum[x]
-        ++tag[x];
+        sum[x] += r - l + 1, ++tag[x];
         return;
     }
     push(x, l, r);
     int m = (l + r) >> 1;
-    add(L, l, m, ml, mr);
-    add(R, m + 1, r, ml, mr);
-    upd(x);
+    add(L, l, m, ml, mr), add(R, m + 1, r, ml, mr), upd(x);
 }
 
 long long query(int x, int l, int r, int ql, int qr) {
@@ -105,40 +99,30 @@ void solve(int ql, int qr, int l, int r) {
     }
     int m = (l + r) >> 1;
     int p1 = 0, p2 = 0;
-    tag[1] = sum[1] = 0;
-    dirty[1] = 1;
+    tag[1] = sum[1] = 0, dirty[1] = 1;
     for (int i = ql; i <= qr; ++i)
         if (!q[i].tp) {
-            if (q[i].c > m) {
-                add(1, 1, n, q[i].l, q[i].r);
-                q2[++p2] = q[i];
-            } else
+            if (q[i].c > m)
+                add(1, 1, n, q[i].l, q[i].r), q2[++p2] = q[i];
+            else
                 q1[++p1] = q[i];
         } else {
             long long gtr =
                 query(1, 1, n, q[i].l, q[i].r);  // IMPORTANT: DON'T use int
-            if (q[i].c > gtr) {
-                q[i].c -= gtr;
-                q1[++p1] = q[i];
-            } else
+            if (q[i].c > gtr)
+                q[i].c -= gtr, q1[++p1] = q[i];
+            else
                 q2[++p2] = q[i];
         }
-    copy(q1 + 1, q1 + 1 + p1, q + ql);
-    copy(q2 + 1, q2 + 1 + p2, q + ql + p1);
-    solve(ql, ql + p1 - 1, l, m);
-    solve(ql + p1, qr, m + 1, r);
+    copy(q1 + 1, q1 + 1 + p1, q + ql), copy(q2 + 1, q2 + 1 + p2, q + ql + p1),
+        solve(ql, ql + p1 - 1, l, m), solve(ql + p1, qr, m + 1, r);
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    for (int i = 1; i <= m; ++i) {
-        q[i].tp = gi() - 1;
-        q[i].l = gi();
-        q[i].r = gi();
-        q[i].c = q[i].tp ? gll() : gi();
-        q[i].id = q[i].tp ? ++aidx : 0;
-    }
+    n = gi(), m = gi();
+    for (int i = 1; i <= m; ++i)
+        q[i].tp = gi() - 1, q[i].l = gi(), q[i].r = gi(),
+        q[i].c = q[i].tp ? gll() : gi(), q[i].id = q[i].tp ? ++aidx : 0;
     solve(1, m, -n, n);
     for (int i = 1; i <= aidx; ++i) putln(ans[i]);
     return 0;

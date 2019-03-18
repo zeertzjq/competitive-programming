@@ -48,10 +48,7 @@ void manacher() {
     for (int i = 2; i <= tail; ++i) {
         if (i < r) ext[i] = min(ext[(pos << 1) - i], r - i);
         while (s[i + ext[i] + 1] == s[i - ext[i] - 1]) ++ext[i];
-        if (i + ext[i] > r) {
-            r = i + ext[i];
-            pos = i;
-        }
+        if (i + ext[i] > r) r = i + ext[i], pos = i;
     }
 }
 
@@ -62,11 +59,9 @@ int main() {
     char c;
     while (!islower(c = getchar()))
         ;
-    do {
-        s[++tail] = c;
-        s[++tail] = '.';
-    } while (islower(c = getchar()));
-    manacher();
-    putln(*max_element(ext + 1, ext + tail + 1));
+    do
+        s[++tail] = c, s[++tail] = '.';
+    while (islower(c = getchar()));
+    manacher(), putln(*max_element(ext + 1, ext + tail + 1));
     return 0;
 }

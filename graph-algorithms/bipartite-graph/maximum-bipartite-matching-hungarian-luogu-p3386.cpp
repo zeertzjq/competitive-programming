@@ -48,8 +48,7 @@ bool dfs(int x) {
         if (g[x][y] && !vis[y]) {
             vis[y] = 1;
             if (!ym[y] || dfs(ym[y])) {
-                xm[x] = y;
-                ym[y] = x;
+                xm[x] = y, ym[y] = x;
                 return 1;
             }
         }
@@ -57,14 +56,9 @@ bool dfs(int x) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    e = gi();
+    n = gi(), m = gi(), e = gi();
     while (e--) g[gi()][gi()] = 1;
-    for (int x = 1; x <= n; ++x) {
-        fill(vis + 1, vis + 1 + m, 0);
-        ans += dfs(x);
-    }
+    for (int x = 1; x <= n; ++x) fill(vis + 1, vis + 1 + m, 0), ans += dfs(x);
     putln(ans);
     return 0;
 }

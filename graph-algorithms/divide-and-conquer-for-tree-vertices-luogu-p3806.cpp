@@ -52,18 +52,13 @@ void grt(int u, int fa) {
         if (v == fa || vis[v])
             continue;  // IMPORTANT: skip the parent node or nodes not in the
                        // current tree
-        grt(v, u);
-        msz = max(msz, sz[v]);
-        sz[u] += sz[v];
+        grt(v, u), msz = max(msz, sz[v]), sz[u] += sz[v];
     }
     msz = max(
         (int)msz,
         tot -
             sz[u]);  // IMPORTANT: the parent node is also the root of a subtree
-    if (msz < rtmsz) {
-        rtmsz = msz;
-        rt = u;
-    }
+    if (msz < rtmsz) rtmsz = msz, rt = u;
 }
 
 void gdis(int u, int fa, int d) {
@@ -86,51 +81,35 @@ inline void gans(int d) {
 }
 
 void solve(int u) {
-    f = 0;
-    vis[u] = 1;
-    vdcnt = 1;
-    vdis[f][1] = 0;
+    f = 0, vis[u] = 1, vdcnt = 1, vdis[f][1] = 0;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (vis[v]) continue;
-        dcnt = 0;
-        dis[v] = c[e];
-        gdis(v, u, c[e]);
+        dcnt = 0, dis[v] = c[e], gdis(v, u, c[e]);
         sort(dis + 1, dis + 1 + dcnt);  // IMPORTANT: sort the distances
         for (int i = 1; i <= dcnt; ++i) gans(dis[i]);
         merge(vdis[f] + 1, vdis[f] + 1 + vdcnt, dis + 1, dis + 1 + dcnt,
-              vdis[!f] + 1);
-        f ^= 1;
-        vdcnt += dcnt;
+              vdis[!f] + 1),
+            f ^= 1, vdcnt += dcnt;
     }
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (vis[v]) continue;
-        rt = 0;
-        rtmsz = N;
-        tot = sz[v] < sz[u] ? sz[v]
-                            : sz[v] - sz[u];  // IMPORTANT: update the tree size
-        grt(v, 0);
-        solve(rt);
+        rt = 0, rtmsz = N, tot = sz[v] < sz[u] ? sz[v] : sz[v] - sz[u],
+        grt(v, 0), solve(rt);
     }
 }
 
 int main() {
-    tot = n = gi();
-    m = gi();
+    tot = n = gi(), m = gi();
     for (int i = 1; i < n; ++i) {
         int a = gi(), b = gi();
-        c[i << 1] = c[i << 1 | 1] = gi();
-        e1[i << 1] = e0[a];
-        e0[a] = i << 1;
-        dst[i << 1] = b;
-        e1[i << 1 | 1] = e0[b];
-        e0[b] = i << 1 | 1;
-        dst[i << 1 | 1] = a;
+        c[i << 1] = c[i << 1 | 1] = gi(), e1[i << 1] = e0[a], e0[a] = i << 1,
+               dst[i << 1] = b, e1[i << 1 | 1] = e0[b], e0[b] = i << 1 | 1,
+               dst[i << 1 | 1] = a;
     }
     for (int i = 1; i <= m; ++i) k[i] = gi();
-    grt(1, 0);
-    solve(rt);
+    grt(1, 0), solve(rt);
     for (int i = 1; i <= m; ++i) puts(ans[i] ? "AYE" : "NAY");
     return 0;
 }

@@ -66,21 +66,14 @@ inline int rot(int p, bool d) {
     int s = c[p][!d];
     rev(s);
     int t = c[s][d];
-    c[s][d] = p;
-    c[p][!d] = t;
-    f[s] = f[p];
-    f[p] = s;
-    f[t] = p;
-    upd(p);
-    upd(s);
+    c[s][d] = p, c[p][!d] = t, f[s] = f[p], f[p] = s, f[t] = p, upd(p), upd(s);
     return s;
 }
 
 void splay(int x) {
     while (!isrt(x)) {
         int p = f[x], gp = f[p];
-        rev(gp);
-        rev(p);
+        rev(gp), rev(p);
         bool pd = c[p][1] == x;
         if (isrt(p))
             rot(p, !pd);
@@ -99,68 +92,42 @@ void splay(int x) {
 }
 
 inline void access(int x) {
-    for (int s = 0; x; s = x, x = f[x]) {
-        splay(x);
-        rev(x);
-        c[x][1] = s;
-        upd(x);
-    }
+    for (int s = 0; x; s = x, x = f[x]) splay(x), rev(x), c[x][1] = s, upd(x);
 }
 
-inline void mkrt(int x) {
-    access(x);
-    splay(x);
-    r[x] ^= 1;
-}
+inline void mkrt(int x) { access(x), splay(x), r[x] ^= 1; }
 
 inline int frt(int x) {
-    access(x);
-    splay(x);
-    rev(x);
-    while (c[x][0]) {
-        x = c[x][0];
-        rev(x);
-    }
+    access(x), splay(x), rev(x);
+    while (c[x][0]) x = c[x][0], rev(x);
     return x;
 }
 
 inline void link(int x, int y) {
-    mkrt(x);
-    splay(x);
+    mkrt(x), splay(x);
     if (frt(y) == x) return;
     f[x] = y;
 }
 
 inline void cut(int x, int y) {
-    mkrt(x);
-    access(y);
-    splay(y);
-    rev(y);
+    mkrt(x), access(y), splay(y), rev(y);
     if (c[y][0] != x || c[x][1] || frt(y) != x) return;
-    f[x] = c[y][0] = 0;
-    upd(y);
+    f[x] = c[y][0] = 0, upd(y);
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) v[i] = s[i] = gi();
     while (m--) {
         int opt = gi(), x = gi(), y = gi();
-        if (opt == 0) {
-            mkrt(x);
-            access(y);
-            splay(y);
-            putln(s[y]);
-        } else if (opt == 1)
+        if (opt == 0)
+            mkrt(x), access(y), splay(y), putln(s[y]);
+        else if (opt == 1)
             link(x, y);
         else if (opt == 2)
             cut(x, y);
-        else {
-            splay(x);
-            v[x] = y;
-            upd(x);
-        }
+        else
+            splay(x), v[x] = y, upd(x);
     }
     return 0;
 }

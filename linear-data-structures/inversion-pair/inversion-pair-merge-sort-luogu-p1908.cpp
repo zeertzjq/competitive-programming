@@ -46,14 +46,12 @@ long long ans = 0;
 void solve(int l, int r) {
     if (l >= r) return;
     int m = (l + r) >> 1;
-    solve(l, m);
-    solve(m + 1, r);
+    solve(l, m), solve(m + 1, r);
     int p = l, q = m + 1, o = l;
     while (p <= m && q <= r)
-        if (a[p] > a[q]) {
-            ans += m - p + 1;
-            tmp[o++] = a[q++];
-        } else
+        if (a[p] > a[q])
+            ans += m - p + 1, tmp[o++] = a[q++];
+        else
             tmp[o++] = a[p++];
     while (p <= m) tmp[o++] = a[p++];
     while (q <= r) tmp[o++] = a[q++];
@@ -63,7 +61,6 @@ void solve(int l, int r) {
 int main() {
     n = gi();
     for (int i = 1; i <= n; ++i) a[i] = gi();
-    solve(1, n);
-    putln(ans);
+    solve(1, n), putln(ans);
     return 0;
 }

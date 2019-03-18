@@ -43,10 +43,7 @@ const int N = 200010;
 int n, m, rt[N], lc[N * 36], rc[N * 36], fa[N * 36], rk[N * 36], tot = 0;
 
 inline int mk(int f, int k, int l, int r) {
-    fa[++tot] = f;
-    rk[tot] = k;
-    lc[tot] = l;
-    rc[tot] = r;
+    fa[++tot] = f, rk[tot] = k, lc[tot] = l, rc[tot] = r;
     return tot;
 }
 
@@ -82,9 +79,7 @@ int finds(int rt, int x) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    rt[0] = build(1, n);
+    n = gi(), m = gi(), rt[0] = build(1, n);
     for (int i = 1; i <= m; ++i) {
         int o = gi();
         if (o == 1) {
@@ -97,10 +92,10 @@ int main() {
             if (rk[na] < rk[nb]) swap(na, nb);
             rt[i] = upd(rt[i - 1], 1, n, fa[nb], fa[na]);
             if (rk[na] == rk[nb]) rt[i] = add(rt[i], 1, n, fa[na]);
-        } else if (o == 3) {
-            rt[i] = rt[i - 1];
+        } else if (o == 3)
+            rt[i] = rt[i - 1],
             puts(fa[finds(rt[i], gi())] == fa[finds(rt[i], gi())] ? "1" : "0");
-        } else
+        else
             rt[i] = rt[gi()];
     }
     return 0;

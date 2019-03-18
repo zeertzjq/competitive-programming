@@ -56,73 +56,46 @@ struct itm {
 int bit[K], f[N], ans[N], k;
 
 inline void upd(int p, int v) {
-    while (p <= k) {
-        bit[p] += v;
-        p += p & -p;
-    }
+    for (; p <= k; p += p & -p) bit[p] += v;
 }
 
 inline int qry(int p) {
     int ans = 0;
-    while (p) {
-        ans += bit[p];
-        p &= p - 1;
-    }
+    for (; p; p &= p - 1) ans += bit[p];
     return ans;
 }
 
 inline void clr(int p) {
-    while (p <= k && bit[p]) {
-        bit[p] = 0;
-        p += p & -p;
-    }
+    for (; p <= k && bit[p]; p += p & -p) bit[p] = 0;
 }
 
 void cdq(int l, int r) {
     if (l >= r) return;
     int m = (l + r) >> 1;
-    cdq(l, m);
-    cdq(m + 1, r);
+    cdq(l, m), cdq(m + 1, r);
     int p1 = l, p2 = m + 1, p = l;
     while (p1 <= m && p2 <= r) {
-        if (q[p1].b <= q[p2].b) {
-            upd(q[p1].c, q[p1].cnt);
-            tmp[p++] = q[p1++];
-        } else {
-            f[q[p2].id] += qry(q[p2].c);
-            tmp[p++] = q[p2++];
-        }
+        if (q[p1].b <= q[p2].b)
+            upd(q[p1].c, q[p1].cnt), tmp[p++] = q[p1++];
+        else
+            f[q[p2].id] += qry(q[p2].c), tmp[p++] = q[p2++];
     }
     while (p1 <= m) tmp[p++] = q[p1++];
-    while (p2 <= r) {
-        f[q[p2].id] += qry(q[p2].c);
-        tmp[p++] = q[p2++];
-    }
-    for (int i = l; i <= r; ++i) {
-        clr(tmp[i].c);
-        q[i] = tmp[i];
-    }
+    while (p2 <= r) f[q[p2].id] += qry(q[p2].c), tmp[p++] = q[p2++];
+    for (int i = l; i <= r; ++i) clr(tmp[i].c), q[i] = tmp[i];
 }
 
 int main() {
     int n0 = gi();
     k = gi();
-    for (int i = 1; i <= n0; ++i) {
-        q[i].a = gi();
-        q[i].b = gi();
-        q[i].c = gi();
-    }
+    for (int i = 1; i <= n0; ++i) q[i].a = gi(), q[i].b = gi(), q[i].c = gi();
     sort(q + 1, q + n0 + 1);
     int n = 0;
     int ccnt = 0;
     for (int i = 1; i <= n0; ++i) {
         ++ccnt;
-        if (i == n0 || !(q[i] == q[i + 1])) {
-            q[++n] = q[i];
-            q[n].id = n;
-            q[n].cnt = ccnt;
-            ccnt = 0;
-        }
+        if (i == n0 || !(q[i] == q[i + 1]))
+            q[++n] = q[i], q[n].id = n, q[n].cnt = ccnt, ccnt = 0;
     }
     cdq(1, n);
     for (int i = 1; i <= n; ++i) ans[f[q[i].id] + q[i].cnt - 1] += q[i].cnt;

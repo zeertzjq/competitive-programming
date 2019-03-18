@@ -53,33 +53,25 @@ inline int minson(int x) {
 }
 
 inline void heapup(int x) {
-    while (x > 1 && h[P] > h[x]) {
-        swap(h[x], h[P]);
-        x >>= 1;
-    }
+    while (x > 1 && h[P] > h[x]) swap(h[x], h[P]), x >>= 1;
 }
 
 inline void heapdown(int x) {
     int ms;
-    while (L <= sz && h[x] > h[ms = minson(x)]) {
-        swap(h[x], h[ms]);
-        x = ms;
-    }
+    while (L <= sz && h[x] > h[ms = minson(x)]) swap(h[x], h[ms]), x = ms;
 }
 
 int main() {
     int n = gi();
     while (n--) switch (gi()) {
             case 1:
-                h[++sz] = gi();
-                heapup(sz);
+                h[++sz] = gi(), heapup(sz);
                 break;
             case 2:
                 putln(h[1]);
                 break;
             case 3:
-                swap(h[1], h[sz--]);
-                heapdown(1);
+                swap(h[1], h[sz--]), heapdown(1);
                 break;
         }
     return 0;

@@ -50,9 +50,7 @@ void tarjan(int u, int fa) {
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (v == fa) continue;
-        tarjan(v, u);
-        p[finds(v)] = u;
-        vis[v] = 1;
+        tarjan(v, u), p[finds(v)] = u, vis[v] = 1;
     }
     for (int q = q0[u]; q; q = q1[q]) {
         int a = aidx[q], v = qi[q];
@@ -61,27 +59,17 @@ void tarjan(int u, int fa) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    s = gi();
+    n = gi(), m = gi(), s = gi();
     for (int i = 1; i < n; ++i) {
         int x = gi(), y = gi();
-        e1[i << 1] = e0[x];
-        e0[x] = i << 1;
-        dst[i << 1] = y;
-        e1[i << 1 | 1] = e0[y];
-        e0[y] = i << 1 | 1;
-        dst[i << 1 | 1] = x;
+        e1[i << 1] = e0[x], e0[x] = i << 1, dst[i << 1] = y,
+                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, dst[i << 1 | 1] = x;
     }
     for (int i = 1; i <= m; ++i) {
         int x = gi(), y = gi();
-        aidx[i << 1] = aidx[i << 1 | 1] = i;
-        q1[i << 1] = q0[x];
-        q0[x] = i << 1;
-        qi[i << 1] = y;
-        q1[i << 1 | 1] = q0[y];
-        q0[y] = i << 1 | 1;
-        qi[i << 1 | 1] = x;
+        aidx[i << 1] = aidx[i << 1 | 1] = i, q1[i << 1] = q0[x], q0[x] = i << 1,
+                  qi[i << 1] = y, q1[i << 1 | 1] = q0[y], q0[y] = i << 1 | 1,
+                  qi[i << 1 | 1] = x;
     }
     for (int i = 1; i <= n; ++i) p[i] = i;
     tarjan(s, 0);

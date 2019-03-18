@@ -45,10 +45,7 @@ int n, d, k, x[N], s[N], ming = inf, maxg = 0, q[N], head, tail;
 long long tot = 0, dp[N];
 
 bool ck(int g) {
-    fill(dp, dp + n + 1, -infll);
-    head = 1;
-    tail = 0;
-    dp[0] = 0;
+    fill(dp, dp + n + 1, -infll), head = 1, tail = 0, dp[0] = 0;
     int j = 0;
     for (int i = 1; i <= n; ++i) {
         while (j < i && x[i] - x[j] >= d - g) {
@@ -76,13 +73,9 @@ int solve(int l, int r) {
 }
 
 int main() {
-    n = gi();
-    d = gi();
-    k = gi();
+    n = gi(), d = gi(), k = gi();
     for (int i = 1; i <= n; ++i) {
-        x[i] = gi();
-        s[i] = gi();
-        ming = min(abs(x[i] - d), ming);
+        x[i] = gi(), s[i] = gi(), ming = min(abs(x[i] - d), ming),
         maxg = max(abs(x[i] - d), maxg);
         if (s[i] > 0) tot += s[i];
     }

@@ -50,16 +50,14 @@ int merge(int l, int r) {
     if (!l || !r) return l | r;
     if (l == r) return l;
     if (v[l] > v[r] || (v[l] == v[r] && l > r)) swap(l, r);
-    p[r] = l;
-    c[l][1] = merge(c[l][1], r);
+    p[r] = l, c[l][1] = merge(c[l][1], r);
     if (dis[c[l][0]] > dis[c[l][1]]) swap(c[l][0], c[l][1]);
     dis[l] = dis[c[l][1]] + 1;
     return l;
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) v[i] = gi(), p[i] = i;
     dis[0] = -1;
     while (m--) {
@@ -74,11 +72,9 @@ int main() {
                 continue;
             } else {
                 int rt = finds(x);
-                putln(v[rt]);
-                v[rt] = 0;
-                p[c[rt][0]] = c[rt][0];
-                p[c[rt][1]] = c[rt][1];
-                p[rt] = merge(c[rt][0], c[rt][1]);
+                putln(v[rt]), v[rt] = 0, p[c[rt][0]] = c[rt][0],
+                              p[c[rt][1]] = c[rt][1],
+                              p[rt] = merge(c[rt][0], c[rt][1]);
             }
         }
     }

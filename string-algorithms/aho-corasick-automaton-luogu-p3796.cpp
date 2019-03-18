@@ -44,9 +44,7 @@ int n, rt, head, tail, q[W], tot, c[W][26], fail[W], e[W], mcnt, cnt[N];
 char s[N][S], t[T];
 
 inline int mk() {
-    fail[++tot] = 0;
-    e[tot] = 0;
-    fill(c[tot], c[tot + 26], 0);
+    fail[++tot] = 0, e[tot] = 0, fill(c[tot], c[tot + 26], 0);
     return tot;
 }
 
@@ -61,37 +59,27 @@ inline void build(int n) {
 }
 
 inline void gfail() {
-    head = tail = 0;
-    fail[rt] = rt;
+    head = tail = 0, fail[rt] = rt;
     for (int i = 0; i < 26; ++i)
-        if (c[rt][i]) {
-            fail[c[rt][i]] = rt;
-            q[tail++] = c[rt][i];
-        } else
+        if (c[rt][i])
+            fail[c[rt][i]] = rt, q[tail++] = c[rt][i];
+        else
             c[rt][i] = rt;
     while (head < tail) {
         int u = q[head++];
         for (int i = 0; i < 26; ++i)
-            if (c[u][i]) {
-                fail[c[u][i]] = c[fail[u]][i];
-                q[tail++] = c[u][i];
-            } else
+            if (c[u][i])
+                fail[c[u][i]] = c[fail[u]][i], q[tail++] = c[u][i];
+            else
                 c[u][i] = c[fail[u]][i];
     }
 }
 
 int main() {
     while (n = gi()) {
-        tot = 0;
-        rt = mk();
-        for (int i = 1; i <= n; ++i) {
-            scanf("%s", s[i]);
-            build(i);
-        }
-        gfail();
-        scanf("%s", t);
-        fill(cnt + 1, cnt + 1 + n, 0);
-        mcnt = 0;
+        tot = 0, rt = mk();
+        for (int i = 1; i <= n; ++i) scanf("%s", s[i]), build(i);
+        gfail(), scanf("%s", t), fill(cnt + 1, cnt + 1 + n, 0), mcnt = 0;
         int u = rt;
         for (int i = 0; t[i]; ++i) {
             u = c[u][t[i] - 'a'];

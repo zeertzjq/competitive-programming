@@ -51,17 +51,12 @@ struct query {
 } q[N];
 
 int main() {
-    n = gi();
-    m = gi();
-    k = gi();
+    n = gi(), m = gi(), k = gi();
     int bs = sqrt(n);
     for (int i = 1; i <= n; ++i) a[i] = gi();
     for (int i = 1; i <= m; ++i) {
         int l = gi(), r = gi();
-        q[i].id = l / bs;
-        q[i].l = l;
-        q[i].r = r;
-        q[i].idx = i;
+        q[i].id = l / bs, q[i].l = l, q[i].r = r, q[i].idx = i;
     }
     sort(q + 1, q + 1 + m);
     int lp = q[1].l, rp = lp;

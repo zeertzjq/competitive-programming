@@ -43,24 +43,17 @@ const int N = 500010;
 int n, m, s[N], bit[N];
 
 inline void upd(int k, int v) {
-    while (k <= n) {
-        bit[k] += v;
-        k += k & -k;
-    }
+    for (; k <= n; k += k & -k) bit[k] += v;
 }
 
 inline int qry(int k) {
     int ans = 0;
-    while (k) {
-        ans += bit[k];
-        k &= k - 1;
-    }
+    for (; k; k &= k - 1) ans += bit[k];
     return ans;
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) s[i] = s[i - 1] + gi();
     while (m--) {
         int o = gi(), x = gi(), y = gi();

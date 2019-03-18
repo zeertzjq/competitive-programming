@@ -48,9 +48,7 @@ int getinv(int x) {
 }
 
 int main() {
-    n = gi();
-    p = gi();
-    inv[1] = 1;
+    n = gi(), p = gi(), inv[1] = 1;
     for (int i = 1; i <= n; ++i) putln(getinv(i));
     return 0;
 }

@@ -54,9 +54,7 @@ void dfs(int x) {
     for (int e = e0[x]; e; e = e1[e]) {
         int v = dst[e];
         if (v == anc[x][0]) continue;  // IMPORTANT: skip parent node
-        anc[v][0] = x;
-        dep[v] = dep[x] + 1;
-        dfs(v);
+        anc[v][0] = x, dep[v] = dep[x] + 1, dfs(v);
     }
 }
 
@@ -65,25 +63,16 @@ int lca(int x, int y) {
     while (dep[x] > dep[y]) x = anc[x][log2(dep[x] - dep[y])];
     if (x == y) return x;
     for (int d = log2(dep[x]); d >= 0; --d)
-        if (anc[x][d] != anc[y][d]) {
-            x = anc[x][d];
-            y = anc[y][d];
-        }
+        if (anc[x][d] != anc[y][d]) x = anc[x][d], y = anc[y][d];
     return anc[x][0];
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    s = gi();
+    n = gi(), m = gi(), s = gi();
     for (int i = 1; i < n; ++i) {
         int x = gi(), y = gi();
-        e1[i << 1] = e0[x];
-        e0[x] = i << 1;
-        dst[i << 1] = y;
-        e1[i << 1 | 1] = e0[y];
-        e0[y] = i << 1 | 1;
-        dst[i << 1 | 1] = x;
+        e1[i << 1] = e0[x], e0[x] = i << 1, dst[i << 1] = y,
+                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, dst[i << 1 | 1] = x;
     }
     dfs(s);
     while (m--) {

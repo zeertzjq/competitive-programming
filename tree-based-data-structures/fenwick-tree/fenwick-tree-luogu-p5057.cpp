@@ -44,30 +44,22 @@ int n, m;
 bool bit[N];
 
 inline void upd(int k) {
-    while (k <= n) {
-        bit[k] ^= 1;
-        k += k & -k;
-    }
+    for (; k <= n; k += k & -k) bit[k] ^= 1;
 }
 
 inline bool qry(int k) {
     bool ans = 0;
-    while (k) {
-        ans ^= bit[k];
-        k &= k - 1;
-    }
+    for (; k; k &= k - 1) ans ^= bit[k];
     return ans;
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     while (m--) {
         int t = gi();
-        if (t == 1) {
-            upd(gi());
-            upd(gi() + 1);
-        } else
+        if (t == 1)
+            upd(gi()), upd(gi() + 1);
+        else
             putln(qry(gi()));
     }
     return 0;

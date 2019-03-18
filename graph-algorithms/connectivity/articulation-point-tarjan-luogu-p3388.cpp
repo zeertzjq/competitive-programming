@@ -44,15 +44,13 @@ int n, m, e0[N], e1[E], dst[E], dfn[N], low[N], disc = 0;
 bool ap[N], vis[N];
 
 void tarjan(int u, int fa) {
-    low[u] = dfn[u] = ++disc;
-    vis[u] = 1;
+    low[u] = dfn[u] = ++disc, vis[u] = 1;
     int ccnt = 0;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (v == fa) continue;
         if (!dfn[v]) {
-            tarjan(v, u);
-            low[u] = min(low[u], low[v]);
+            tarjan(v, u), low[u] = min(low[u], low[v]);
             if (fa && low[v] >= dfn[u])
                 ap[u] = 1;
             else if (!fa)
@@ -67,16 +65,11 @@ void tarjan(int u, int fa) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= m; ++i) {
         int x = gi(), y = gi();
-        e1[i << 1] = e0[x];
-        e0[x] = i << 1;
-        dst[i << 1] = y;
-        e1[i << 1 | 1] = e0[y];
-        e0[y] = i << 1 | 1;
-        dst[i << 1 | 1] = x;
+        e1[i << 1] = e0[x], e0[x] = i << 1, dst[i << 1] = y,
+                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, dst[i << 1 | 1] = x;
     }
     for (int i = 1; i <= n; ++i)
         if (!dfn[i]) tarjan(i, 0);

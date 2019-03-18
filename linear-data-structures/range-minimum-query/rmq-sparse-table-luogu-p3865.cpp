@@ -61,9 +61,7 @@ inline int stquery(int l, int r) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
-    log2n = log2(n);
+    n = gi(), m = gi(), log2n = log2(n);
     for (int i = 1; i <= n; ++i) stmax[i][0] = gi();
     stinit();
     while (m--) {

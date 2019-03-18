@@ -65,7 +65,7 @@ struct node {
     // IMPORTANT: call update() whenever the subtree rooted at the node is
     // modified
     inline void update() {
-        sheight = max(c[0] ? c[0]->sheight : 0, c[1] ? c[1]->sheight : 0) + 1;
+        sheight = max(c[0] ? c[0]->sheight : 0, c[1] ? c[1]->sheight : 0) + 1,
         sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;
     }
 
@@ -73,41 +73,30 @@ struct node {
         return (c[1] ? c[1]->sheight : 0) - (c[0] ? c[0]->sheight : 0);
     }
 
-    node(int k) {
-        key = k;
-        sheight = 1;
-        c[0] = c[1] = NULL;
-        cnt = sz = 1;
-    }
+    node(int k) { key = k, sheight = 1, c[0] = c[1] = NULL, cnt = sz = 1; }
 };
 
 inline node *rotate(node *p, bool dir) {
-    node *s = p->c[!dir], *t = s->c[dir];
-    p->c[!dir] = t;
-    s->c[dir] = p;
-    p->update();
-    s->update();
+    node *s = p->c[!dir], *t = s->c[dir], p->c[!dir] = t, s->c[dir] = p,
+         p->update(), s->update();
     return s;
 }
 
 void destroy(node *rt) {
     if (!rt) return;
-    destroy(rt->c[0]);
-    destroy(rt->c[1]);
+    destroy(rt->c[0]), destroy(rt->c[1]);
     delete rt;
 }
 
 node *insitem(node *rt, int key) {
     if (!rt) return new node(key);
     if (key == rt->key) {
-        ++rt->cnt;
-        ++rt->sz;
+        ++rt->cnt, ++rt->sz;
         return rt;
     }
     bool dir = 0;
     if (key > rt->key) dir = 1;
-    rt->c[dir] = insitem(rt->c[dir], key);
-    rt->update();
+    rt->c[dir] = insitem(rt->c[dir], key), rt->update();
     int bal = rt->bal();
     if (bal < -1) {
         if (key > rt->c[0]->key) rt->c[0] = rotate(rt->c[0], 0);
@@ -124,8 +113,7 @@ node *delitem(node *rt, int key) {
     if (!rt) return rt;
     if (key == rt->key) {
         if (rt->cnt > 1) {
-            --rt->cnt;
-            --rt->sz;
+            --rt->cnt, --rt->sz;
             return rt;
         } else {
             if (!rt->c[0]) {
@@ -138,15 +126,13 @@ node *delitem(node *rt, int key) {
                 return tmp;
             } else {
                 node *p = rt->stsucc();
-                key = rt->key = p->key;
-                swap(rt->cnt, p->cnt);
+                key = rt->key = p->key, swap(rt->cnt, p->cnt);
             }
         }
     }
     bool dir = 1;
     if (key < rt->key) dir = 0;
-    rt->c[dir] = delitem(rt->c[dir], key);
-    rt->update();
+    rt->c[dir] = delitem(rt->c[dir], key), rt->update();
     int bal = rt->bal();
     if (bal < -1) {
         if (rt->c[0]->bal() > 0) rt->c[0] = rotate(rt->c[0], 0);

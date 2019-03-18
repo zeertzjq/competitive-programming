@@ -52,27 +52,22 @@ void solve() {
         top = 0;
         for (int i = 1; i <= n + 1; ++i) {
             int ubm = i;
-            while (top && w[i][j] < stk[top]) {
-                a1 = max(a1, sq(min(i - ub[top], stk[top])));
-                a2 = max(a2, (i - ub[top]) * stk[top]);
+            while (top && w[i][j] < stk[top])
+                a1 = max(a1, sq(min(i - ub[top], stk[top]))),
+                a2 = max(a2, (i - ub[top]) * stk[top]),
                 ubm = min(ubm, ub[top--]);
-            }
-            stk[++top] = w[i][j];
-            ub[top] = ubm;
+            stk[++top] = w[i][j], ub[top] = ubm;
         }
     }
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i)
         for (int j = 1; j <= m; ++j) mp[i][j] = gi() ^ (i & 1) ^ (j & 1);
     solve();
     for (int i = 1; i <= n; ++i)
         for (int j = 1; j <= m; ++j) mp[i][j] ^= 1;
-    solve();
-    putln(a1);
-    putln(a2);
+    solve(), putln(a1), putln(a2);
     return 0;
 }

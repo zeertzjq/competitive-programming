@@ -43,9 +43,7 @@ const int N = 1000010;
 int n, m, a[N], rt[N], lc[N * 20], rc[N * 20], val[N * 20], tot = 0;
 
 inline int mk(int v, int l, int r) {
-    val[++tot] = v;
-    lc[tot] = l;
-    rc[tot] = r;
+    val[++tot] = v, lc[tot] = l, rc[tot] = r;
     return tot;
 }
 
@@ -69,8 +67,7 @@ int qry(int rt, int l, int r, int x) {
 }
 
 int main() {
-    n = gi();
-    m = gi();
+    n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) a[i] = gi();
     rt[0] = build(1, n);
     for (int i = 1; i <= m; ++i) {
