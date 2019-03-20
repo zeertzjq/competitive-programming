@@ -70,7 +70,7 @@ int main() {
     int ans = 0;
     for (int j = 0; j <= m; ++j)
         for (int k = 0; j + k <= m; ++k)
-            ans = ((long long)ans + dp[n][j][k]) % mod;
+            ans = ((0LL + ans + dp[n][j][k])) % mod;
     putln(ans);
     return 0;
 }
