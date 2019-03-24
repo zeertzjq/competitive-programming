@@ -39,8 +39,8 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 50010;
-int n, m, k, bs, cnt[N], a[N], ans[N];
+const int N = 500010;
+int n, m, bs, rg, a[N], aa[N], cnt[N], ans[N];
 
 struct query {
     int b, l, r, id;
@@ -50,20 +50,28 @@ struct query {
     }
 } q[N];
 
+inline int mv(int p, int tp) {
+    cnt[a[p]] += tp ? 1 : -1;
+    return cnt[a[p]] == tp ? tp ? 1 : -1 : 0;
+}
+
 int main() {
-    n = gi(), m = gi(), k = gi(), bs = sqrt(n);
+    n = gi(), bs = sqrt(n);
     for (int i = 1; i <= n; ++i) a[i] = gi();
+    copy(a + 1, a + 1 + n, aa + 1), sort(aa + 1, aa + 1 + n),
+        rg = unique(aa + 1, aa + 1 + n) - aa - 1;
+    for (int i = 1; i <= n; ++i)
+        a[i] = lower_bound(aa + 1, aa + 1 + rg, a[i]) - aa;
+    m = gi();
     for (int i = 1; i <= m; ++i)
         q[i].l = gi(), q[i].r = gi(), q[i].b = q[i].l / bs, q[i].id = i;
     sort(q + 1, q + 1 + m);
-    int lp = q[1].l, rp = lp;
-    ++cnt[a[lp]];
-    long long cur = 1;
+    int lp = q[1].l, rp = lp, cur = mv(lp, 1);
     for (int i = 1; i <= m; ++i) {
-        while (lp > q[i].l) cur += 2 * cnt[a[--lp]]++ + 1;
-        while (rp < q[i].r) cur += 2 * cnt[a[++rp]]++ + 1;
-        while (lp < q[i].l) cur -= 2 * --cnt[a[lp++]] + 1;
-        while (rp > q[i].r) cur -= 2 * --cnt[a[rp--]] + 1;
+        while (lp > q[i].l) cur += mv(--lp, 1);
+        while (rp < q[i].r) cur += mv(++rp, 1);
+        while (lp < q[i].l) cur += mv(lp++, 0);
+        while (rp > q[i].r) cur += mv(rp--, 0);
         ans[q[i].id] = cur;
     }
     for (int i = 1; i <= m; ++i) putln(ans[i]);
