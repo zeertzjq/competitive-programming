@@ -40,7 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 10000010;
-int n, m, prime[N], pcnt;
+int n, m, prime[N], pcnt = 0;
 bool nprime[N];
 
 int main() {
@@ -48,10 +48,8 @@ int main() {
     nprime[1] = 1;  // IMPORTANT: 1 is NOT a prime number
     for (int i = 2; i <= n; ++i) {
         if (!nprime[i]) prime[++pcnt] = i;
-        for (int j = 1; j <= pcnt; ++j) {
-            int c = i * prime[j];
-            if (c > n) break;
-            nprime[c] = 1;
+        for (int j = 1; j <= pcnt && i * prime[j] <= n; ++j) {
+            nprime[i * prime[j]] = 1;
             if (!(i % prime[j])) break;
         }
     }
