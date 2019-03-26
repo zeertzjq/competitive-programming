@@ -39,7 +39,7 @@ inline void putln(T x) {
 }
 //}}}
 
-int gcd(int a, int b) {
+inline int gcd(int a, int b) {
     int r;
     while (b) r = a % b, a = b, b = r;
     return a;
