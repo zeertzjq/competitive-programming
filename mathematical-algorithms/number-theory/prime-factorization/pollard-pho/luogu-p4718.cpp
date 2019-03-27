@@ -41,7 +41,7 @@ inline void putln(T x) {
 
 const int base[8] = {2, 3, 5, 7, 11, 13, 17, 19};
 const long long U = ~0ULL >> 4;
-long long seed = 19260817LL;
+long long seed = 19260817LL, n, ans;
 
 inline long long ran() { return seed = (seed * 1103515245LL + 12345LL) & U; }
 
@@ -97,26 +97,40 @@ inline long long f(long long x, long long c, long long n) {
     return mul(x, x, n) + c % n;
 }
 
-long long pollard_rho(long long n) {
+long long find_cycle(long long n) {
+    long long x, y = ran() % (n - 1), c = ran() % (n - 1), d;
+    for (long long len = 1;; len <<= 1) {
+        x = y;
+        long long z = 1;
+        for (int i = 0; i < len; ++i) {
+            y = f(y, c, n), z = mul(z, abs(x - y), n);
+            if (!(i & 127) && (d = gcd(z, n)) > 1) return d;
+        }
+        if ((d = gcd(z, n)) > 1) return d;
+    }
+}
+
+void pollard_rho(long long n) {
+    if (n <= ans) return;
     if (!(n & 1)) {
         while (!(n & 1)) n >>= 1;
-        return max(2LL, pollard_rho(n));
+        ans = 2, pollard_rho(n);
+        return;
     }
-    if (n == 1 || miller_rabin(n)) return n;
-    long long x = ran() % (n - 1), y = x, c = ran() % (n - 1) + 1, d = 1;
-    while (d == 1) {
-        x = f(x, c, n);
-        y = f(f(y, c, n), c, n);
-        d = gcd(abs(x - y), n);
-        if (d == n) x = ran() % (n - 1), y = x, c = ran() % (n - 1) + 1, d = 1;
+    if (miller_rabin(n)) {
+        ans = max(ans, n);
+        return;
     }
-    return max(pollard_rho(d), pollard_rho(n / d));
+    long long d;
+    for (d = find_cycle(n); d == n; d = find_cycle(n))
+        ;
+    pollard_rho(d), pollard_rho(n / d);
 }
 
 int main() {
     int _ = gi();
     while (_--) {
-        long long n = gll(), ans = pollard_rho(n);
+        n = gll(), ans = 1, pollard_rho(n);
         if (ans == n)
             puts("Prime");
         else
