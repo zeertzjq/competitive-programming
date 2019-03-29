@@ -63,7 +63,6 @@ inline void push(int x, int l, int r) {
 
     if (tag[x]) {
         int m = (l + r) >> 1;
-        // IMPORTANT: multiply by length
         sum[L] += tag[x] * (m - l + 1), sum[R] += tag[x] * (r - m),
             tag[L] += tag[x], tag[R] += tag[x], tag[x] = 0;
     }
@@ -107,8 +106,7 @@ void solve(int ql, int qr, int l, int r) {
             else
                 q1[++p1] = q[i];
         } else {
-            long long gtr =
-                query(1, 1, n, q[i].l, q[i].r);  // IMPORTANT: DON'T use int
+            long long gtr = query(1, 1, n, q[i].l, q[i].r);
             if (q[i].c > gtr)
                 q[i].c -= gtr, q1[++p1] = q[i];
             else

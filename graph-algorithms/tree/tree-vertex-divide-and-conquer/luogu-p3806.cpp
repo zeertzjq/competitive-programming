@@ -49,15 +49,10 @@ void grt(int u, int fa) {
     sz[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
-        if (v == fa || vis[v])
-            continue;  // IMPORTANT: skip the parent node or nodes not in the
-                       // current tree
+        if (v == fa || vis[v]) continue;
         grt(v, u), msz = max(msz, sz[v]), sz[u] += sz[v];
     }
-    msz = max(
-        (int)msz,
-        tot -
-            sz[u]);  // IMPORTANT: the parent node is also the root of a subtree
+    msz = max((int)msz, tot - sz[u]);
     if (msz < rtmsz) rtmsz = msz, rt = u;
 }
 
@@ -65,16 +60,14 @@ void gdis(int u, int fa, int d) {
     dis[++dcnt] = d;
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
-        if (v == fa || vis[v])
-            continue;  // IMPORTANT: skip the parent node or nodes not in the
-                       // current tree
+        if (v == fa || vis[v]) continue;
+
         gdis(v, u, d + c[e]);
     }
 }
 
 inline void gans(int d) {
-    vdis[f][vdcnt + 1] = 0;  // IMPORTANT: std::lower_bound may return a
-                             // pointer to the element past the last
+    vdis[f][vdcnt + 1] = 0;
     for (int i = 1; i <= m; ++i)
         ans[i] |= *lower_bound(vdis[f] + 1, vdis[f] + 1 + vdcnt, k[i] - d) ==
                   k[i] - d;
@@ -86,7 +79,7 @@ void solve(int u) {
         int v = dst[e];
         if (vis[v]) continue;
         dcnt = 0, dis[v] = c[e], gdis(v, u, c[e]);
-        sort(dis + 1, dis + 1 + dcnt);  // IMPORTANT: sort the distances
+        sort(dis + 1, dis + 1 + dcnt);
         for (int i = 1; i <= dcnt; ++i) gans(dis[i]);
         merge(vdis[f] + 1, vdis[f] + 1 + vdcnt, dis + 1, dis + 1 + dcnt,
               vdis[!f] + 1),

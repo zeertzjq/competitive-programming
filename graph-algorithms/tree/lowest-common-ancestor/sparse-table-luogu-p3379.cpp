@@ -53,7 +53,7 @@ void dfs(int x) {
     for (int i = 1; i <= log2d; ++i) anc[x][i] = anc[anc[x][i - 1]][i - 1];
     for (int e = e0[x]; e; e = e1[e]) {
         int v = dst[e];
-        if (v == anc[x][0]) continue;  // IMPORTANT: skip parent node
+        if (v == anc[x][0]) continue;
         anc[v][0] = x, dep[v] = dep[x] + 1, dfs(v);
     }
 }

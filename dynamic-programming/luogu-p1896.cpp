@@ -66,7 +66,6 @@ int main() {
                     if (!(s & ps) && ck(s | ps))
                         dp[i][j][s] += dp[i - 1][j - d][ps];
             }
-    putln(accumulate(dp[n][k], dp[n][k] + (1 << n),
-                     0LL));  // IMPORTANT: use long long
+    putln(accumulate(dp[n][k], dp[n][k] + (1 << n), 0LL));
     return 0;
 }

@@ -49,7 +49,7 @@ int main() {
     for (int i = 0; i < n; ++i)
         for (int j = 0; j <= m; ++j)
             for (int k = 0; j + k <= m; ++k)
-                if (long long f0 = dp[i][j][k]) {  // IMPORTANT: use long long
+                if (long long f0 = dp[i][j][k]) {
                     dp[i + 1][j][k] = (dp[i + 1][j][k] + f0) % mod;
                     if (j + k + 1 <= m)
                         dp[i + 1][j + 1][k] =

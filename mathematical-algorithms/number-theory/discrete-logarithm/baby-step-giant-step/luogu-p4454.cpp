@@ -39,29 +39,26 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 10010;
-int p[N], rk[N];
+inline int pow(int n, int k, int p) {
+    int ans = 1;
+    for (; k; k >>= 1) k & 1 && (ans = 1LL * ans * n % p), n = 1LL * n * n % p;
+    return ans;
+}
 
-int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
-
-inline void unions(int x, int y) {
-    if (x == y) return;
-    if (rk[x] == rk[y]) ++rk[x];
-    if (rk[x] > rk[y])
-        p[y] = x;
-    else
-        p[x] = y;
+inline int bsgs(int a, int b, int p) {
+    int n = sqrt(p) + 1, an = pow(a, n, p);
+    map<int, int> mp;
+    for (int i = 0, r = b; i <= n; ++i, r = 1LL * r * a % p) mp[r] = i;
+    for (int i = 1, l = an; i <= n; ++i, l = 1LL * l * an % p)
+        if (mp.count(l)) return i * n - mp[l];
+    return -1;
 }
 
 int main() {
-    int n = gi(), m = gi();
-    for (int i = 1; i <= n; ++i) p[i] = i;
-    while (m--) {
-        int z = gi(), x = gi(), y = gi();
-        if (z == 1)
-            unions(finds(x), finds(y));
-        else
-            puts(finds(x) == finds(y) ? "Y" : "N");
+    int g = gi(), p = gi(), _ = gi();
+    while (_--) {
+        int A = gi(), b = bsgs(g, gi(), p);
+        putln(pow(A, b, p));
     }
     return 0;
 }

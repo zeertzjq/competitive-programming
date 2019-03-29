@@ -51,12 +51,10 @@ struct node {
         val = v, pri = p, sz = 1, c[0] = c[1] = NULL, tag = 0;
     }
 
-    // IMPORTANT: call upd() whenever the subtree rooted at the node is modified
     inline void upd() {
         sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + 1;
     }
 
-    // IMPORTANT: call rev() before accessing c[0] and c[1]
     inline void rev() {
         if (!tag) return;
         tag = 0;
@@ -123,6 +121,6 @@ int main() {
         split(rt, r, t1, t3), split(t1, l - 1, t1, t2), t2->tag ^= 1,
             rt = merge(merge(t1, t2), t3);
     }
-    inorder(rt), putchar('\n'), destroy(rt);  // IMPORTANT: DESTROY the tree
+    inorder(rt), putchar('\n'), destroy(rt);
     return 0;
 }

@@ -84,8 +84,7 @@ int main() {
         int o = gi();
         if (o == 1) {
             int na = finds(rt[i - 1], gi()), nb = finds(rt[i - 1], gi());
-            if (fa[na] ==
-                fa[nb]) {  // IMPORTANT: the two sets must not be the same
+            if (fa[na] == fa[nb]) {
                 rt[i] = rt[i - 1];
                 continue;
             }

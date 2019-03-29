@@ -49,7 +49,6 @@ greater<hitem> cmp;
 long long dis[N];
 bool vis[N];
 
-// IMPORTANT: for acyclic graphs with non-negative edge weights ONLY
 void dijkstra() {
     fill(dis + 1, dis + 1 + n, inf), dis[s] = 0, h[hsz++] = make_pair(0, s),
                                      push_heap(h, h + hsz, cmp);
@@ -57,7 +56,7 @@ void dijkstra() {
         pop_heap(h, h + hsz--, cmp);
         int u = h[hsz].second;
         if (vis[u]) continue;
-        vis[u] = 1;  // IMPORTANT: mark u as visited
+        vis[u] = 1;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             long long ndis = dis[u] + w[e];

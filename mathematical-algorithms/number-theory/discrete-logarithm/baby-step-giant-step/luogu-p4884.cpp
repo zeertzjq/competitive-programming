@@ -39,29 +39,29 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 10010;
-int p[N], rk[N];
+inline long long mul(long long a, long long b, long long p) {
+    long long ans = 0;
+    for (; b; b >>= 1) b & 1 && (ans = (ans + a) % p), a = (a << 1) % p;
+    return ans;
+}
 
-int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
+inline long long pow(long long n, long long k, long long p) {
+    long long ans = 1;
+    for (; k; k >>= 1) k & 1 && (ans = mul(ans, n, p)), n = mul(n, n, p);
+    return ans;
+}
 
-inline void unions(int x, int y) {
-    if (x == y) return;
-    if (rk[x] == rk[y]) ++rk[x];
-    if (rk[x] > rk[y])
-        p[y] = x;
-    else
-        p[x] = y;
+inline long long bsgs(long long a, long long b, long long p) {
+    long long n = sqrt(p) + 1, an = pow(a, n, p);
+    map<long long, long long> mp;
+    for (long long i = 0, r = b; i <= n; ++i, r = mul(r, a, p)) mp[r] = i;
+    for (long long i = 1, l = an; i <= n; ++i, l = mul(l, an, p))
+        if (mp.count(l)) return i * n - mp[l];
+    return -1;
 }
 
 int main() {
-    int n = gi(), m = gi();
-    for (int i = 1; i <= n; ++i) p[i] = i;
-    while (m--) {
-        int z = gi(), x = gi(), y = gi();
-        if (z == 1)
-            unions(finds(x), finds(y));
-        else
-            puts(finds(x) == finds(y) ? "Y" : "N");
-    }
+    long long k = gll(), m = gll();
+    putln(bsgs(10, (k * 9 + 1) % m, m));
     return 0;
 }

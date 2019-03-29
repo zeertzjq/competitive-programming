@@ -45,7 +45,7 @@ bool nprime[N];
 
 int main() {
     n = gi(), m = gi();
-    nprime[1] = 1;  // IMPORTANT: 1 is NOT a prime number
+    nprime[1] = 1;
     for (int i = 2; i <= n; ++i) {
         if (!nprime[i]) prime[++pcnt] = i;
         for (int j = 1; j <= pcnt && i * prime[j] <= n; ++j) {

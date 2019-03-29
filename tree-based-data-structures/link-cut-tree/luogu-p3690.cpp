@@ -44,7 +44,6 @@ int n, m;
 int f[N], c[N][2], s[N], v[N];
 bool r[N];
 
-// IMPORTANT: call rev(x) before accessing c[x][0] and c[x][1]
 inline void rev(int x) {
     if (!x) return;
     if (!r[x]) return;
@@ -54,7 +53,6 @@ inline void rev(int x) {
     swap(c[x][0], c[x][1]);
 }
 
-// IMPORTANT: call upd(x) whenever the subtree rooted at x is modified
 inline void upd(int x) { s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]]; }
 
 inline bool isrt(int x) {

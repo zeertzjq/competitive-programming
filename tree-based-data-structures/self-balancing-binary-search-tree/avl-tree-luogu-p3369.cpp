@@ -62,8 +62,6 @@ struct node {
         return ret;
     }
 
-    // IMPORTANT: call update() whenever the subtree rooted at the node is
-    // modified
     inline void update() {
         sheight = max(c[0] ? c[0]->sheight : 0, c[1] ? c[1]->sheight : 0) + 1,
         sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;

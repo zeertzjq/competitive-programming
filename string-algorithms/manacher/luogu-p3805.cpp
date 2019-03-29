@@ -53,8 +53,7 @@ void manacher() {
 }
 
 int main() {
-    s[tail] =
-        '/';  // IMPORTANT: the first character must NOT be a null character
+    s[tail] = '/';
     s[++tail] = '.';
     char c;
     while (!islower(c = getchar()))

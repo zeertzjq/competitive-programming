@@ -87,7 +87,7 @@ int main() {
         if (!ee[u]) ee[u] = i;
         dst[i] = v;
     }
-    for (int i = 1; i <= n; ++i) tarjan(i);  // IMPORTANT: the graph has NO root
+    for (int i = 1; i <= n; ++i) tarjan(i);
     for (int i = 1; i <= m; ++i) dst[i] = rep[dst[i]];
     for (int i = 1; i <= n; ++i) ans = max(ans, dfs(i));
     putln(ans);

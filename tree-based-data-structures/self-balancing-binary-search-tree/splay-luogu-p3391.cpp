@@ -49,12 +49,10 @@ struct node {
 
     node(int v) { val = v, sz = 1, tag = 0, c[0] = c[1] = NULL; }
 
-    // IMPORTANT: call upd() whenever the subtree rooted at the node is modified
     inline void upd() {
         sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + 1;
     }
 
-    // IMPORTANT: call rev() before accessing c[0] and c[1]
     inline void rev() {
         if (!tag) return;
         tag = 0;
@@ -80,7 +78,6 @@ node *splay(node *rt, int rk) {
     if (rk == lsz + 1)
         return rt;
     else if (rk <= lsz) {
-        // IMPORTANT: DON'T use node *s = rt->c[0]
         rt->c[0]->rev();
         int llsz = rt->c[0]->c[0] ? rt->c[0]->c[0]->sz : 0;
         if (rk <= llsz)
@@ -90,7 +87,6 @@ node *splay(node *rt, int rk) {
             rt->c[0] = rotate(rt->c[0], 0);
         if (rt->c[0]) rt = rotate(rt, 1);
     } else {
-        // IMPORTANT: DON'T use node *s = rt->c[1]
         rt->c[1]->rev();
         int rlsz = rt->c[1]->c[0] ? lsz + 1 + rt->c[1]->c[0]->sz : lsz + 1;
         if (rk > rlsz + 1)
@@ -134,6 +130,6 @@ int main() {
         rt = splay(rt, r + 2), rt->c[0] = splay(rt->c[0], l),
         rt->c[0]->c[1]->tag ^= 1;
     }
-    inorder(rt), putchar('\n'), destroy(rt);  // IMPORTANT: DESTROY the tree
+    inorder(rt), putchar('\n'), destroy(rt);
     return 0;
 }

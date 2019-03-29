@@ -54,7 +54,7 @@ inline void push(int x, int l, int r) {
     addt[L] = (addt[L] * mult[x] + addt[x]) % p,
     addt[R] = (addt[R] * mult[x] + addt[x]) % p,
     mult[L] = (mult[L] * mult[x]) % p, mult[R] = (mult[R] * mult[x]) % p,
-    addt[x] = 0, mult[x] = 1;  // IMPORTANT: reset mult[x] to 1
+    addt[x] = 0, mult[x] = 1;
 }
 
 void add(int x, int l, int r, int ll, int rr, long long v) {
@@ -91,7 +91,7 @@ long long qry(int x, int l, int r, int ll, int rr) {
 }
 
 void build(int x, int l, int r) {
-    mult[x] = 1;  // IMPORTANT: initialize mult[x] to 1
+    mult[x] = 1;
     if (l == r) {
         sgt[x] = a[l];
         return;

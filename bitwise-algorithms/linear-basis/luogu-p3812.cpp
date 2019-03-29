@@ -48,7 +48,7 @@ int main() {
     for (int i = 1; i <= n; ++i) {
         long long a = gll();
         for (int j = N; j >= 0; --j)
-            if (a & 1LL << j) {  // IMPORTANT: use long long integer literals
+            if (a & 1LL << j) {
                 if (b[j])
                     a ^= b[j];
                 else {
