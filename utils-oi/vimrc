@@ -12,6 +12,6 @@ ino [] []
 ino () ()
 ino '' ''
 ino "" ""
-ino {<cr> {<cr>}<c-o>o
-ino [<cr> [<cr>]<c-o>o
-ino (<cr> (<cr>)<c-o>o
+ino {<cr> {<cr>}<c-o>O
+ino [<cr> [<cr>]<c-o>O
+ino (<cr> (<cr>)<c-o>O
