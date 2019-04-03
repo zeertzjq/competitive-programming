@@ -39,12 +39,10 @@ inline void putln(T x) {
 }
 //}}}
 
-int n;
-long long p;
-int inv[20000529];
+int n, p, inv[20000529];
 
 int getinv(int x) {
-    return inv[x] ? inv[x] : inv[x] = (p - p / x * getinv(p % x) % p) % p;
+    return inv[x] ? inv[x] : inv[x] = (p - 1LL * p / x * getinv(p % x) % p) % p;
 }
 
 int main() {

@@ -52,7 +52,7 @@ void grt(int u, int fa) {
         if (v == fa || vis[v]) continue;
         grt(v, u), msz = max(msz, sz[v]), sz[u] += sz[v];
     }
-    msz = max((int)msz, tot - sz[u]);
+    msz = max(msz, tot - sz[u]);
     if (msz < rtmsz) rtmsz = msz, rt = u;
 }
 
