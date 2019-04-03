@@ -53,7 +53,7 @@ inline void push(int x, int l, int r) {
     sgt[R] = (sgt[R] * mult[x] + addt[x] * (r - m)) % p,
     addt[L] = (addt[L] * mult[x] + addt[x]) % p,
     addt[R] = (addt[R] * mult[x] + addt[x]) % p,
-    mult[L] = (mult[L] * mult[x]) % p, mult[R] = (mult[R] * mult[x]) % p,
+    mult[L] = mult[L] * mult[x] % p, mult[R] = mult[R] * mult[x] % p,
     addt[x] = 0, mult[x] = 1;
 }
 

@@ -78,7 +78,7 @@ void solve(int u) {
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (vis[v]) continue;
-        dcnt = 0, dis[v] = c[e], gdis(v, u, c[e]);
+        dcnt = 0, dis[v] = c[e], gdis(v, u, c[e]),
         sort(dis + 1, dis + 1 + dcnt);
         for (int i = 1; i <= dcnt; ++i) gans(dis[i]);
         merge(vdis[f] + 1, vdis[f] + 1 + vdcnt, dis + 1, dis + 1 + dcnt,

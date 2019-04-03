@@ -44,34 +44,33 @@ int n, m;
 int f[N], c[N][2], s[N], v[N];
 bool r[N];
 
-inline void rev(int x) {
-    if (!x) return;
-    if (!r[x]) return;
+inline void upd(int x) { s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]]; }
+
+inline void push(int x) {
+    if (!x || !r[x]) return;
     r[x] = 0;
     if (c[x][0]) r[c[x][0]] ^= 1;
     if (c[x][1]) r[c[x][1]] ^= 1;
     swap(c[x][0], c[x][1]);
 }
 
-inline void upd(int x) { s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]]; }
-
 inline bool isrt(int x) {
     return !f[x] || (c[f[x]][0] != x && c[f[x]][1] != x);
 }
 
 inline int rot(int p, bool d) {
-    rev(p);
+    push(p);
     int s = c[p][!d];
-    rev(s);
+    push(s);
     int t = c[s][d];
     c[s][d] = p, c[p][!d] = t, f[s] = f[p], f[p] = s, f[t] = p, upd(p), upd(s);
     return s;
 }
 
-void splay(int x) {
+inline void splay(int x) {
     while (!isrt(x)) {
         int p = f[x], gp = f[p];
-        rev(gp), rev(p);
+        push(gp), push(p);
         bool pd = c[p][1] == x;
         if (isrt(p))
             rot(p, !pd);
@@ -80,7 +79,7 @@ void splay(int x) {
             bool gpd = c[gp][1] == p, gprt = isrt(gp),
                  ggpd = gprt || c[ggp][1] == gp;
             if (pd != gpd)
-                c[gp][gpd] = rot(p, gpd);
+                c[gp][gpd] = rot(p, !pd);
             else
                 gp = rot(gp, !gpd);
             if (c[gp][gpd]) gp = rot(gp, !gpd);
@@ -90,14 +89,14 @@ void splay(int x) {
 }
 
 inline void access(int x) {
-    for (int s = 0; x; s = x, x = f[x]) splay(x), rev(x), c[x][1] = s, upd(x);
+    for (int s = 0; x; s = x, x = f[x]) splay(x), push(x), c[x][1] = s, upd(x);
 }
 
 inline void mkrt(int x) { access(x), splay(x), r[x] ^= 1; }
 
 inline int frt(int x) {
-    access(x), splay(x), rev(x);
-    while (c[x][0]) x = c[x][0], rev(x);
+    access(x), splay(x);
+    while (push(x), c[x][0]) x = c[x][0];
     return x;
 }
 
@@ -108,7 +107,7 @@ inline void link(int x, int y) {
 }
 
 inline void cut(int x, int y) {
-    mkrt(x), access(y), splay(y), rev(y);
+    mkrt(x), access(y), splay(y), push(y);
     if (c[y][0] != x || c[x][1] || frt(y) != x) return;
     f[x] = c[y][0] = 0, upd(y);
 }
