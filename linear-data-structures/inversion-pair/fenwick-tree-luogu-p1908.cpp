@@ -40,7 +40,14 @@ inline void putln(T x) {
 //}}}
 
 const int N = 500010;
-int n, a[N], b[N], bit[N];
+int n, a[N], bit[N];
+
+struct _ {
+    int v, *p;
+
+    inline bool operator<(const _ &rhs) const { return v < rhs.v; }
+} a_[N];
+
 long long ans = 0;
 
 inline void upd(int k) {
@@ -55,10 +62,10 @@ inline int qry(int k) {
 
 int main() {
     n = gi();
-    for (int i = 1; i <= n; ++i) a[i] = b[i] = gi();
-    sort(b + 1, b + 1 + n);
-    int *r = unique(b + 1, b + 1 + n);
-    for (int i = 1; i <= n; ++i) a[i] = lower_bound(b + 1, r, a[i]) - b;
+    for (int i = 1; i <= n; ++i) a[i] = a_[i].v = gi(), a_[i].p = a + i;
+    sort(a_ + 1, a_ + 1 + n);
+    for (int i = 1, j = 1; i <= n; ++i)
+        a_[j].v == a_[i].v || (j = i), *a_[i].p = j;
     for (int i = 1; i <= n; ++i) ans += i - 1 - qry(a[i]), upd(a[i]);
     putln(ans);
     return 0;

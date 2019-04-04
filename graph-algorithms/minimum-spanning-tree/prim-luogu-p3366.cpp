@@ -39,29 +39,29 @@ inline void putln(T x) {
 }
 //}}}
 
-typedef pair<int, int> hitem;
-
 const int N = 5010, M = 200010, inf = ~0U >> 1;
 int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dis[N], len = 0, vcnt = 0,
                                                              hsz = 0;
-hitem h[M];
-greater<hitem> cmp;
+struct hitm {
+    int d, u;
+
+    inline bool operator<(const hitm &rhs) const { return d > rhs.d; }
+} h[M];
 bool vis[N];
 
 void prim() {
-    fill(dis + 1, dis + 1 + n, inf), dis[1] = 0, h[hsz++] = make_pair(0, 1),
-                                     push_heap(h, h + hsz, cmp);
+    fill(dis + 1, dis + 1 + n, inf), dis[1] = 0, h[hsz++] = {0, 1},
+                                     push_heap(h, h + hsz);
     while (hsz) {
-        pop_heap(h, h + hsz--, cmp);
-        int u = h[hsz].second;
+        pop_heap(h, h + hsz--);
+        int u = h[hsz].u;
         if (vis[u]) continue;
         vis[u] = 1, len += dis[u], ++vcnt;
         if (vcnt == n) return;
         for (int e = e0[u]; e; e = e1[e]) {
             int v = dst[e];
             if (z[e] < dis[v])
-                dis[v] = z[e], h[hsz++] = make_pair(dis[v], v),
-                push_heap(h, h + hsz, cmp);
+                dis[v] = z[e], h[hsz++] = {dis[v], v}, push_heap(h, h + hsz);
         }
     }
 }

@@ -41,7 +41,13 @@ inline void putln(T x) {
 
 const int N = 200010;
 
-int n, m, a[N], a0[N], rg, lc[N * 20], rc[N * 20], val[N * 20], rt[N], tot = 0;
+int n, m, a[N], lc[N * 20], rc[N * 20], val[N * 20], rt[N], tot = 0;
+
+struct _ {
+    int v, *p;
+
+    inline bool operator<(const _ &rhs) const { return v < rhs.v; }
+} a_[N];
 
 inline int mk(int v, int l, int r) {
     val[++tot] = ~v ? v : val[l] + val[r], lc[tot] = l, rc[tot] = r;
@@ -65,15 +71,15 @@ int qry(int rt1, int rt2, int l, int r, int k) {
 
 int main() {
     n = gi(), m = gi();
-    for (int i = 1; i <= n; ++i) a[i] = gi();
-    copy(a + 1, a + 1 + n, a0 + 1), sort(a + 1, a + 1 + n),
-        rg = unique(a + 1, a + 1 + n) - a - 1, rt[0] = mk(0, 0, 0);
-    for (int i = 1; i <= n; ++i)
-        rt[i] =
-            add(rt[i - 1], 1, rg, lower_bound(a + 1, a + 1 + rg, a0[i]) - a);
+    for (int i = 1; i <= n; ++i) a[i] = a_[i].v = gi(), a_[i].p = a + i;
+    sort(a_ + 1, a_ + 1 + n);
+    for (int i = 1, j = 1; i <= n; ++i)
+        a_[j].v == a_[i].v || (j = i), *a_[i].p = j;
+    rt[0] = mk(0, 0, 0);
+    for (int i = 1; i <= n; ++i) rt[i] = add(rt[i - 1], 1, n, a[i]);
     while (m--) {
         int l = gi(), r = gi();
-        putln(a[qry(rt[l - 1], rt[r], 1, rg, gi())]);
+        putln(a_[qry(rt[l - 1], rt[r], 1, n, gi())].v);
     }
     return 0;
 }

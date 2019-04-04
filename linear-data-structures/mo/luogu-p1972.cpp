@@ -40,7 +40,13 @@ inline void putln(T x) {
 //}}}
 
 const int N = 500010;
-int n, m, bs, rg, a[N], aa[N], cnt[N], ans[N];
+int n, m, bs, a[N], cnt[N], ans[N];
+
+struct _ {
+    int v, *p;
+
+    inline bool operator<(const _& rhs) const { return v < rhs.v; }
+} a_[N];
 
 struct query {
     int b, l, r, id;
@@ -57,11 +63,10 @@ inline int mv(int p, int tp) {
 
 int main() {
     n = gi(), bs = sqrt(n);
-    for (int i = 1; i <= n; ++i) a[i] = gi();
-    copy(a + 1, a + 1 + n, aa + 1), sort(aa + 1, aa + 1 + n),
-        rg = unique(aa + 1, aa + 1 + n) - aa - 1;
-    for (int i = 1; i <= n; ++i)
-        a[i] = lower_bound(aa + 1, aa + 1 + rg, a[i]) - aa;
+    for (int i = 1; i <= n; ++i) a[i] = a_[i].v = gi(), a_[i].p = a + i;
+    sort(a_ + 1, a_ + 1 + n);
+    for (int i = 1, j = 1; i <= n; ++i)
+        a_[j].v == a_[i].v || (j = i), *a_[i].p = j;
     m = gi();
     for (int i = 1; i <= m; ++i)
         q[i].l = gi(), q[i].r = gi(), q[i].b = q[i].l / bs, q[i].id = i;
