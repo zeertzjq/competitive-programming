@@ -39,13 +39,20 @@ inline void putln(T x) {
 }
 //}}}
 
-const int K = 110, B = 30;
-int k, a[K], lb[B + 1];
-long long ans = 0;
+const int N = 1010, B = 60;
+int n, ans = 0;
+long long lb[B + 1];
 
-inline bool ins(int x) {
+struct rock {
+    long long a;
+    int b;
+
+    inline bool operator<(const rock &rhs) const { return b > rhs.b; }
+} r[N];
+
+inline bool ins(long long x) {
     for (int i = B; i >= 0; --i)
-        if (x & 1 << i) {
+        if (x & 1LL << i) {
             if (!lb[i]) {
                 lb[i] = x;
                 return 1;
@@ -56,11 +63,10 @@ inline bool ins(int x) {
 }
 
 int main() {
-    k = gi();
-    for (int i = 1; i <= k; ++i) a[i] = gi();
-    sort(a + 1, a + 1 + k, greater<int>());
-    for (int i = 1; i <= k; ++i)
-        if (!ins(a[i])) ans += a[i];
+    n = gi();
+    for (int i = 1; i <= n; ++i) r[i] = {gll(), gi()};
+    sort(r + 1, r + 1 + n);
+    for (int i = 1; i <= n; ++i) ins(r[i].a) && (ans += r[i].b);
     putln(ans);
     return 0;
 }

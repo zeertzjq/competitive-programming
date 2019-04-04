@@ -39,25 +39,27 @@ inline void putln(T x) {
 }
 //}}}
 
-const int B = 50;
-int n;
-long long lb[B + 1], ans = 0;
+const int K = 110, B = 30;
+int k, a[K], lb[B + 1];
+long long ans = 0;
+
+inline bool ins(int x) {
+    for (int i = B; i >= 0; --i)
+        if (x & 1 << i) {
+            if (!lb[i]) {
+                lb[i] = x;
+                return 1;
+            } else
+                x ^= lb[i];
+        }
+    return 0;
+}
 
 int main() {
-    n = gi();
-    while (n--) {
-        long long a = gll();
-        for (int j = B; j >= 0; --j)
-            if (a & 1LL << j) {
-                if (lb[j])
-                    a ^= lb[j];
-                else {
-                    lb[j] = a;
-                    break;
-                }
-            }
-    }
-    for (int i = B; i >= 0; --i) ans = max(ans, ans ^ lb[i]);
+    k = gi();
+    for (int i = 1; i <= k; ++i) a[i] = gi();
+    sort(a + 1, a + 1 + k, greater<int>());
+    for (int i = 1; i <= k; ++i) ins(a[i]) || (ans += a[i]);
     putln(ans);
     return 0;
 }
