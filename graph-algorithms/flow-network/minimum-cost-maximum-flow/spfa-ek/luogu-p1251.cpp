@@ -39,15 +39,22 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 5010, M = 100010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], to[M], w[M], c[M], dis[N], pre[N], q[N], head,
-    tail, flow = 0, cost = 0;
+const int N = 4010, E = N * 12, inf = ~0U >> 1;
+int n, s, t, e0[N], e1[E], to[E], w[E], c[E], ei = 0, dis[N], pre[N], q[N],
+                                              head, tail;
 bool inq[N];
 
 inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 
+inline void mk(int u, int v, int w0, int c0) {
+    ++ei;
+    int j = ei << 1, k = ei << 1 | 1;
+    e1[j] = e0[u], e0[u] = j, to[j] = v, e1[k] = e0[v], e0[v] = k, to[k] = u,
+    w[j] = w0, w[k] = 0, c[j] = c0, c[k] = -c0;
+}
+
 inline bool spfa() {
-    fill(dis + 1, dis + 1 + n, inf), dis[s] = 0, head = 1, tail = 0,
+    fill(dis + 1, dis + 1 + t, inf), dis[s] = 0, head = 1, tail = 0,
                                      q[++tail] = s, inq[s] = 1;
     while (head != tail + 1) {
         int u = q[head++];
@@ -63,7 +70,6 @@ inline bool spfa() {
                         q[qo(--head)] = v;
                     else
                         q[qo(++tail)] = v;
-                    inq[v] = 1;
                 }
             }
         }
@@ -71,26 +77,31 @@ inline bool spfa() {
     return dis[t] != inf;
 }
 
-inline void mcmf() {
+inline long long mcmf() {
+    long long cost = 0;
     while (spfa()) {
         int f = inf;
         for (int u = t; u != s; u = to[pre[u] ^ 1]) f = min(f, w[pre[u]]);
         for (int u = t; u != s; u = to[pre[u] ^ 1])
             w[pre[u]] -= f, w[pre[u] ^ 1] += f;
-        flow += f, cost += f * dis[t];
+        cost += f * dis[t];
     }
+    return cost;
 }
 
 int main() {
-    n = gi(), m = gi(), s = gi(), t = gi();
-    for (int i = 1; i <= m; ++i) {
-        int u = gi(), v = gi();
-        e1[i << 1] = e0[u], e0[u] = i << 1, to[i << 1] = v, w[i << 1] = gi(),
-                e1[i << 1 | 1] = e0[v], e0[v] = i << 1 | 1, to[i << 1 | 1] = u,
-                w[i << 1 | 1] = 0;
-        int f = gi();
-        c[i << 1] = f, c[i << 1 | 1] = -f;
+    n = gi(), s = 1, t = (n + 1) << 1;
+    for (int i = 1; i < n; ++i) mk(i << 1 | 1, (i + 1) << 1 | 1, inf, 0);
+    for (int i = 1; i <= n; ++i) {
+        int r = gi();
+        mk(i << 1, t, r, 0), mk(s, i << 1 | 1, r, 0);
     }
-    mcmf(), putsp(flow), putln(cost);
+    int p0 = gi(), m0 = gi(), f0 = gi(), n0 = gi(), s0 = gi();
+    for (int i = 1; i <= n; ++i) {
+        mk(s, i << 1, inf, p0);
+        if (i + m0 <= n) mk(i << 1 | 1, (i + m0) << 1, inf, f0);
+        if (i + n0 <= n) mk(i << 1 | 1, (i + n0) << 1, inf, s0);
+    }
+    putln(mcmf());
     return 0;
 }
