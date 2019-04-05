@@ -53,11 +53,10 @@ void tarjan(int u, int fa) {
     }
     for (int q = q0[u]; q; q = q1[q]) {
         int a = q >> 1, v = qi[q];
-        if (!ck[a]) {
+        if (!ck[a])
             ck[a] = 1;
-            continue;
-        }
-        if (!ans[a]) ans[a] = finds(v);
+        else
+            ans[a] = finds(v);
     }
 }
 

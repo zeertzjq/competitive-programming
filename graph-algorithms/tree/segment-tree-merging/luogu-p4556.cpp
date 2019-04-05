@@ -92,13 +92,13 @@ void dfs(int u) {
     }
     for (int q = q0[u]; q; q = q1[q]) {
         int a = q >> 1, v = qi[q];
-        if (!ck[a]) {
+        if (!ck[a])
             ck[a] = 1;
-            continue;
+        else {
+            int lca = finds(v);
+            upd(rt[lca], 1, N, z[a], -1);
+            if (fa[lca]) upd(rt[fa[lca]], 1, N, z[a], -1);
         }
-        int lca = finds(v);
-        upd(rt[lca], 1, N, z[a], -1);
-        if (fa[lca]) upd(rt[fa[lca]], 1, N, z[a], -1);
     }
     ans[u] = qmx(rt[u]);
 }
