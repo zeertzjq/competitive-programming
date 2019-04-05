@@ -41,7 +41,7 @@ inline void putln(T x) {
 
 const int N = 100010, M = 200010;
 const long long inf = 100000000000;
-int n, m, s, e0[N], e1[M], dst[M], w[M], hsz = 0;
+int n, m, s, e0[N], e1[M], to[M], w[M], hsz = 0;
 
 struct hitm {
     int d, u;
@@ -61,7 +61,7 @@ void dijkstra() {
         if (vis[u]) continue;
         vis[u] = 1;
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = dst[e];
+            int v = to[e];
             long long ndis = dis[u] + w[e];
             if (ndis < dis[v])
                 dis[v] = ndis, h[hsz++] = {ndis, v}, push_heap(h, h + hsz);
@@ -73,7 +73,7 @@ int main() {
     n = gi(), m = gi(), s = gi();
     for (int i = 1; i <= m; ++i) {
         int f = gi();
-        e1[i] = e0[f], e0[f] = i, dst[i] = gi(), w[i] = gi();
+        e1[i] = e0[f], e0[f] = i, to[i] = gi(), w[i] = gi();
     }
     dijkstra();
     for (int i = 1; i <= n; ++i) putsp(dis[i]);

@@ -54,8 +54,6 @@ bool dirty[N << 2];
 #define L (x << 1)
 #define R (x << 1 | 1)
 
-inline void upd(int x) { sum[x] = sum[L] + sum[R]; }
-
 inline void push(int x, int l, int r) {
     if (dirty[x])
         dirty[L] = dirty[R] = 1,
@@ -68,7 +66,7 @@ inline void push(int x, int l, int r) {
     }
 }
 
-void add(int x, int l, int r, int ml, int mr) {
+void upd(int x, int l, int r, int ml, int mr) {
     if (l > r) return;
     if (mr < l || ml > r) return;
     if (ml <= l && mr >= r) {
@@ -77,16 +75,16 @@ void add(int x, int l, int r, int ml, int mr) {
     }
     push(x, l, r);
     int m = (l + r) >> 1;
-    add(L, l, m, ml, mr), add(R, m + 1, r, ml, mr), upd(x);
+    upd(L, l, m, ml, mr), upd(R, m + 1, r, ml, mr), sum[x] = sum[L] + sum[R];
 }
 
-long long query(int x, int l, int r, int ql, int qr) {
+long long qry(int x, int l, int r, int ql, int qr) {
     if (l > r) return 0;
     if (qr < l || ql > r) return 0;
     if (ql <= l && qr >= r) return sum[x];
     push(x, l, r);
     int m = (l + r) >> 1;
-    return query(L, l, m, ql, qr) + query(R, m + 1, r, ql, qr);
+    return qry(L, l, m, ql, qr) + qry(R, m + 1, r, ql, qr);
 }
 
 void solve(int ql, int qr, int l, int r) {
@@ -102,11 +100,11 @@ void solve(int ql, int qr, int l, int r) {
     for (int i = ql; i <= qr; ++i)
         if (!q[i].tp) {
             if (q[i].c > m)
-                add(1, 1, n, q[i].l, q[i].r), q2[++p2] = q[i];
+                upd(1, 1, n, q[i].l, q[i].r), q2[++p2] = q[i];
             else
                 q1[++p1] = q[i];
         } else {
-            long long gtr = query(1, 1, n, q[i].l, q[i].r);
+            long long gtr = qry(1, 1, n, q[i].l, q[i].r);
             if (q[i].c > gtr)
                 q[i].c -= gtr, q1[++p1] = q[i];
             else

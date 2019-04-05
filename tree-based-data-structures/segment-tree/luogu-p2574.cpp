@@ -73,19 +73,19 @@ int qry(int x, int l, int r, int ll, int rr) {
     return qry(L, l, m, ll, rr) + qry(R, m + 1, r, ll, rr);
 }
 
-void build(int x, int l, int r) {
+void bld(int x, int l, int r) {
     if (l == r) {
         sgt[x] = a[l];
         return;
     }
     int m = (l + r) >> 1;
-    build(L, l, m), build(R, m + 1, r), sgt[x] = sgt[L] + sgt[R];
+    bld(L, l, m), bld(R, m + 1, r), sgt[x] = sgt[L] + sgt[R];
 }
 
 int main() {
     n = gi(), m = gi(), scanf("%s", s + 1);
     for (int i = 1; i <= n; ++i) a[i] = s[i] == '1';
-    build(1, 1, n);
+    bld(1, 1, n);
     while (m--) {
         int p = gi(), l = gi(), r = gi();
         if (p)

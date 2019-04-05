@@ -40,8 +40,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 20010, E = N << 1;
-int n, e0[N], e1[E], dst[E], w[E], rt, rtmsz = N, tot, sz[N], dis[N], dcnt,
-                                       vdis[N], vdcnt, ans[3];
+int n, e0[N], e1[E], to[E], w[E], rt, rtmsz = N, tot, sz[N], dis[N], dcnt,
+                                      vdis[N], vdcnt, ans[3];
 bool vis[N];
 
 int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
@@ -50,7 +50,7 @@ void grt(int u, int fa) {
     int msz = 0;
     sz[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (v == fa || vis[v]) continue;
         grt(v, u), msz = max(msz, sz[v]), sz[u] += sz[v];
     }
@@ -61,7 +61,7 @@ void grt(int u, int fa) {
 void gdis(int u, int fa, int d) {
     dis[++dcnt] = d;
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (v == fa || vis[v]) continue;
         gdis(v, u, d + w[e]);
     }
@@ -74,14 +74,14 @@ inline void gans(int d) {
 void solve(int u) {
     vis[u] = 1, vdis[vdcnt = 1] = 0, ++ans[0];
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (vis[v]) continue;
         dcnt = 0, gdis(v, u, w[e]);
         for (int i = 1; i <= dcnt; ++i) gans(dis[i]);
         vdcnt = copy(dis + 1, dis + 1 + dcnt, vdis + 1 + vdcnt) - vdis - 1;
     }
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (vis[v]) continue;
         rt = 0, rtmsz = N, tot = sz[v] < sz[u] ? sz[v] : sz[v] - sz[u],
         grt(v, 0), solve(rt);
@@ -93,8 +93,8 @@ int main() {
     for (int i = 1; i < n; ++i) {
         int x = gi(), y = gi();
         w[i << 1] = w[i << 1 | 1] = gi(), e1[i << 1] = e0[x], e0[x] = i << 1,
-               dst[i << 1] = y, e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1,
-               dst[i << 1 | 1] = x;
+               to[i << 1] = y, e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1,
+               to[i << 1 | 1] = x;
     }
     grt(1, 0), solve(rt);
     int a = ans[0], b = ans[0] + ans[1] + ans[2], d = gcd(a, b);

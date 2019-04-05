@@ -40,8 +40,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 5010, M = 200010, inf = ~0U >> 1;
-int n, m, e0[N], e1[M << 1], dst[M << 1], z[M << 1], dis[N], len = 0, vcnt = 0,
-                                                             hsz = 0;
+int n, m, e0[N], e1[M << 1], to[M << 1], z[M << 1], dis[N], len = 0, vcnt = 0,
+                                                            hsz = 0;
 struct hitm {
     int d, u;
 
@@ -59,7 +59,7 @@ void prim() {
         vis[u] = 1, len += dis[u], ++vcnt;
         if (vcnt == n) return;
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = dst[e];
+            int v = to[e];
             if (z[e] < dis[v])
                 dis[v] = z[e], h[hsz++] = {dis[v], v}, push_heap(h, h + hsz);
         }
@@ -71,8 +71,8 @@ int main() {
     for (int i = 1; i <= m; ++i) {
         int x = gi(), y = gi();
         z[i << 1] = z[i << 1 | 1] = gi(), e1[i << 1] = e0[x], e0[x] = i << 1,
-               dst[i << 1] = y, e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1,
-               dst[i << 1 | 1] = x;
+               to[i << 1] = y, e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1,
+               to[i << 1 | 1] = x;
     }
     prim();
     if (vcnt == n)

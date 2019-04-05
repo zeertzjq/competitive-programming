@@ -101,11 +101,11 @@ node *splay(node *rt, int rk) {
     return rt;
 }
 
-node *build(int l, int r) {
+node *bld(int l, int r) {
     if (l > r) return NULL;
     int m = (l + r) >> 1;
     node *rt = new node(m);
-    rt->c[0] = build(l, m - 1), rt->c[1] = build(m + 1, r), rt->upd();
+    rt->c[0] = bld(l, m - 1), rt->c[1] = bld(m + 1, r), rt->upd();
     return rt;
 }
 
@@ -124,7 +124,7 @@ void destroy(node *rt) {
 
 int main() {
     n = gi(), m = gi();
-    node *rt = build(0, n + 1);
+    node *rt = bld(0, n + 1);
     while (m--) {
         int l = gi(), r = gi();
         rt = splay(rt, r + 2), rt->c[0] = splay(rt->c[0], l),

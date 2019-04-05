@@ -40,7 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 100010, E = N << 1;
-int n, m, r, p, e0[N], e1[E], dst[E], a[N], bit1[N], bit2[N], dep[N], fa[N],
+int n, m, r, p, e0[N], e1[E], to[E], a[N], bit1[N], bit2[N], dep[N], fa[N],
     h[N], sz[N], top[N], id[N], cnt = 0;
 
 inline void upd(int *bit, int k, int v) {
@@ -67,7 +67,7 @@ inline int qrys(int l, int r) {
 void dfs1(int u) {
     sz[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (v == fa[u]) continue;
         dep[v] = dep[u] + 1, fa[v] = u, dfs1(v);
         if (sz[v] > sz[h[u]]) h[u] = v;
@@ -80,7 +80,7 @@ void dfs2(int u) {
     if (!h[u]) return;
     top[h[u]] = top[u], dfs2(h[u]);
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (v == h[u] || v == fa[u]) continue;
         top[v] = v, dfs2(v);
     }
@@ -91,8 +91,8 @@ int main() {
     for (int i = 1; i <= n; ++i) a[i] = gi() % p;
     for (int i = 1; i < n; ++i) {
         int x = gi(), y = gi();
-        e1[i << 1] = e0[x], e0[x] = i << 1, dst[i << 1] = y,
-                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, dst[i << 1 | 1] = x;
+        e1[i << 1] = e0[x], e0[x] = i << 1, to[i << 1] = y,
+                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, to[i << 1 | 1] = x;
     }
     dfs1(r), top[r] = r, dfs2(r);
     for (int i = 1; i <= n; ++i) upds(id[i], id[i], a[i]);

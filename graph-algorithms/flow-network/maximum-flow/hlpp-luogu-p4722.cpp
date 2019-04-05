@@ -40,8 +40,8 @@ inline void putln(T x) {
 //}}}
 
 const int N = 1210, M = 240010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], h[N], q[N], head, tail, fe[N],
-    pq[N], pqsz = 0, cnt[N << 1];
+int n, m, s, t, e0[N], e1[M], to[M], w[M], h[N], q[N], head, tail, fe[N], pq[N],
+    pqsz = 0, cnt[N << 1];
 bool inq[N], inpq[N];
 
 inline bool bfs() {
@@ -50,7 +50,7 @@ inline bool bfs() {
     while (head <= tail) {
         int u = q[head++];
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = dst[e];
+            int v = to[e];
             if (w[e ^ 1] && h[u] + 1 < h[v]) {
                 h[v] = h[u] + 1;
                 if (!inq[v]) q[++tail] = v, inq[v] = 1;
@@ -62,7 +62,7 @@ inline bool bfs() {
 
 inline void push(int u) {
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (w[e] && h[u] == h[v] + 1) {
             int f = min(fe[u], w[e]);
             w[e] -= f, w[e ^ 1] += f, fe[u] -= f, fe[v] += f;
@@ -75,7 +75,7 @@ inline void push(int u) {
 inline void relabel(int u) {
     h[u] = inf;
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (w[e]) h[u] = min(h[u], h[v] + 1);
     }
 }
@@ -87,7 +87,7 @@ int hlpp() {
         if (h[v] != inf) ++cnt[h[v]];
     inpq[s] = inpq[t] = 1;
     for (int e = e0[s]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (int f = w[e]) {
             w[e] -= f, w[e ^ 1] += f, fe[s] -= f, fe[v] += f;
             if (!inpq[v]) pq[pqsz++] = v, push_heap(pq, pq + pqsz), inpq[v] = 1;
@@ -113,8 +113,8 @@ int main() {
     n = gi(), m = gi(), s = gi(), t = gi();
     for (int i = 1; i <= m; ++i) {
         int u = gi(), v = gi();
-        e1[i << 1] = e0[u], e0[u] = i << 1, dst[i << 1] = v, w[i << 1] = gi(),
-                e1[i << 1 | 1] = e0[v], e0[v] = i << 1 | 1, dst[i << 1 | 1] = u,
+        e1[i << 1] = e0[u], e0[u] = i << 1, to[i << 1] = v, w[i << 1] = gi(),
+                e1[i << 1 | 1] = e0[v], e0[v] = i << 1 | 1, to[i << 1 | 1] = u,
                 w[i << 1 | 1] = 0;
     }
     putln(hlpp());

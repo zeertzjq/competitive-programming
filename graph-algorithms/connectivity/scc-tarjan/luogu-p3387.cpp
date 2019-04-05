@@ -40,7 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 10010, M = 100010;
-int n, m, val[N], e0[N], e1[M], ee[N], dst[M], dfn[N], low[N], rep[N], stk[N],
+int n, m, val[N], e0[N], e1[M], ee[N], to[M], dfn[N], low[N], rep[N], stk[N],
     top = 0, disc = 0, f[N], ans = 0;
 bool vis[N];
 
@@ -48,7 +48,7 @@ void tarjan(int u) {
     if (dfn[u]) return;
     dfn[u] = low[u] = ++disc, stk[++top] = u, vis[u] = 1;
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (!dfn[v])
             tarjan(v), low[u] = min(low[u], low[v]);
         else if (vis[v])
@@ -72,7 +72,7 @@ int dfs(int u) {
     u = rep[u];
     if (f[u]) return f[u];
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = rep[dst[e]];
+        int v = rep[to[e]];
         if (v != u) f[u] = max(f[u], dfs(v));
     }
     return f[u] += val[u];
@@ -85,10 +85,10 @@ int main() {
         int u = gi(), v = gi();
         e1[i] = e0[u], e0[u] = i;
         if (!ee[u]) ee[u] = i;
-        dst[i] = v;
+        to[i] = v;
     }
     for (int i = 1; i <= n; ++i) tarjan(i);
-    for (int i = 1; i <= m; ++i) dst[i] = rep[dst[i]];
+    for (int i = 1; i <= m; ++i) to[i] = rep[to[i]];
     for (int i = 1; i <= n; ++i) ans = max(ans, dfs(i));
     putln(ans);
     return 0;

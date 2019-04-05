@@ -90,20 +90,20 @@ long long qry(int x, int l, int r, int ll, int rr) {
     return (qry(L, l, m, ll, rr) + qry(R, m + 1, r, ll, rr)) % p;
 }
 
-void build(int x, int l, int r) {
+void bld(int x, int l, int r) {
     mult[x] = 1;
     if (l == r) {
         sgt[x] = a[l];
         return;
     }
     int m = (l + r) >> 1;
-    build(L, l, m), build(R, m + 1, r), sgt[x] = (sgt[L] + sgt[R]) % p;
+    bld(L, l, m), bld(R, m + 1, r), sgt[x] = (sgt[L] + sgt[R]) % p;
 }
 
 int main() {
     n = gi(), m = gi(), p = gi();
     for (int i = 1; i <= n; ++i) a[i] = gll() % p;
-    build(1, 1, n);
+    bld(1, 1, n);
     while (m--) {
         int o = gi(), x = gi(), y = gi();
         if (o == 1)

@@ -67,26 +67,26 @@ struct node {
     }
 };
 
-void split(node *rt, int key, node *&l, node *&r) {
+void splt(node *rt, int key, node *&l, node *&r) {
     if (!rt) {
         l = r = NULL;
         return;
     }
     if (rt->key <= key)
-        l = rt, split(rt->c[1], key, rt->c[1], r);
+        l = rt, splt(rt->c[1], key, rt->c[1], r);
     else
-        r = rt, split(rt->c[0], key, l, rt->c[0]);
+        r = rt, splt(rt->c[0], key, l, rt->c[0]);
     rt->update();
 }
 
-node *merge(node *l, node *r) {
+node *mrg(node *l, node *r) {
     if (!l) return r;
     if (!r) return l;
     if (l->pri > r->pri) {
-        l->c[1] = merge(l->c[1], r), l->update();
+        l->c[1] = mrg(l->c[1], r), l->update();
         return l;
     } else {
-        r->c[0] = merge(l, r->c[0]), r->update();
+        r->c[0] = mrg(l, r->c[0]), r->update();
         return r;
     }
 }
@@ -115,23 +115,23 @@ int main() {
         int opt = gi(), x = gi();
         if (opt == 1) {
             node *t1, *t2;
-            split(rt, x, t1, t2), rt = merge(merge(t1, new node(x)), t2);
+            splt(rt, x, t1, t2), rt = mrg(mrg(t1, new node(x)), t2);
         } else if (opt == 2) {
             node *t1, *t2, *t3;
-            split(rt, x, t1, t3), split(t1, x - 1, t1, t2),
-                rt = merge(merge(t1, merge(t2->c[0], t2->c[1])), t3);
+            splt(rt, x, t1, t3), splt(t1, x - 1, t1, t2),
+                rt = mrg(mrg(t1, mrg(t2->c[0], t2->c[1])), t3);
         } else if (opt == 3) {
             node *t1, *t2;
-            split(rt, x - 1, t1, t2), putln(t1 ? t1->sz + 1 : 1),
-                rt = merge(t1, t2);
+            splt(rt, x - 1, t1, t2), putln(t1 ? t1->sz + 1 : 1),
+                rt = mrg(t1, t2);
         } else if (opt == 4) {
             putln(getkth(rt, x));
         } else if (opt == 5) {
             node *t1, *t2;
-            split(rt, x - 1, t1, t2), putln(t1->max()), rt = merge(t1, t2);
+            splt(rt, x - 1, t1, t2), putln(t1->max()), rt = mrg(t1, t2);
         } else if (opt == 6) {
             node *t1, *t2;
-            split(rt, x, t1, t2), putln(t2->min()), rt = merge(t1, t2);
+            splt(rt, x, t1, t2), putln(t2->min()), rt = mrg(t1, t2);
         }
     }
     destroy(rt);

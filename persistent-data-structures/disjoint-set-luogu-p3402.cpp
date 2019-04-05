@@ -39,18 +39,18 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 200010;
-int n, m, rt[N], lc[N * 36], rc[N * 36], fa[N * 36], rk[N * 36], tot = 0;
+const int N = 200010, S = N * 36;
+int n, m, rt[N], lc[S], rc[S], fa[S], rk[S], tot = 0;
 
 inline int mk(int f, int k, int l, int r) {
     fa[++tot] = f, rk[tot] = k, lc[tot] = l, rc[tot] = r;
     return tot;
 }
 
-int build(int l, int r) {
+int bld(int l, int r) {
     if (l == r) return mk(l, 0, 0, 0);
     int m = (l + r) >> 1;
-    return mk(0, 0, build(l, m), build(m + 1, r));
+    return mk(0, 0, bld(l, m), bld(m + 1, r));
 }
 
 int upd(int rt, int l, int r, int x, int f) {
@@ -79,7 +79,7 @@ int finds(int rt, int x) {
 }
 
 int main() {
-    n = gi(), m = gi(), rt[0] = build(1, n);
+    n = gi(), m = gi(), rt[0] = bld(1, n);
     for (int i = 1; i <= m; ++i) {
         int o = gi();
         if (o == 1) {

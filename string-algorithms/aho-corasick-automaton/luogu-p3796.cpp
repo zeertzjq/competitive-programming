@@ -48,7 +48,7 @@ inline int mk() {
     return tot;
 }
 
-inline void build(int n) {
+inline void bld(int n) {
     int cur = rt;
     for (int i = 0; s[n][i]; ++i) {
         char ch = s[n][i] - 'a';
@@ -78,7 +78,7 @@ inline void gfail() {
 int main() {
     while (n = gi()) {
         tot = 0, rt = mk();
-        for (int i = 1; i <= n; ++i) scanf("%s", s[i]), build(i);
+        for (int i = 1; i <= n; ++i) scanf("%s", s[i]), bld(i);
         gfail(), scanf("%s", t), fill(cnt + 1, cnt + 1 + n, 0), mcnt = 0;
         int u = rt;
         for (int i = 0; t[i]; ++i) {

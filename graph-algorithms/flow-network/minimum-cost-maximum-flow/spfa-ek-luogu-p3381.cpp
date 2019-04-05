@@ -40,7 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 5010, M = 100010, inf = ~0U >> 1;
-int n, m, s, t, e0[N], e1[M], dst[M], w[M], c[M], dis[N], pre[N], q[N], head,
+int n, m, s, t, e0[N], e1[M], to[M], w[M], c[M], dis[N], pre[N], q[N], head,
     tail, flow = 0, cost = 0;
 bool inq[N];
 
@@ -53,7 +53,7 @@ bool spfa() {
         int u = q[head++];
         qo(head), inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = dst[e];
+            int v = to[e];
             if (!w[e]) continue;
             int ndis = dis[u] + c[e];
             if (ndis < dis[v]) {
@@ -74,8 +74,8 @@ bool spfa() {
 inline void mcmf() {
     while (spfa()) {
         int f = inf;
-        for (int u = t; u != s; u = dst[pre[u] ^ 1]) f = min(f, w[pre[u]]);
-        for (int u = t; u != s; u = dst[pre[u] ^ 1])
+        for (int u = t; u != s; u = to[pre[u] ^ 1]) f = min(f, w[pre[u]]);
+        for (int u = t; u != s; u = to[pre[u] ^ 1])
             w[pre[u]] -= f, w[pre[u] ^ 1] += f;
         flow += f, cost += f * dis[t];
     }
@@ -85,8 +85,8 @@ int main() {
     n = gi(), m = gi(), s = gi(), t = gi();
     for (int i = 1; i <= m; ++i) {
         int u = gi(), v = gi();
-        e1[i << 1] = e0[u], e0[u] = i << 1, dst[i << 1] = v, w[i << 1] = gi(),
-                e1[i << 1 | 1] = e0[v], e0[v] = i << 1 | 1, dst[i << 1 | 1] = u,
+        e1[i << 1] = e0[u], e0[u] = i << 1, to[i << 1] = v, w[i << 1] = gi(),
+                e1[i << 1 | 1] = e0[v], e0[v] = i << 1 | 1, to[i << 1 | 1] = u,
                 w[i << 1 | 1] = 0;
         int f = gi();
         c[i << 1] = f, c[i << 1 | 1] = -f;

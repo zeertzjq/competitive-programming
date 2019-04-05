@@ -39,8 +39,8 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 500010;
-int n, m, s, e0[N], e1[N << 1], anc[N][22], dep[N], dst[N << 1];
+const int N = 500010, E = N << 1;
+int n, m, s, e0[N], e1[E], to[E], anc[N][22], dep[N];
 
 inline int log2(int x) {
     int ans = 0;
@@ -48,13 +48,13 @@ inline int log2(int x) {
     return ans;
 }
 
-void dfs(int x) {
+void init(int x) {
     int log2d = log2(dep[x]);
     for (int i = 1; i <= log2d; ++i) anc[x][i] = anc[anc[x][i - 1]][i - 1];
     for (int e = e0[x]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (v == anc[x][0]) continue;
-        anc[v][0] = x, dep[v] = dep[x] + 1, dfs(v);
+        anc[v][0] = x, dep[v] = dep[x] + 1, init(v);
     }
 }
 
@@ -71,10 +71,10 @@ int main() {
     n = gi(), m = gi(), s = gi();
     for (int i = 1; i < n; ++i) {
         int x = gi(), y = gi();
-        e1[i << 1] = e0[x], e0[x] = i << 1, dst[i << 1] = y,
-                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, dst[i << 1 | 1] = x;
+        e1[i << 1] = e0[x], e0[x] = i << 1, to[i << 1] = y,
+                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, to[i << 1 | 1] = x;
     }
-    dfs(s);
+    init(s);
     while (m--) {
         int a = gi(), b = gi();
         putln(lca(a, b));

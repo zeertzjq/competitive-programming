@@ -41,7 +41,7 @@ inline void putln(T x) {
 
 const int N = 2010, M = 3010, inf = ~0U >> 1;
 int n, m;
-int e0[N], e1[M << 1], dst[M << 1], w[M << 1], dis[N], cnt[N], inq[N];
+int e0[N], e1[M << 1], to[M << 1], w[M << 1], dis[N], cnt[N], inq[N];
 
 queue<int> q;
 
@@ -62,7 +62,7 @@ int detect() {
     while (!q.empty()) {
         int u = pop();
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = dst[e];
+            int v = to[e];
             int ndis = dis[u] + w[e];
             if (ndis < dis[v]) {
                 dis[v] = ndis;
@@ -83,9 +83,9 @@ int main() {
         for (int i = 1; i <= n; ++i) e0[i] = 0;
         while (m--) {
             int a = gi(), b = gi(), w0 = gi();
-            e1[++ecnt] = e0[a], e0[a] = ecnt, dst[ecnt] = b, w[ecnt] = w0;
+            e1[++ecnt] = e0[a], e0[a] = ecnt, to[ecnt] = b, w[ecnt] = w0;
             if (w0 >= 0)
-                e1[++ecnt] = e0[b], e0[b] = ecnt, dst[ecnt] = a, w[ecnt] = w0;
+                e1[++ecnt] = e0[b], e0[b] = ecnt, to[ecnt] = a, w[ecnt] = w0;
         }
         puts(detect() ? "YE5" : "N0");
     }

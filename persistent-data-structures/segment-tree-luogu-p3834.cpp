@@ -39,9 +39,8 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 200010;
-
-int n, m, a[N], lc[N * 20], rc[N * 20], val[N * 20], rt[N], tot = 0;
+const int N = 200010, S = N * 20;
+int n, m, a[N], lc[S], rc[S], val[S], rt[N], tot = 0;
 
 struct _ {
     int v, *p;

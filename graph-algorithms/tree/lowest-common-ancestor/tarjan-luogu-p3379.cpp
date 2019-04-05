@@ -39,21 +39,20 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 500010;
-int n, m, s, e0[N], e1[N << 1], dst[N << 1], q0[N], q1[N << 1], qi[N << 1],
-    aidx[N << 1], ans[N], p[N];
+const int N = 500010, E = N << 1;
+int n, m, s, e0[N], e1[E], to[E], q0[N], q1[E], qi[E], id[E], ans[N], p[N];
 bool vis[N];
 
 int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
 
 void tarjan(int u, int fa) {
     for (int e = e0[u]; e; e = e1[e]) {
-        int v = dst[e];
+        int v = to[e];
         if (v == fa) continue;
         tarjan(v, u), p[finds(v)] = u, vis[v] = 1;
     }
     for (int q = q0[u]; q; q = q1[q]) {
-        int a = aidx[q], v = qi[q];
+        int a = id[q], v = qi[q];
         if (vis[v] && !ans[a]) ans[a] = finds(v);
     }
 }
@@ -62,14 +61,14 @@ int main() {
     n = gi(), m = gi(), s = gi();
     for (int i = 1; i < n; ++i) {
         int x = gi(), y = gi();
-        e1[i << 1] = e0[x], e0[x] = i << 1, dst[i << 1] = y,
-                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, dst[i << 1 | 1] = x;
+        e1[i << 1] = e0[x], e0[x] = i << 1, to[i << 1] = y,
+                e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1, to[i << 1 | 1] = x;
     }
     for (int i = 1; i <= m; ++i) {
         int x = gi(), y = gi();
-        aidx[i << 1] = aidx[i << 1 | 1] = i, q1[i << 1] = q0[x], q0[x] = i << 1,
-                  qi[i << 1] = y, q1[i << 1 | 1] = q0[y], q0[y] = i << 1 | 1,
-                  qi[i << 1 | 1] = x;
+        id[i << 1] = id[i << 1 | 1] = i, q1[i << 1] = q0[x], q0[x] = i << 1,
+                qi[i << 1] = y, q1[i << 1 | 1] = q0[y], q0[y] = i << 1 | 1,
+                qi[i << 1 | 1] = x;
     }
     for (int i = 1; i <= n; ++i) p[i] = i;
     tarjan(s, 0);

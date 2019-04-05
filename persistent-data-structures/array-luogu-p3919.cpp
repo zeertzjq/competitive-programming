@@ -39,18 +39,18 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 1000010;
-int n, m, a[N], rt[N], lc[N * 20], rc[N * 20], val[N * 20], tot = 0;
+const int N = 1000010, S = N * 20;
+int n, m, a[N], rt[N], lc[S], rc[S], val[S], tot = 0;
 
 inline int mk(int v, int l, int r) {
     val[++tot] = v, lc[tot] = l, rc[tot] = r;
     return tot;
 }
 
-int build(int l, int r) {
+int bld(int l, int r) {
     if (l == r) return mk(a[l], 0, 0);
     int m = (l + r) >> 1;
-    return mk(0, build(l, m), build(m + 1, r));
+    return mk(0, bld(l, m), bld(m + 1, r));
 }
 
 int upd(int rt, int l, int r, int x, int v) {
@@ -69,7 +69,7 @@ int qry(int rt, int l, int r, int x) {
 int main() {
     n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) a[i] = gi();
-    rt[0] = build(1, n);
+    rt[0] = bld(1, n);
     for (int i = 1; i <= m; ++i) {
         int v = gi(), o = gi(), x = gi();
         if (o == 1)
