@@ -39,10 +39,12 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 10010, M = 101, E = N << 1;
-int n, m, e0[N], e1[E], c[E], dst[E], sz[N], tot, rt,
-    rtmsz = N, dcnt = 0, vdcnt = 0, k[M], dis[N], vdis[2][N];
-bool ans[M], vis[N], f;
+const int N = 20010, E = N << 1;
+int n, e0[N], e1[E], dst[E], w[E], rt, rtmsz = N, tot, sz[N], dis[N], dcnt,
+                                       vdis[N], vdcnt, ans[3];
+bool vis[N];
+
+int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
 
 void grt(int u, int fa) {
     int msz = 0;
@@ -61,27 +63,22 @@ void gdis(int u, int fa, int d) {
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (v == fa || vis[v]) continue;
-        gdis(v, u, d + c[e]);
+        gdis(v, u, d + w[e]);
     }
 }
 
 inline void gans(int d) {
-    vdis[f][vdcnt + 1] = 0;
-    for (int i = 1; i <= m; ++i)
-        ans[i] |= *lower_bound(vdis[f] + 1, vdis[f] + 1 + vdcnt, k[i] - d) ==
-                  k[i] - d;
+    for (int i = 1; i <= vdcnt; ++i) ans[(d + vdis[i]) % 3] += 2;
 }
 
 void solve(int u) {
-    f = 0, vis[u] = 1, vdis[f][vdcnt = 1] = 0;
+    vis[u] = 1, vdis[vdcnt = 1] = 0, ++ans[0];
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
         if (vis[v]) continue;
-        dcnt = 0, gdis(v, u, c[e]), sort(dis + 1, dis + 1 + dcnt);
+        dcnt = 0, gdis(v, u, w[e]);
         for (int i = 1; i <= dcnt; ++i) gans(dis[i]);
-        merge(vdis[f] + 1, vdis[f] + 1 + vdcnt, dis + 1, dis + 1 + dcnt,
-              vdis[!f] + 1),
-            f ^= 1, vdcnt += dcnt;
+        vdcnt = copy(dis + 1, dis + 1 + dcnt, vdis + 1 + vdcnt) - vdis - 1;
     }
     for (int e = e0[u]; e; e = e1[e]) {
         int v = dst[e];
@@ -92,15 +89,15 @@ void solve(int u) {
 }
 
 int main() {
-    tot = n = gi(), m = gi();
+    tot = n = gi();
     for (int i = 1; i < n; ++i) {
-        int a = gi(), b = gi();
-        c[i << 1] = c[i << 1 | 1] = gi(), e1[i << 1] = e0[a], e0[a] = i << 1,
-               dst[i << 1] = b, e1[i << 1 | 1] = e0[b], e0[b] = i << 1 | 1,
-               dst[i << 1 | 1] = a;
+        int x = gi(), y = gi();
+        w[i << 1] = w[i << 1 | 1] = gi(), e1[i << 1] = e0[x], e0[x] = i << 1,
+               dst[i << 1] = y, e1[i << 1 | 1] = e0[y], e0[y] = i << 1 | 1,
+               dst[i << 1 | 1] = x;
     }
-    for (int i = 1; i <= m; ++i) k[i] = gi();
     grt(1, 0), solve(rt);
-    for (int i = 1; i <= m; ++i) puts(ans[i] ? "AYE" : "NAY");
+    int a = ans[0], b = ans[0] + ans[1] + ans[2], d = gcd(a, b);
+    puti(a / d), putchar('/'), putln(b / d);
     return 0;
 }
