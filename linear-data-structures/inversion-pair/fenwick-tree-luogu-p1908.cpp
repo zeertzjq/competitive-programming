@@ -65,7 +65,7 @@ int main() {
     for (int i = 1; i <= n; ++i) a[i] = a_[i].v = gi(), a_[i].p = a + i;
     sort(a_ + 1, a_ + 1 + n);
     for (int i = 1, j = 1; i <= n; ++i)
-        a_[j].v == a_[i].v || (j = i), *a_[i].p = j;
+        a_[j].v != a_[i].v && (j = i), *a_[i].p = j;
     for (int i = 1; i <= n; ++i) ans += i - 1 - qry(a[i]), upd(a[i]);
     putln(ans);
     return 0;

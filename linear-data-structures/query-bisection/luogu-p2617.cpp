@@ -47,7 +47,7 @@ inline char gc() {
 }
 
 const int N = 100010;
-int n, m, a[N], aidx = 0, v[N << 1], vidx, ans[N], tot, bit[N];
+int n, m, a[N], aidx = 0, v[N << 1], ans[N], tot, bit[N];
 
 struct itm {
     bool tp;
@@ -100,20 +100,20 @@ int main() {
     n = gi(), m = gi();
     for (int i = 1; i <= n; ++i)
         q[i].tp = 0, q[i].l = i, q[i].r = 1, a[i] = v[i] = q[i].k = gi();
-    tot = vidx = n;
+    tot = v[0] = n;
     while (m--) {
         if (gc() == 'Q') {
             int l = gi(), r = gi(), k = gi();
             mk(1, l, r, k, ++aidx);
         } else {
             int p = gi(), t = gi();
-            mk(0, p, -1, a[p], 0), mk(0, p, 1, t, 0), a[p] = v[++vidx] = t;
+            mk(0, p, -1, a[p], 0), mk(0, p, 1, t, 0), a[p] = v[++v[0]] = t;
         }
     }
-    sort(v + 1, v + 1 + vidx), vidx = unique(v + 1, v + 1 + vidx) - v - 1;
+    sort(v + 1, v + 1 + v[0]), v[0] = unique(v + 1, v + 1 + v[0]) - v - 1;
     for (int i = 1; i <= tot; ++i)
-        if (!q[i].tp) q[i].k = lower_bound(v + 1, v + 1 + vidx, q[i].k) - v;
-    solve(1, tot, 1, vidx);
+        if (!q[i].tp) q[i].k = lower_bound(v + 1, v + 1 + v[0], q[i].k) - v;
+    solve(1, tot, 1, v[0]);
     for (int i = 1; i <= aidx; ++i) putln(v[ans[i]]);
     return 0;
 }

@@ -66,7 +66,7 @@ int main() {
     for (int i = 1; i <= n; ++i) a[i] = a_[i].v = gi(), a_[i].p = a + i;
     sort(a_ + 1, a_ + 1 + n);
     for (int i = 1, j = 1; i <= n; ++i)
-        a_[j].v == a_[i].v || (j = i), *a_[i].p = j;
+        a_[j].v != a_[i].v && (j = i), *a_[i].p = j;
     m = gi();
     for (int i = 1; i <= m; ++i)
         q[i].l = gi(), q[i].r = gi(), q[i].b = q[i].l / bs, q[i].id = i;
