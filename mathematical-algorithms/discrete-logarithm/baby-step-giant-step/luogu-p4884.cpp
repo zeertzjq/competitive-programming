@@ -53,7 +53,7 @@ inline long long pow(long long n, long long k, long long p) {
 
 inline long long bsgs(long long a, long long b, long long p) {
     long long n = sqrt(p) + 1, an = pow(a, n, p);
-    map<long long, long long> mp;
+    unordered_map<long long, long long> mp;
     for (long long i = 0, r = b; i <= n; ++i, r = mul(r, a, p)) mp[r] = i;
     for (long long i = 1, l = an; i <= n; ++i, l = mul(l, an, p))
         if (mp.count(l)) return i * n - mp[l];

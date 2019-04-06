@@ -54,8 +54,7 @@ inline int exbsgs(int a, int b, int p) {
         b /= d, p /= d, ++k, c = 1LL * a / d * c % p;
     }
     int n = sqrt(p) + 1, an = pow(a, n, p);
-    // unordered_map<int,int> mp;
-    map<int, int> mp;
+    unordered_map<int, int> mp;
     for (int i = 0, r = b; i <= n; ++i, r = 1LL * r * a % p) mp[r] = i;
     for (int i = 1, l = 1LL * c * an % p; i <= n; ++i, l = 1LL * l * an % p)
         if (mp.count(l)) return i * n + k - mp[l];

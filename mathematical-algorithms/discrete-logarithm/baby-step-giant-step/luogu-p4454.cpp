@@ -47,7 +47,7 @@ inline int pow(int n, int k, int p) {
 
 inline int bsgs(int a, int b, int p) {
     int n = sqrt(p) + 1, an = pow(a, n, p);
-    map<int, int> mp;
+    unordered_map<int, int> mp;
     for (int i = 0, r = b; i <= n; ++i, r = 1LL * r * a % p) mp[r] = i;
     for (int i = 1, l = an; i <= n; ++i, l = 1LL * l * an % p)
         if (mp.count(l)) return i * n - mp[l];

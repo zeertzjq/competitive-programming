@@ -59,7 +59,7 @@ inline int bsgs(int a, int b, int p) {
     if (!a && !b) return 1;
     if ((!a && b) || (!b && a)) return -1;
     int n = sqrt(p) + 1, an = pow(a, n, p);
-    map<int, int> mp;
+    unordered_map<int, int> mp;
     for (int i = 0, r = b; i <= n; ++i, r = 1LL * r * a % p) mp[r] = i;
     for (int i = 1, l = an; i <= n; ++i, l = 1LL * l * an % p)
         if (mp.count(l)) return i * n - mp[l];
