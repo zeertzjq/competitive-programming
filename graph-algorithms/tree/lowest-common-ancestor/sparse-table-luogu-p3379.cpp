@@ -48,17 +48,17 @@ inline int log2(int x) {
     return ans;
 }
 
-void init(int x) {
-    int log2d = log2(dep[x]);
-    for (int i = 1; i <= log2d; ++i) anc[x][i] = anc[anc[x][i - 1]][i - 1];
-    for (int e = e0[x]; e; e = e1[e]) {
+void init(int u) {
+    int log2d = log2(dep[u]);
+    for (int i = 1; i <= log2d; ++i) anc[u][i] = anc[anc[u][i - 1]][i - 1];
+    for (int e = e0[u]; e; e = e1[e]) {
         int v = to[e];
-        if (v == anc[x][0]) continue;
-        anc[v][0] = x, dep[v] = dep[x] + 1, init(v);
+        if (v == anc[u][0]) continue;
+        anc[v][0] = u, dep[v] = dep[u] + 1, init(v);
     }
 }
 
-int lca(int x, int y) {
+inline int lca(int x, int y) {
     if (dep[x] < dep[y]) swap(x, y);
     while (dep[x] > dep[y]) x = anc[x][log2(dep[x] - dep[y])];
     if (x == y) return x;
