@@ -79,8 +79,8 @@ void solve(int u) {
         if (vis[v]) continue;
         dcnt = 0, gdis(v, u, c[e]), sort(dis + 1, dis + 1 + dcnt);
         for (int i = 1; i <= dcnt; ++i) gans(dis[i]);
-        mrg(vdis[f] + 1, vdis[f] + 1 + vdcnt, dis + 1, dis + 1 + dcnt,
-            vdis[!f] + 1),
+        merge(vdis[f] + 1, vdis[f] + 1 + vdcnt, dis + 1, dis + 1 + dcnt,
+              vdis[!f] + 1),
             f ^= 1, vdcnt += dcnt;
     }
     for (int e = e0[u]; e; e = e1[e]) {
