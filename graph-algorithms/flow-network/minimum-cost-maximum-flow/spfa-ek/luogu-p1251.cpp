@@ -48,9 +48,9 @@ inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 
 inline void mk(int u, int v, int w0, int c0) {
     ++ei;
-    int j = ei << 1, k = ei << 1 | 1;
-    e1[j] = e0[u], e0[u] = j, to[j] = v, e1[k] = e0[v], e0[v] = k, to[k] = u,
-    w[j] = w0, w[k] = 0, c[j] = c0, c[k] = -c0;
+    int i0 = ei << 1, i1 = ei << 1 | 1;
+    e1[i0] = e0[u], e0[u] = i0, to[i0] = v, e1[i1] = e0[v], e0[v] = i1,
+    to[i1] = u, w[i0] = w0, w[i1] = 0, c[i0] = c0, c[i1] = -c0;
 }
 
 inline bool spfa() {
