@@ -39,25 +39,16 @@ inline void putln(T x) {
 }
 //}}}
 
+const int P = 19260817;
+
 inline int mgu(int p) {
-    int x, f = 0;
+    int x;
     char c;
     while (!isdigit(c = getchar()))
         ;
-    for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
-        x > p && (x %= p, f = 1);
-    return f ? x + p : x;
-}
-
-inline int phi(int n) {
-    int ans = n;
-    for (int i = 2; i * i <= n; ++i)
-        if (!(n % i)) {
-            ans -= ans / i;
-            while (!(n % i)) n /= i;
-        }
-    if (n > 1) ans -= ans / n;
-    return ans;
+    for (x = (c - '0') % p; isdigit(c = getchar()); x = (x * 10 + c - '0') % p)
+        ;
+    return x;
 }
 
 inline int pow(int n, int k, int p) {
@@ -67,7 +58,10 @@ inline int pow(int n, int k, int p) {
 }
 
 int main() {
-    int a = gi(), m = gi(), b = mgu(phi(m));
-    a %= m, putln(pow(a, b, m));
+    int ans = 1LL * mgu(P) * pow(mgu(P), P - 2, P) % P;
+    if (ans)
+        putln(ans);
+    else
+        puts("Angry!");
     return 0;
 }
