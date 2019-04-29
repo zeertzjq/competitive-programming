@@ -41,24 +41,27 @@ inline void putln(T x) {
 
 const int N = 100010;
 
-int n, m, dis[N], p[N], c[N][2], v[N];
+int n, m, c[N], sib[N], p[N], v[N];
 
 int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
 
-int mrg(int l, int r) {
-    if (!l || !r) return l | r;
-    if (l == r) return l;
-    if (v[l] > v[r] || (v[l] == v[r] && l > r)) swap(l, r);
-    p[r] = l, c[l][1] = mrg(c[l][1], r);
-    if (dis[c[l][0]] > dis[c[l][1]]) swap(c[l][0], c[l][1]);
-    dis[l] = dis[c[l][1]] + 1;
-    return l;
+inline int mrg(int x, int y) {
+    if (!x || !y) return x | y;
+    if (v[x] > v[y] || (v[x] == v[y] && x > y)) swap(x, y);
+    sib[y] = c[x], c[x] = y, p[x] = p[y] = x;
+    return x;
+}
+
+int mrgs(int l) {
+    if (!l || !sib[l]) return p[l] = l;
+    int l1 = sib[l], l2 = sib[l1];
+    sib[l] = sib[l1] = 0;
+    return mrg(mrg(l, l1), mrgs(l2));
 }
 
 int main() {
     n = gi(), m = gi();
     for (int i = 1; i <= n; ++i) v[i] = gi(), p[i] = i;
-    dis[0] = -1;
     while (m--) {
         int op = gi();
         if (op == 1) {
@@ -71,9 +74,7 @@ int main() {
                 continue;
             } else {
                 int rt = finds(x);
-                putln(v[rt]), v[rt] = 0, p[c[rt][0]] = c[rt][0],
-                              p[c[rt][1]] = c[rt][1],
-                              p[rt] = mrg(c[rt][0], c[rt][1]);
+                putln(v[rt]), v[rt] = 0, p[rt] = mrgs(c[rt]);
             }
         }
     }
