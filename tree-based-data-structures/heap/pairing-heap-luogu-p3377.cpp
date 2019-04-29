@@ -52,11 +52,11 @@ inline int mrg(int x, int y) {
     return x;
 }
 
-int mrgs(int l) {
+int mrgl(int l) {
     if (!l || !sib[l]) return p[l] = l;
     int l1 = sib[l], l2 = sib[l1];
     sib[l] = sib[l1] = 0;
-    return mrg(mrg(l, l1), mrgs(l2));
+    return mrg(mrg(l, l1), mrgl(l2));
 }
 
 int main() {
@@ -74,7 +74,7 @@ int main() {
                 continue;
             } else {
                 int rt = finds(x);
-                putln(v[rt]), v[rt] = 0, p[rt] = mrgs(c[rt]);
+                putln(v[rt]), v[rt] = 0, p[rt] = mrgl(c[rt]);
             }
         }
     }
