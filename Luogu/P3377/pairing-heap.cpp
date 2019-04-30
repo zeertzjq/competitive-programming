@@ -52,11 +52,11 @@ inline int mrg(int x, int y) {
     return x;
 }
 
-int mrgl(int l) {
-    if (!l || !sib[l]) return p[l] = l;
-    int l1 = sib[l], l2 = sib[l1];
-    sib[l] = sib[l1] = 0;
-    return mrg(mrg(l, l1), mrgl(l2));
+int mrgl(int l0) {
+    if (!l0 || !sib[l0]) return p[l0] = l0;
+    int l1 = sib[l0], l2 = sib[l1];
+    sib[l0] = sib[l1] = 0;
+    return mrg(mrg(l0, l1), mrgl(l2));
 }
 
 int main() {
