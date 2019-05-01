@@ -74,10 +74,7 @@ void dfs(int u) {
             int tmp = 0;
             while (rt[v]) {
                 int a = pop(mx), b = pop(v);
-                if (m[a] > m[b])
-                    tmp = mrg(tmp, a);
-                else
-                    tmp = mrg(tmp, b);
+                tmp = mrg(tmp, m[a] > m[b] ? a : b);
             }
             rt[mx] = mrg(rt[mx], tmp);
         }
