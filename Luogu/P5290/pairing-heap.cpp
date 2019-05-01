@@ -64,27 +64,24 @@ inline int pop(int u) {
 
 void dfs(int u) {
     if (!c0[u]) return;
-    int mxc = 0, mxsz = 0;
+    int mx = 0;
     for (int v = c0[u]; v; v = c1[v]) {
         dfs(v);
-        if (sz[rt[v]] > mxsz) {
-            mxsz = sz[rt[v]];
-            mxc = v;
-        }
+        if (sz[rt[v]] > sz[rt[mx]]) mx = v;
     }
     for (int v = c0[u]; v; v = c1[v])
-        if (v != mxc) {
+        if (v != mx) {
             int tmp = 0;
             while (rt[v]) {
-                int a = pop(mxc), b = pop(v);
+                int a = pop(mx), b = pop(v);
                 if (m[a] > m[b])
                     tmp = mrg(tmp, a);
                 else
                     tmp = mrg(tmp, b);
             }
-            rt[mxc] = mrg(rt[mxc], tmp);
+            rt[mx] = mrg(rt[mx], tmp);
         }
-    rt[u] = mrg(rt[u], rt[mxc]);
+    rt[u] = mrg(rt[u], rt[mx]);
 }
 
 long long hsum(int rt) {
