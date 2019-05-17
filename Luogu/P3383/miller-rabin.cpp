@@ -39,12 +39,12 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 22, base[8] = {2, 3, 5, 7, 11, 13, 17, 19};
-int n, k, x[N], ans = 0;
+const int base[8] = {2, 3, 5, 7, 11, 13, 17, 19};
+int n, m;
 
 inline int pow(int n, int k, int p) {
     int ans = 1;
-    for (; k; k >>= 1) k & 1 && (ans = 1LL * ans % p), n = 1LL * n * n % p;
+    for (; k; k >>= 1) k & 1 && (ans = 1LL * ans * n % p), n = 1LL * n * n % p;
     return ans;
 }
 
@@ -70,14 +70,8 @@ inline bool miller_rabin(int n) {
     return 1;
 }
 
-void dfs(int cnt, int l, int s) {
-    if (cnt == k) ans += miller_rabin(s);
-    for (int i = l + 1; i <= n; ++i) dfs(cnt + 1, i, s + x[i]);
-}
-
 int main() {
-    n = gi(), k = gi();
-    for (int i = 1; i <= n; ++i) x[i] = gi();
-    dfs(0, 0, 0), putln(ans);
+    n = gi(), m = gi();
+    while (m--) puts(miller_rabin(gi()) ? "Yes" : "No");
     return 0;
 }
