@@ -40,6 +40,7 @@ inline void putln(T x) {
 //}}}
 
 const int N = 1010;
+const unsigned B = 1000000000;
 int n, a, b;
 
 struct itm {
@@ -70,7 +71,7 @@ struct bi {
         unsigned r = 0;
         for (int i = 0; i <= sz; ++i) {
             unsigned long long tmp = 1ULL * d[i] * rhs + r;
-            d[i] = tmp % 1000000000, r = tmp / 1000000000;
+            d[i] = tmp % B, r = tmp / B;
         }
         if (r) d[++sz] = r;
         return *this;
@@ -79,7 +80,7 @@ struct bi {
     inline bi &operator/=(const unsigned &rhs) {
         unsigned long long r = 0;
         for (int i = sz; i >= 0; --i)
-            r = r * 1000000000 + d[i], d[i] = r / rhs, r %= rhs;
+            r = r * B + d[i], d[i] = r / rhs, r %= rhs;
         while (sz && !d[sz]) --sz;
         return *this;
     }
