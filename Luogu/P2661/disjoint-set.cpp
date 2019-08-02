@@ -39,8 +39,8 @@ inline void putln(T x) {
 }
 //}}}
 
-const int N = 200010, INF = 2147483647;
-int n, dad[N], dis[N], ans = INF;
+const int N = 200010, inf = ~0U >> 1;
+int n, dad[N], dis[N], ans = inf;
 
 int finds(int x) {
     if (dad[x] == x)
