@@ -62,8 +62,7 @@ int detect() {
     while (!q.empty()) {
         int u = pop();
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = to[e];
-            int ndis = dis[u] + w[e];
+            int v = to[e], ndis = dis[u] + w[e];
             if (ndis < dis[v]) {
                 dis[v] = ndis;
                 if (inq[v]) continue;

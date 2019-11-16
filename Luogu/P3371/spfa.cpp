@@ -51,8 +51,7 @@ void spfa() {
         int u = q[head++];
         qo(head), inq[u] = 0;
         for (int e = e0[u]; e; e = e1[e]) {
-            int v = to[e];
-            int ndis = dis[u] + w[e];
+            int v = to[e], ndis = dis[u] + w[e];
             if (ndis < dis[v]) {
                 dis[v] = ndis;
                 if (!inq[v]) q[qo(++tail)] = v, inq[v] = 1;
