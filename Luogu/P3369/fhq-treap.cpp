@@ -39,101 +39,85 @@ inline void putln(T x) {
 }
 //}}}
 
-const int inf = ~0U >> 1;
-int seed = 19260817;
+const int N = 100010, inf = ~0U >> 1;
+int seed = 19260817, key[N], pri[N], sz[N], c[N][2], tot = 0;
 
 inline int ran() { return seed = (seed * 1103515245LL + 12345LL) & inf; }
 
-struct node {
-    int key, pri, sz;
-    node *c[2];
-
-    node(int k) { key = k, pri = ran(), sz = 1, c[0] = c[1] = NULL; }
-
-    inline void update() {
-        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + 1;
-    }
-
-    inline int min() {
-        node *cur = this;
-        while (cur->c[0]) cur = cur->c[0];
-        return cur->key;
-    }
-
-    inline int max() {
-        node *cur = this;
-        while (cur->c[1]) cur = cur->c[1];
-        return cur->key;
-    }
-};
-
-void splt(node *rt, int key, node *&l, node *&r) {
-    if (!rt) {
-        l = r = NULL;
-        return;
-    }
-    if (rt->key <= key)
-        l = rt, splt(rt->c[1], key, rt->c[1], r);
-    else
-        r = rt, splt(rt->c[0], key, l, rt->c[0]);
-    rt->update();
+inline int mk(int k) {
+    key[++tot] = k, pri[tot] = ran(), sz[tot] = 1, c[tot][0] = c[tot][1] = 0;
+    return tot;
 }
 
-node *mrg(node *l, node *r) {
-    if (!l) return r;
-    if (!r) return l;
-    if (l->pri > r->pri) {
-        l->c[1] = mrg(l->c[1], r), l->update();
+inline void upd(int p) { sz[p] = 1 + sz[c[p][0]] + sz[c[p][1]]; }
+
+inline int tmin(int rt) {
+    while (c[rt][0]) rt = c[rt][0];
+    return key[rt];
+}
+
+inline int tmax(int rt) {
+    while (c[rt][1]) rt = c[rt][1];
+    return key[rt];
+}
+
+void splt(int rt, int k, int &l, int &r) {
+    if (!rt) {
+        l = r = 0;
+        return;
+    }
+    if (key[rt] <= k)
+        l = rt, splt(c[rt][1], k, c[rt][1], r);
+    else
+        r = rt, splt(c[rt][0], k, l, c[rt][0]);
+    upd(rt);
+}
+
+int mrg(int l, int r) {
+    if (!l || !r) return l | r;
+    if (pri[l] > pri[r]) {
+        c[l][1] = mrg(c[l][1], r), upd(l);
         return l;
     } else {
-        r->c[0] = mrg(l, r->c[0]), r->update();
+        c[r][0] = mrg(l, c[r][0]), upd(r);
         return r;
     }
 }
 
-int getkth(node *rt, int rk) {
-    int lsz = 0;
-    if (rt->c[0]) lsz = rt->c[0]->sz;
+int getkth(int rt, int rk) {
+    int lsz = sz[c[rt][0]];
     if (rk <= lsz)
-        return getkth(rt->c[0], rk);
+        return getkth(c[rt][0], rk);
     else if (rk == lsz + 1)
-        return rt->key;
+        return key[rt];
     else
-        return getkth(rt->c[1], rk - lsz - 1);
-}
-
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->c[0]), destroy(rt->c[1]);
-    delete rt;
+        return getkth(c[rt][1], rk - lsz - 1);
 }
 
 int main() {
-    int _ = gi();
-    node *rt = NULL;
+    int _ = gi(), rt = 0;
     while (_--) {
         int opt = gi(), x = gi();
         if (opt == 1) {
-            node *t1, *t2;
-            splt(rt, x, t1, t2), rt = mrg(mrg(t1, new node(x)), t2);
+            int t1, t2;
+            splt(rt, x, t1, t2), rt = mrg(mrg(t1, mk(x)), t2);
         } else if (opt == 2) {
-            node *t1, *t2, *t3;
+            int t1, t2, t3;
             splt(rt, x, t1, t3), splt(t1, x - 1, t1, t2),
-                rt = mrg(mrg(t1, mrg(t2->c[0], t2->c[1])), t3);
+                rt = mrg(mrg(t1, mrg(c[t2][0], c[t2][1])), t3);
         } else if (opt == 3) {
-            node *t1, *t2;
-            splt(rt, x - 1, t1, t2), putln(t1 ? t1->sz + 1 : 1),
+            int t1, t2;
+            splt(rt, x - 1, t1, t2), putln(t1 ? sz[t1] + 1 : 1),
                 rt = mrg(t1, t2);
         } else if (opt == 4) {
             putln(getkth(rt, x));
         } else if (opt == 5) {
-            node *t1, *t2;
-            splt(rt, x - 1, t1, t2), putln(t1->max()), rt = mrg(t1, t2);
+            int t1, t2;
+            splt(rt, x - 1, t1, t2), putln(tmax(t1)), rt = mrg(t1, t2);
         } else if (opt == 6) {
-            node *t1, *t2;
-            splt(rt, x, t1, t2), putln(t2->min()), rt = mrg(t1, t2);
+            int t1, t2;
+            splt(rt, x, t1, t2), putln(tmin(t2)), rt = mrg(t1, t2);
         }
     }
-    destroy(rt);
     return 0;
 }

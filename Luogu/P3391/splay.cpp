@@ -39,97 +39,87 @@ inline void putln(T x) {
 }
 //}}}
 
-const int inf = ~0U >> 1;
-int n, m;
+const int N = 100010;
+int n, m, val[N], sz[N], c[N][2], tot = 0;
+bool rev[N];
 
-struct node {
-    int val, sz;
-    node *c[2];
-    bool tag;
+inline int mk(int v) {
+    val[++tot] = v, sz[tot] = 1, c[tot][0] = c[tot][1] = 0, rev[tot] = 0;
+    return tot;
+}
 
-    node(int v) { val = v, sz = 1, tag = 0, c[0] = c[1] = NULL; }
+inline void upd(int p) { sz[p] = 1 + sz[c[p][0]] + sz[c[p][1]]; }
 
-    inline void upd() {
-        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + 1;
-    }
+inline void push(int p) {
+    if (!rev[p]) return;
+    rev[p] = 0;
+    if (c[p][0]) rev[c[p][0]] ^= 1;
+    if (c[p][1]) rev[c[p][1]] ^= 1;
+    swap(c[p][0], c[p][1]);
+}
 
-    inline void rev() {
-        if (!tag) return;
-        tag = 0;
-        if (c[0]) c[0]->tag ^= 1;
-        if (c[1]) c[1]->tag ^= 1;
-        swap(c[0], c[1]);
-    }
-};
-
-inline node *rotate(node *p, bool dir) {
-    p->rev();
-    node *s = p->c[!dir];
-    s->rev();
-    node *t = s->c[dir];
-    s->c[dir] = p, p->c[!dir] = t, p->upd(), s->upd();
+int rot(int p, bool d) {
+    push(p);
+    int s = c[p][!d];
+    if (!s) return p;
+    push(s);
+    int t = c[s][d];
+    c[s][d] = p, c[p][!d] = t, upd(p), upd(s);
     return s;
 }
 
-node *splay(node *rt, int rk) {
+int splay(int rt, int rk) {
     if (!rt) return rt;
-    rt->rev();
-    int lsz = rt->c[0] ? rt->c[0]->sz : 0;
+    push(rt);
+    int lsz = sz[c[rt][0]];
     if (rk == lsz + 1)
         return rt;
     else if (rk <= lsz) {
-        rt->c[0]->rev();
-        int llsz = rt->c[0]->c[0] ? rt->c[0]->c[0]->sz : 0;
+        push(c[rt][0]);
+        int llsz = sz[c[c[rt][0]][0]];
         if (rk <= llsz)
-            rt->c[0]->c[0] = splay(rt->c[0]->c[0], rk), rt = rotate(rt, 1);
+            c[c[rt][0]][0] = splay(c[c[rt][0]][0], rk), rt = rot(rt, 1);
         else if (rk > llsz + 1)
-            rt->c[0]->c[1] = splay(rt->c[0]->c[1], rk - llsz - 1),
-            rt->c[0] = rotate(rt->c[0], 0);
-        if (rt->c[0]) rt = rotate(rt, 1);
+            c[c[rt][0]][1] = splay(c[c[rt][0]][1], rk - llsz - 1),
+            c[rt][0] = rot(c[rt][0], 0);
+        rt = rot(rt, 1);
     } else {
-        rt->c[1]->rev();
-        int rlsz = rt->c[1]->c[0] ? lsz + 1 + rt->c[1]->c[0]->sz : lsz + 1;
+        push(c[rt][1]);
+        int rlsz = lsz + 1 + sz[c[c[rt][1]][0]];
         if (rk > rlsz + 1)
-            rt->c[1]->c[1] = splay(rt->c[1]->c[1], rk - rlsz - 1),
-            rt = rotate(rt, 0);
+            c[c[rt][1]][1] = splay(c[c[rt][1]][1], rk - rlsz - 1),
+            rt = rot(rt, 0);
         else if (rk <= rlsz)
-            rt->c[1]->c[0] = splay(rt->c[1]->c[0], rk - lsz - 1),
-            rt->c[1] = rotate(rt->c[1], 1);
-        if (rt->c[1]) rt = rotate(rt, 0);
+            c[c[rt][1]][0] = splay(c[c[rt][1]][0], rk - lsz - 1),
+            c[rt][1] = rot(c[rt][1], 1);
+        rt = rot(rt, 0);
     }
-    rt->upd();
+    upd(rt);
     return rt;
 }
 
-node *bld(int l, int r) {
-    if (l > r) return NULL;
-    int m = (l + r) >> 1;
-    node *rt = new node(m);
-    rt->c[0] = bld(l, m - 1), rt->c[1] = bld(m + 1, r), rt->upd();
+int bld(int l, int r) {
+    if (l > r) return 0;
+    int m = (l + r) >> 1, rt = mk(m);
+    c[rt][0] = bld(l, m - 1), c[rt][1] = bld(m + 1, r), upd(rt);
     return rt;
 }
 
-void inorder(node *rt) {
+void inorder(int rt) {
     if (!rt) return;
-    rt->rev(), inorder(rt->c[0]);
-    if (rt->val > 0 && rt->val <= n) putsp(rt->val);
-    inorder(rt->c[1]);
-}
-
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->c[0]), destroy(rt->c[1]);
-    delete rt;
+    push(rt), inorder(c[rt][0]);
+    if (val[rt] > 0 && val[rt] <= n) putsp(val[rt]);
+    inorder(c[rt][1]);
 }
 
 int main() {
     n = gi(), m = gi();
-    node *rt = bld(0, n + 1);
+    int rt = bld(0, n + 1);
     while (m--) {
         int l = gi(), r = gi();
-        rt = splay(rt, r + 2), rt->c[0] = splay(rt->c[0], l),
-        rt->c[0]->c[1]->tag ^= 1;
+        rt = splay(rt, r + 2), c[rt][0] = splay(c[rt][0], l),
+        rev[c[c[rt][0]][1]] ^= 1;
     }
-    inorder(rt), putchar('\n'), destroy(rt);
+    inorder(rt), putchar('\n');
     return 0;
 }

@@ -39,165 +39,141 @@ inline void putln(T x) {
 }
 //}}}
 
-const int inf = ~0U >> 1;
+const int N = 100010, inf = ~0U >> 1;
+int key[N], h[N], cnt[N], sz[N], c[N][2], tot = 0;
 
-struct node {
-    node *c[2];
-    int key;
-    int sheight;
-    int cnt;
-    int sz;
+inline int mk(int k) {
+    key[++tot] = k, h[tot] = 1, sz[tot] = cnt[tot] = 1,
+    c[tot][0] = c[tot][1] = 0;
+    return tot;
+}
 
-    inline node *stpred() {
-        if (!c[0]) return NULL;
-        node *ret = c[0];
-        while (ret->c[1]) ret = ret->c[1];
-        return ret;
-    }
+inline void upd(int p) {
+    h[p] = max(h[c[p][0]], h[c[p][1]]) + 1;
+    sz[p] = cnt[p] + sz[c[p][0]] + sz[c[p][1]];
+}
 
-    inline node *stsucc() {
-        if (!c[1]) return NULL;
-        node *ret = c[1];
-        while (ret->c[0]) ret = ret->c[0];
-        return ret;
-    }
+inline int bal(int p) { return h[c[p][1]] - h[c[p][0]]; }
 
-    inline void update() {
-        sheight = max(c[0] ? c[0]->sheight : 0, c[1] ? c[1]->sheight : 0) + 1,
-        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + cnt;
-    }
+inline int tpred(int rt) {
+    if (!c[rt][0]) return 0;
+    rt = c[rt][0];
+    while (c[rt][1]) rt = c[rt][1];
+    return rt;
+}
 
-    inline int bal() {
-        return (c[1] ? c[1]->sheight : 0) - (c[0] ? c[0]->sheight : 0);
-    }
+inline int tsucc(int rt) {
+    if (!c[rt][1]) return 0;
+    rt = c[rt][1];
+    while (c[rt][0]) rt = c[rt][0];
+    return rt;
+}
 
-    node(int k) { key = k, sheight = 1, c[0] = c[1] = NULL, cnt = sz = 1; }
-};
-
-inline node *rotate(node *p, bool dir) {
-    node *s = p->c[!dir], *t = s->c[dir], p->c[!dir] = t, s->c[dir] = p,
-         p->update(), s->update();
+inline int rot(int p, bool d) {
+    int s = c[p][!d];
+    if (!s) return p;
+    int t = c[s][d];
+    c[s][d] = p, c[p][!d] = t, upd(p), upd(s);
     return s;
 }
 
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->c[0]), destroy(rt->c[1]);
-    delete rt;
-}
-
-node *insitem(node *rt, int key) {
-    if (!rt) return new node(key);
-    if (key == rt->key) {
-        ++rt->cnt, ++rt->sz;
+int insitem(int rt, int k) {
+    if (!rt) return mk(k);
+    if (k == key[rt]) {
+        ++cnt[rt], ++sz[rt];
         return rt;
     }
-    bool dir = 0;
-    if (key > rt->key) dir = 1;
-    rt->c[dir] = insitem(rt->c[dir], key), rt->update();
-    int bal = rt->bal();
-    if (bal < -1) {
-        if (key > rt->c[0]->key) rt->c[0] = rotate(rt->c[0], 0);
-        rt = rotate(rt, 1);
-    }
-    if (bal > 1) {
-        if (key < rt->c[1]->key) rt->c[1] = rotate(rt->c[1], 1);
-        rt = rotate(rt, 0);
+    bool d = k > key[rt];
+    c[rt][d] = insitem(c[rt][d], k), upd(rt);
+    int b = bal(rt);
+    if (b < -1) {
+        if (k > key[c[rt][0]]) c[rt][0] = rot(c[rt][0], 0);
+        rt = rot(rt, 1);
+    } else if (b > 1) {
+        if (k < key[c[rt][1]]) c[rt][1] = rot(c[rt][1], 1);
+        rt = rot(rt, 0);
     }
     return rt;
 }
 
-node *delitem(node *rt, int key) {
+int delitem(int rt, int k) {
     if (!rt) return rt;
-    if (key == rt->key) {
-        if (rt->cnt > 1) {
-            --rt->cnt, --rt->sz;
+    if (k == key[rt]) {
+        if (cnt[rt] > 1) {
+            --cnt[rt], --sz[rt];
             return rt;
-        } else {
-            if (!rt->c[0]) {
-                node *tmp = rt->c[1];
-                delete rt;
-                return tmp;
-            } else if (!rt->c[1]) {
-                node *tmp = rt->c[0];
-                delete rt;
-                return tmp;
-            } else {
-                node *p = rt->stsucc();
-                key = rt->key = p->key, swap(rt->cnt, p->cnt);
-            }
+        } else if (!c[rt][0] || !c[rt][1])
+            return c[rt][0] | c[rt][1];
+        else {
+            int p = tsucc(rt);
+            k = key[rt] = key[p], swap(cnt[rt], cnt[p]);
         }
     }
-    bool dir = 1;
-    if (key < rt->key) dir = 0;
-    rt->c[dir] = delitem(rt->c[dir], key), rt->update();
-    int bal = rt->bal();
-    if (bal < -1) {
-        if (rt->c[0]->bal() > 0) rt->c[0] = rotate(rt->c[0], 0);
-        rt = rotate(rt, 1);
-    }
-    if (bal > 1) {
-        if (rt->c[1]->bal() < 0) rt->c[1] = rotate(rt->c[1], 1);
-        rt = rotate(rt, 0);
+    bool d = k >= key[rt];
+    c[rt][d] = delitem(c[rt][d], k), upd(rt);
+    int b = bal(rt);
+    if (b < -1) {
+        if (bal(c[rt][0]) > 0) c[rt][0] = rot(c[rt][0], 0);
+        rt = rot(rt, 1);
+    } else if (b > 1) {
+        if (bal(c[rt][1]) < 0) c[rt][1] = rot(c[rt][1], 1);
+        rt = rot(rt, 0);
     }
     return rt;
 }
 
-int getlesscnt(node *rt, int key) {
+int getlesscnt(int rt, int k) {
     if (!rt) return 0;
-    int lsz = 0;
-    if (rt->c[0]) lsz = rt->c[0]->sz;
-    if (key < rt->key)
-        return getlesscnt(rt->c[0], key);
-    else if (key == rt->key)
+    int lsz = sz[c[rt][0]];
+    if (k < key[rt])
+        return getlesscnt(c[rt][0], k);
+    else if (k == key[rt])
         return lsz;
     else
-        return lsz + rt->cnt + getlesscnt(rt->c[1], key);
+        return lsz + cnt[rt] + getlesscnt(c[rt][1], k);
 }
 
-int getnth(node *rt, int rk) {
+int getkth(int rt, int rk) {
     if (!rt) return -inf;
-    int lsz = 0;
-    if (rt->c[0]) lsz = rt->c[0]->sz;
+    int lsz = sz[c[rt][0]];
     if (rk <= lsz)
-        return getnth(rt->c[0], rk);
-    else if (rk <= lsz + rt->cnt)
-        return rt->key;
+        return getkth(c[rt][0], rk);
+    else if (rk <= lsz + cnt[rt])
+        return key[rt];
     else
-        return getnth(rt->c[1], rk - lsz - rt->cnt);
+        return getkth(c[rt][1], rk - lsz - cnt[rt]);
 }
 
-int pred(node *rt, int key) {
+int pred(int rt, int k) {
     if (!rt) return -inf;
-    if (key == rt->key) {
-        node *p = rt->stpred();
+    if (k == key[rt]) {
+        int p = tpred(rt);
         if (!p)
             return -inf;
         else
-            return p->key;
-    } else if (key < rt->key)
-        return pred(rt->c[0], key);
+            return key[p];
+    } else if (k < key[rt])
+        return pred(c[rt][0], k);
     else
-        return max(rt->key, pred(rt->c[1], key));
+        return max(key[rt], pred(c[rt][1], k));
 }
 
-int succ(node *rt, int key) {
+int succ(int rt, int k) {
     if (!rt) return inf;
-    if (key == rt->key) {
-        node *p = rt->stsucc();
+    if (k == key[rt]) {
+        int p = tsucc(rt);
         if (!p)
             return inf;
         else
-            return p->key;
-    } else if (key > rt->key)
-        return succ(rt->c[1], key);
+            return key[p];
+    } else if (k > key[rt])
+        return succ(c[rt][1], k);
     else
-        return min(rt->key, succ(rt->c[0], key));
+        return min(key[rt], succ(c[rt][0], k));
 }
 
 int main() {
-    int _ = gi();
-    node *rt = NULL;
+    int _ = gi(), rt = 0;
     while (_--) {
         int opt = gi(), x = gi();
         if (opt == 1)
@@ -207,12 +183,11 @@ int main() {
         else if (opt == 3)
             putln(1 + getlesscnt(rt, x));
         else if (opt == 4)
-            putln(getnth(rt, x));
+            putln(getkth(rt, x));
         else if (opt == 5)
             putln(pred(rt, x));
         else if (opt == 6)
             putln(succ(rt, x));
     }
-    destroy(rt);
     return 0;
 }

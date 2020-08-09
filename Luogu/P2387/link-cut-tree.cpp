@@ -72,6 +72,7 @@ inline bool isrt(int x) {
 inline int rot(int p, bool d) {
     push(p);
     int s = c[p][!d];
+    if (!s) return p;
     push(s);
     int t = c[s][d];
     c[s][d] = p, c[p][!d] = t, f[s] = f[p], f[p] = s, f[t] = p, upd(p), upd(s);
@@ -93,7 +94,7 @@ inline void splay(int x) {
                 c[gp][gpd] = rot(p, !pd);
             else
                 gp = rot(gp, !gpd);
-            if (c[gp][gpd]) gp = rot(gp, !gpd);
+            gp = rot(gp, !gpd);
             if (!gprt) c[ggp][ggpd] = gp;
         }
     }

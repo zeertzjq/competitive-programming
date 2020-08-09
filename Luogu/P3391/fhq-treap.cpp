@@ -39,87 +39,73 @@ inline void putln(T x) {
 }
 //}}}
 
-const int inf = ~0U >> 1;
-int n, m;
+const int N = 100010;
+int n, m, val[N], pri[N], sz[N], c[N][2], tot = 0;
+bool rev[N];
 
-struct node {
-    int val, pri, sz;
-    node *c[2];
-    bool tag;
-
-    node(int v, int p) {
-        val = v, pri = p, sz = 1, c[0] = c[1] = NULL, tag = 0;
-    }
-
-    inline void upd() {
-        sz = (c[0] ? c[0]->sz : 0) + (c[1] ? c[1]->sz : 0) + 1;
-    }
-
-    inline void rev() {
-        if (!tag) return;
-        tag = 0;
-        if (c[0]) c[0]->tag ^= 1;
-        if (c[1]) c[1]->tag ^= 1;
-        swap(c[0], c[1]);
-    }
-};
-
-void splt(node *rt, int rk, node *&l, node *&r) {
-    if (!rt) {
-        l = r = NULL;
-        return;
-    }
-    rt->rev();
-    int lsz = rt->c[0] ? rt->c[0]->sz : 0;
-    if (rk <= lsz)
-        r = rt, splt(rt->c[0], rk, l, rt->c[0]);
-    else
-        l = rt, splt(rt->c[1], rk - lsz - 1, rt->c[1], r);
-    rt->upd();
+inline int mk(int v, int p) {
+    val[++tot] = v, pri[tot] = p, sz[tot] = 1, c[tot][0] = c[tot][1] = 0,
+    rev[tot] = 0;
+    return tot;
 }
 
-node *mrg(node *l, node *r) {
-    if (!l) return r;
-    if (!r) return l;
-    if (l->pri < r->pri) {
-        l->rev(), l->c[1] = mrg(l->c[1], r), l->upd();
+inline void upd(int p) { sz[p] = 1 + sz[c[p][0]] + sz[c[p][1]]; }
+
+inline void push(int p) {
+    if (!rev[p]) return;
+    rev[p] = 0;
+    if (c[p][0]) rev[c[p][0]] ^= 1;
+    if (c[p][1]) rev[c[p][1]] ^= 1;
+    swap(c[p][0], c[p][1]);
+}
+
+void splt(int rt, int rk, int &l, int &r) {
+    if (!rt) {
+        l = r = 0;
+        return;
+    }
+    push(rt);
+    int lsz = sz[c[rt][0]];
+    if (rk <= lsz)
+        r = rt, splt(c[rt][0], rk, l, c[rt][0]);
+    else
+        l = rt, splt(c[rt][1], rk - lsz - 1, c[rt][1], r);
+    upd(rt);
+}
+
+int mrg(int l, int r) {
+    if (!l || !r) return l | r;
+    if (pri[l] < pri[r]) {
+        push(l), c[l][1] = mrg(c[l][1], r), upd(l);
         return l;
     } else {
-        r->rev(), r->c[0] = mrg(l, r->c[0]), r->upd();
+        push(r), c[r][0] = mrg(l, c[r][0]), upd(r);
         return r;
     }
 }
 
-node *bld(int l, int r, int d) {
-    if (l > r) return NULL;
-    int m = (l + r) >> 1;
-    node *rt = new node(m, d);
-    rt->c[0] = bld(l, m - 1, d + 1), rt->c[1] = bld(m + 1, r, d + 1), rt->upd();
+int bld(int l, int r, int d) {
+    if (l > r) return 0;
+    int m = (l + r) >> 1, rt = mk(m, d);
+    c[rt][0] = bld(l, m - 1, d + 1), c[rt][1] = bld(m + 1, r, d + 1), upd(rt);
     return rt;
 }
 
-void inorder(node *rt) {
+void inorder(int rt) {
     if (!rt) return;
-    rt->rev(), inorder(rt->c[0]);
-    if (rt->val > 0 && rt->val <= n) putsp(rt->val);
-    inorder(rt->c[1]);
-}
-
-void destroy(node *rt) {
-    if (!rt) return;
-    destroy(rt->c[0]), destroy(rt->c[1]);
-    delete rt;
+    push(rt), inorder(c[rt][0]);
+    if (val[rt] > 0 && val[rt] <= n) putsp(val[rt]);
+    inorder(c[rt][1]);
 }
 
 int main() {
     n = gi(), m = gi();
-    node *rt = bld(1, n, 1);
+    int rt = bld(1, n, 1);
     while (m--) {
-        int l = gi(), r = gi();
-        node *t1, *t2, *t3;
-        splt(rt, r, t1, t3), splt(t1, l - 1, t1, t2), t2->tag ^= 1,
+        int l = gi(), r = gi(), t1, t2, t3;
+        splt(rt, r, t1, t3), splt(t1, l - 1, t1, t2), rev[t2] ^= 1,
             rt = mrg(mrg(t1, t2), t3);
     }
-    inorder(rt), putchar('\n'), destroy(rt);
+    inorder(rt), putchar('\n');
     return 0;
 }
