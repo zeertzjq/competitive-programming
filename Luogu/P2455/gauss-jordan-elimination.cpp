@@ -42,20 +42,23 @@ inline void putln(T x) {
 const int N = 55;
 const double eps = 1e-7;
 int n;
-double a[N][N];
-bool f1, f2;
+double a0[N][N], *a[N];
+bool f0, f1;
+
+inline bool is0(double x) { return fabs(x) < eps; }
 
 int main() {
     n = gi();
-    for (int i = 1; i <= n; ++i)
+    for (int i = 1; i <= n; ++i) {
+        a[i] = a0[i];
         for (int j = 1; j <= n + 1; ++j) a[i][j] = gi();
+    }
     for (int i = 1; i <= n; ++i) {
         int r = i;
         for (int j = i + 1; j <= n; ++j)
             if (fabs(a[j][i]) > fabs(a[r][i])) r = j;
-        if (r != i)
-            for (int k = 1; k <= n + 1; ++k) swap(a[r][k], a[i][k]);
-        if (fabs(a[i][i]) < eps) continue;
+        if (r != i) swap(a[r], a[i]);
+        if (is0(a[i][i])) continue;
         double c = a[i][i];
         for (int k = 1; k <= n + 1; ++k) a[i][k] /= c;
         for (int j = 1; j <= n; ++j)
@@ -66,26 +69,26 @@ int main() {
     }
     for (int i = 1; i <= n; ++i) {
         bool f = 1;
-        for (int j = 1; j <= n; ++j) f &= fabs(a[i][j]) < eps;
+        for (int j = 1; j <= n; ++j) f &= is0(a[i][j]);
         if (f) {
-            if (fabs(a[i][n + 1]) < eps)
-                f1 = 1;
+            if (is0(a[i][n + 1]))
+                f0 = 1;
             else
-                f2 = 1;
+                f1 = 1;
         }
     }
-    if (f2) {
+    if (f1) {
         puts("-1");
         return 0;
     }
-    if (f1) {
+    if (f0) {
         puts("0");
         return 0;
     }
     for (int i = n; i; --i)
         for (int j = i + 1; j <= n; ++j) a[i][n + 1] -= a[i][j] * a[j][n + 1];
     for (int i = 1; i <= n; ++i)
-        if (fabs(a[i][n + 1]) < eps)
+        if (is0(a[i][n + 1]))
             printf("x%d=0\n", i);
         else
             printf("x%d=%.2lf\n", i, a[i][n + 1]);
