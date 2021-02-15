@@ -1,6 +1,1 @@
-BasedOnStyle: Google
-
-AccessModifierOffset: -4
-IndentWidth: 4
-NamespaceIndentation: All
-ObjCBlockIndentWidth: 4
+BasedOnStyle: LLVM

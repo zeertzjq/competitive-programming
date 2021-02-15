@@ -1,7 +1,3 @@
-setxkbmap -option caps:escape
+setxkbmap -option caps:ctrl_modifier -option ctrl:nocaps -option shift:both_capslock
+alias gcc='gcc -Wall -Wextra -g'
 alias g++='g++ -Wall -Wextra -g'
-alias x='./a.out'
-alias g='gdb a.out'
-c() { g++ "${PWD##*/}.cpp" $@; }
-u() { cp "${PWD##*/}$1.in" "${PWD##*/}.in"; }
-d() { vimdiff "${PWD##*/}$1.ans" "${PWD##*/}.out"; }
