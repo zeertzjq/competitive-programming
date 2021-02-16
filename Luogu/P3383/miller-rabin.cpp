@@ -7,7 +7,8 @@ inline int gi() {
   int x, f = 0;
   char c;
   while (!isdigit(c = getchar()))
-    c == '-' && (f = 1);
+    if (c == '-')
+      f = 1;
   for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
     ;
   return f ? -x : x;
@@ -18,7 +19,8 @@ inline int gll() {
   int x;
   char c;
   while (!isdigit(c = getchar()))
-    c == '-' && (f = 1);
+    if (c == '-')
+      f = 1;
   for (x = c - '0'; isdigit(c = getchar()); x = x * 10 + c - '0')
     ;
   return f ? -x : x;
