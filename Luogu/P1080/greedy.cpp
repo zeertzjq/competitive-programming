@@ -46,7 +46,7 @@ int n, a, b;
 struct itm {
   int a, b, p;
 
-  inline bool operator<(const itm &rhs) const { return p < rhs.p; }
+  inline bool operator<(const itm& rhs) const { return p < rhs.p; }
 } m[N];
 
 struct bi {
@@ -55,13 +55,13 @@ struct bi {
 
   bi(unsigned n = 0) { d[sz = 0] = n; }
 
-  bi(const bi &rhs) {
+  bi(const bi& rhs) {
     sz = rhs.sz;
     for (int i = 0; i <= sz; ++i)
       d[i] = rhs.d[i];
   }
 
-  inline bool operator<(const bi &rhs) const {
+  inline bool operator<(const bi& rhs) const {
     if (sz != rhs.sz)
       return sz < rhs.sz;
     for (int i = sz; i >= 0; --i)
@@ -70,7 +70,7 @@ struct bi {
     return 0;
   }
 
-  inline bi &operator*=(const unsigned &rhs) {
+  inline bi& operator*=(const unsigned& rhs) {
     unsigned r = 0;
     for (int i = 0; i <= sz; ++i) {
       unsigned long long tmp = 1ULL * d[i] * rhs + r;
@@ -81,7 +81,7 @@ struct bi {
     return *this;
   }
 
-  inline bi &operator/=(const unsigned &rhs) {
+  inline bi& operator/=(const unsigned& rhs) {
     unsigned long long r = 0;
     for (int i = sz; i >= 0; --i)
       r = r * B + d[i], d[i] = r / rhs, r %= rhs;

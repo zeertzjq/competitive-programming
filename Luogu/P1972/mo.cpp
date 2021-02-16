@@ -45,13 +45,13 @@ int n, m, bs, a[N], cnt[N], ans[N];
 struct _ {
   int v, *p;
 
-  inline bool operator<(const _ &rhs) const { return v < rhs.v; }
+  inline bool operator<(const _& rhs) const { return v < rhs.v; }
 } a_[N];
 
 struct query {
   int b, l, r, id;
 
-  inline bool operator<(const query &rhs) const {
+  inline bool operator<(const query& rhs) const {
     return b == rhs.b ? r < rhs.r : b < rhs.b;
   }
 } q[N];

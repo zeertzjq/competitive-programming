@@ -63,7 +63,7 @@ int dfs(int u, int lim) {
   if (u == t)
     return lim;
   int used = 0;
-  for (int &e = cur[u]; e; e = e1[e]) {
+  for (int& e = cur[u]; e; e = e1[e]) {
     int v = to[e];
     if (!w[e] || dep[v] != dep[u] + 1)
       continue;

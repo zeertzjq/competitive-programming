@@ -46,7 +46,7 @@ bool r[N + M];
 struct edge {
   int x, y, a, b;
 
-  inline bool operator<(const edge &rhs) const { return a < rhs.a; }
+  inline bool operator<(const edge& rhs) const { return a < rhs.a; }
 } e[M];
 
 int finds(int x) { return uf[x] == x ? x : uf[x] = finds(uf[x]); }

@@ -44,7 +44,7 @@ int n, m, s, t, e0[N], e1[M], to[M], w[M], c[M], dis[N], pre[N], q[N], head,
     tail, flow = 0, cost = 0;
 bool inq[N];
 
-inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
+inline int& qo(int& x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 
 inline bool spfa() {
   fill(dis + 1, dis + 1 + n, inf), dis[s] = 0, head = 1, tail = 0,

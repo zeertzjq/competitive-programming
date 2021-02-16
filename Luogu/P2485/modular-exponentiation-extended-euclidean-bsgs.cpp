@@ -46,7 +46,7 @@ inline int pow(int n, int k, int p) {
   return ans;
 }
 
-int exgcd(int a, int b, int &x, int &y) {
+int exgcd(int a, int b, int& x, int& y) {
   if (!b) {
     x = 1, y = 0;
     return a;

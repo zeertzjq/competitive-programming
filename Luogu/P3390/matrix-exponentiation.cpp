@@ -50,7 +50,7 @@ struct mat {
         m[i][j] = 0;
   }
 
-  mat &operator*=(const mat &rhs) {
+  mat& operator*=(const mat& rhs) {
     int bb = rhs.b;
     mat ret(a, bb);
     for (int i = 0; i < a; ++i)

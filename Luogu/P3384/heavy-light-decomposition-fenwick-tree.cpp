@@ -43,12 +43,12 @@ const int N = 100010, E = N << 1;
 int n, m, r, p, e0[N], e1[E], to[E], a[N], bit1[N], bit2[N], dep[N], fa[N],
     h[N], sz[N], top[N], id[N], cnt = 0;
 
-inline void upd(int *bit, int k, int v) {
+inline void upd(int* bit, int k, int v) {
   for (; k <= n; k += k & -k)
     bit[k] = (bit[k] + v) % p;
 }
 
-inline int qry(int *bit, int k) {
+inline int qry(int* bit, int k) {
   int ans = 0;
   for (; k; k &= k - 1)
     ans = (ans + bit[k]) % p;

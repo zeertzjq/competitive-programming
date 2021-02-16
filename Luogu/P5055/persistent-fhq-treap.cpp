@@ -73,7 +73,7 @@ inline void push(int p) {
   rev[p] = 0;
 }
 
-void splt(int rt, int rk, int &l, int &r) {
+void splt(int rt, int rk, int& l, int& r) {
   if (!rt) {
     l = r = 0;
     return;
