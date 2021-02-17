@@ -1,4 +1,4 @@
-// vim: et sw=2 sts=2 fdm=marker
+// vim: et sw=2 fdm=marker
 #include <bits/stdc++.h>
 using namespace std;
 
