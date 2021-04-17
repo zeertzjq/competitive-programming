@@ -46,7 +46,7 @@ bool ck[N];
 
 int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
 
-void upd(int& rt, int l, int r, int x, int w) {
+void upd(int & rt, int l, int r, int x, int w) {
   if (!rt)
     rt = ++tot;
   if (l == r) {
@@ -72,7 +72,7 @@ inline int qmx(int rt) {
   return l;
 }
 
-void mrg(int& a, int b, int l, int r) {
+void mrg(int & a, int b, int l, int r) {
   if (!a || !b) {
     a |= b;
     return;

@@ -45,7 +45,7 @@ int n, tmp[N];
 struct point {
   double x, y;
 
-  inline bool operator<(const point& rhs) const {
+  inline bool operator<(const point & rhs) const {
     return x == rhs.x ? y < rhs.y : x < rhs.x;
   }
 } p[N];

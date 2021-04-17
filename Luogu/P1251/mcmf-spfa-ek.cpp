@@ -44,7 +44,7 @@ int n, s, t, e0[N], e1[E], to[E], w[E], c[E], ei = 0, dis[N], pre[N], q[N],
                                               head, tail;
 bool inq[N];
 
-inline int& qo(int& x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
+inline int & qo(int & x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 
 inline void mk(int u, int v, int w0, int c0) {
   ++ei;

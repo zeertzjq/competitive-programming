@@ -44,7 +44,7 @@ const int N = 5010, M = 200010;
 struct edge {
   int x, y, z;
 
-  bool operator<(const edge& rhs) const { return z < rhs.z; }
+  bool operator<(const edge & rhs) const { return z < rhs.z; }
 } e[M];
 
 int n, m, rk[N], p[N], len = 0, ecnt = 0;

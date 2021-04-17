@@ -47,7 +47,7 @@ struct opt {
   int l, r, k;
 } o[N];
 
-void update(int& rt, int l, int r, int x, int w) {
+void update(int & rt, int l, int r, int x, int w) {
   if (!rt)
     rt = ++tot;
   if (l == r) {
@@ -64,7 +64,7 @@ inline void upd(int p, int x, int w) {
     update(bit[p], 1, v[0], x, w);
 }
 
-inline void qinit(int* q, int p) {
+inline void qinit(int * q, int p) {
   for (q[0] = 0; p; p &= p - 1)
     q[++q[0]] = bit[p];
 }

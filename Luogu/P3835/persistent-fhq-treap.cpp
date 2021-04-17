@@ -57,7 +57,7 @@ inline int cp(int o) {
 
 inline void upd(int p) { sz[p] = 1 + sz[c[p][0]] + sz[c[p][1]]; }
 
-void splt(int rt, int k, int& l, int& r) {
+void splt(int rt, int k, int & l, int & r) {
   if (!rt) {
     l = r = 0;
     return;

@@ -45,7 +45,7 @@ int n, m, k, bs, cnt[N], a[N], ans[N];
 struct query {
   int b, l, r, id;
 
-  inline bool operator<(const query& rhs) const {
+  inline bool operator<(const query & rhs) const {
     return b == rhs.b ? r < rhs.r : b < rhs.b;
   }
 } q[N];

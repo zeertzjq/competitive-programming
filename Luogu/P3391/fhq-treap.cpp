@@ -62,7 +62,7 @@ inline void push(int p) {
   swap(c[p][0], c[p][1]);
 }
 
-void splt(int rt, int rk, int& l, int& r) {
+void splt(int rt, int rk, int & l, int & r) {
   if (!rt) {
     l = r = 0;
     return;

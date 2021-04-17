@@ -49,7 +49,7 @@ inline long long mul(long long a, long long b, long long p) {
   return ans;
 }
 
-long long exgcd(long long a, long long b, long long& x, long long& y) {
+long long exgcd(long long a, long long b, long long & x, long long & y) {
   if (!b) {
     x = 1, y = 0;
     return a;

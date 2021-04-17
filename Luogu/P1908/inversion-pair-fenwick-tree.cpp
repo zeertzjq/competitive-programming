@@ -45,7 +45,7 @@ int n, a[N], bit[N];
 struct _ {
   int v, *p;
 
-  inline bool operator<(const _& rhs) const { return v < rhs.v; }
+  inline bool operator<(const _ & rhs) const { return v < rhs.v; }
 } a_[N];
 
 long long ans = 0;

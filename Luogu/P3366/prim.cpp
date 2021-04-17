@@ -45,7 +45,7 @@ int n, m, e0[N], e1[M << 1], to[M << 1], z[M << 1], dis[N], len = 0, vcnt = 0,
 struct hitm {
   int d, u;
 
-  inline bool operator<(const hitm& rhs) const { return d > rhs.d; }
+  inline bool operator<(const hitm & rhs) const { return d > rhs.d; }
 } h[M];
 bool vis[N];
 
