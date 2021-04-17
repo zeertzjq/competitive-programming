@@ -44,11 +44,11 @@ const int N = 100010, K = 200010;
 struct itm {
   int a, b, c, id, cnt;
 
-  inline bool operator<(const itm & rhs) const {
+  inline bool operator<(const itm &rhs) const {
     return a == rhs.a ? b == rhs.b ? c < rhs.c : b < rhs.b : a < rhs.a;
   }
 
-  inline bool operator==(const itm & rhs) const {
+  inline bool operator==(const itm &rhs) const {
     return a == rhs.a && b == rhs.b && c == rhs.c;
   }
 } q[N], tmp[N];

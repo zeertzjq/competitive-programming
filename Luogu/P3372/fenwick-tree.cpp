@@ -43,12 +43,12 @@ const int N = 100010;
 int n, m;
 long long s[N], bit1[N], bit2[N];
 
-inline void upd(long long * bit, int k, long long v) {
+inline void upd(long long *bit, int k, long long v) {
   for (; k <= n; k += k & -k)
     bit[k] += v;
 }
 
-inline long long qry(long long * bit, int k) {
+inline long long qry(long long *bit, int k) {
   long long ans = 0;
   for (; k; k &= k - 1)
     ans += bit[k];

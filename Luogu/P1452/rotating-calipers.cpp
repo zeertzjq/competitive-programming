@@ -45,7 +45,7 @@ int n, top = -1, ch, ans = 0;
 struct pt {
   int x, y;
 
-  inline bool operator<(const pt & rhs) const {
+  inline bool operator<(const pt &rhs) const {
     return x == rhs.x ? y < rhs.y : x < rhs.x;
   }
 } p[N], s[N];

@@ -82,7 +82,7 @@ int isap() {
     if (u == t)
       ans += flow(), u = s;
     bool f = 0;
-    for (int & e = cur[u]; e; e = e1[e]) {
+    for (int &e = cur[u]; e; e = e1[e]) {
       int v = to[e];
       if (dep[u] == dep[v] + 1 && w[e]) {
         f = 1, u = v, pre[v] = e;

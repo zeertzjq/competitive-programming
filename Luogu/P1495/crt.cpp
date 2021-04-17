@@ -43,7 +43,7 @@ const int N = 12;
 int n, p[N], b[N];
 long long mod = 1, ans = 0;
 
-long long exgcd(long long a, long long b, long long & x, long long & y) {
+long long exgcd(long long a, long long b, long long &x, long long &y) {
   if (!b) {
     x = 1, y = 0;
     return a;

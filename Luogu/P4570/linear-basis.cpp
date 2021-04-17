@@ -47,7 +47,7 @@ struct rock {
   long long a;
   int b;
 
-  inline bool operator<(const rock & rhs) const { return b > rhs.b; }
+  inline bool operator<(const rock &rhs) const { return b > rhs.b; }
 } r[N];
 
 inline bool ins(long long x) {

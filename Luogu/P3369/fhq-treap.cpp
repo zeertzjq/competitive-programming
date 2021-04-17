@@ -63,7 +63,7 @@ inline int tmax(int rt) {
   return key[rt];
 }
 
-void splt(int rt, int k, int & l, int & r) {
+void splt(int rt, int k, int &l, int &r) {
   if (!rt) {
     l = r = 0;
     return;

@@ -39,7 +39,7 @@ template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
 template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
 //}}}
 
-int exgcd(int a, int b, int & x, int & y) {
+int exgcd(int a, int b, int &x, int &y) {
   if (!b) {
     x = 1, y = 0;
     return a;

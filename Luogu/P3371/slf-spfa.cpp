@@ -43,7 +43,7 @@ const int N = 10010, M = 500010, inf = ~0U >> 1;
 int n, m, s, e0[N], e1[M], to[M], w[M], dis[N], q[N], head, tail;
 bool inq[N];
 
-inline int & qo(int & x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
+inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
 
 void spfa() {
   fill(dis + 1, dis + 1 + n, inf), dis[s] = 0, head = 1, tail = 0,

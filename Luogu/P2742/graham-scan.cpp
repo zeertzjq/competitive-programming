@@ -46,7 +46,7 @@ double ans = 0;
 struct pt {
   double x, y;
 
-  inline bool operator<(const pt & rhs) const {
+  inline bool operator<(const pt &rhs) const {
     return x == rhs.x ? y < rhs.y : x < rhs.x;
   }
 } p[N], stk[N];
