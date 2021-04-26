@@ -49,14 +49,14 @@ inline long long mul(long long a, long long b, long long p) {
   return ans;
 }
 
-long long exgcd(long long a, long long b, long long &x, long long &y) {
-  if (!b) {
-    x = 1, y = 0;
-    return a;
+inline long long exgcd(long long a, long long b, long long &x, long long &y) {
+  long long aa = 1, ab = 0, ba = 0, bb = 1;
+  while (b) {
+    long long q = a / b, r = a % b, ra = aa - q * ba, rb = ab - q * bb;
+    a = b, b = r, aa = ba, ab = bb, ba = ra, bb = rb;
   }
-  long long x0, y0, c = exgcd(b, a % b, x0, y0);
-  x = y0, y = x0 - a / b * y0;
-  return c;
+  x = aa, y = ab;
+  return a;
 }
 
 int main() {

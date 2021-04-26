@@ -46,7 +46,12 @@ inline int pow(int n, int k, int p) {
   return ans;
 }
 
-int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+inline int gcd(int a, int b) {
+  int r;
+  while (b)
+    r = a % b, a = b, b = r;
+  return a;
+}
 
 inline int exbsgs(int a, int b, int p) {
   int d, k = 0, c = 1;

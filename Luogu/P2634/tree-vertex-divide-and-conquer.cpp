@@ -44,7 +44,12 @@ int n, e0[N], e1[E], to[E], w[E], rt, rtmsz = N, tot, sz[N], dis[N], dcnt,
                                       vdis[N], vdcnt, ans[3];
 bool vis[N];
 
-int gcd(int a, int b) { return b ? gcd(b, a % b) : a; }
+inline int gcd(int a, int b) {
+  int r;
+  while (b)
+    r = a % b, a = b, b = r;
+  return a;
+}
 
 void grt(int u, int fa) {
   int msz = 0;

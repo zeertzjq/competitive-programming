@@ -46,14 +46,14 @@ inline int pow(int n, int k, int p) {
   return ans;
 }
 
-int exgcd(int a, int b, int &x, int &y) {
-  if (!b) {
-    x = 1, y = 0;
-    return a;
+inline int exgcd(int a, int b, int &x, int &y) {
+  int aa = 1, ab = 0, ba = 0, bb = 1;
+  while (b) {
+    int q = a / b, r = a % b, ra = aa - q * ba, rb = ab - q * bb;
+    a = b, b = r, aa = ba, ab = bb, ba = ra, bb = rb;
   }
-  int x0, y0, c = exgcd(b, a % b, x0, y0);
-  x = y0, y = x0 - a / b * y0;
-  return c;
+  x = aa, y = ab;
+  return a;
 }
 
 inline int bsgs(int a, int b, int p) {
