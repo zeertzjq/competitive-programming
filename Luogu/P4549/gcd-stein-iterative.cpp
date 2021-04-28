@@ -43,7 +43,7 @@ inline int gcd(int a, int b) {
   if (!(a && b))
     return a | b;
   int k = 0;
-  while (!((a | b) & 1))
+  while (!(a & 1) && !(b & 1))
     a >>= 1, b >>= 1, ++k;
   while (!(a & 1))
     a >>= 1;
