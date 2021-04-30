@@ -58,8 +58,8 @@ int main() {
   for (int i = 1; i <= n; ++i)
     p[i] = gi(), b[i] = gi(), mod *= p[i];
   for (int i = 1; i <= n; ++i) {
-    long long m = mod / p[i], r, t;
-    exgcd(m, p[i], r, t), r = (r % p[i] + p[i]) % p[i],
+    long long m = mod / p[i], r, _;
+    exgcd(m, p[i], r, _), r = (r % p[i] + p[i]) % p[i],
                           ans = (ans + b[i] * m * r) % mod;
   }
   putln(ans);

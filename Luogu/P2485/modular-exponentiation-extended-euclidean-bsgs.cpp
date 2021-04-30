@@ -83,8 +83,8 @@ int main() {
         puts("Orz, I cannot find x!");
         continue;
       }
-      int x, t;
-      exgcd(y, p, x, t), putln((1LL * x * z % p + p) % p);
+      int x, _;
+      exgcd(y, p, x, _), putln((1LL * x * z % p + p) % p);
     } else {
       y %= p, z %= p;
       int x = bsgs(y, z, p);

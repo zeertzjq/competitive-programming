@@ -60,8 +60,8 @@ inline int exgcd(int a, int b, int &x, int &y) {
 }
 
 inline int inv(int n, int p) {
-  int r, t;
-  exgcd(n, p, r, t);
+  int r, _;
+  exgcd(n, p, r, _);
   return (r % p + p) % p;
 }
 

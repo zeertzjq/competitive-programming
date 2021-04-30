@@ -50,7 +50,7 @@ inline int exgcd(int a, int b, int &x, int &y) {
 }
 
 int main() {
-  int a = gi(), b = gi(), x, y;
-  a %= b, exgcd(a, b, x, y), putln((x % b + b) % b);
+  int a = gi(), b = gi(), x, _;
+  a %= b, exgcd(a, b, x, _), putln((x % b + b) % b);
   return 0;
 }

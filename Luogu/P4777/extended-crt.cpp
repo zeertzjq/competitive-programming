@@ -62,8 +62,8 @@ inline long long exgcd(long long a, long long b, long long &x, long long &y) {
 int main() {
   n = gi(), m = gll(), ans = gll();
   for (int i = 2; i <= n; ++i) {
-    long long p = gll(), b = gll(), c = (b - ans % p + p) % p, x, t,
-              d = exgcd(m, p, x, t), r = p / d;
+    long long p = gll(), b = gll(), c = (b - ans % p + p) % p, x, _,
+              d = exgcd(m, p, x, _), r = p / d;
     if (c % d)
       return -1;
     x = mul(x, c / d, r), ans += x * m, m *= r, ans = (ans % m + m) % m;
