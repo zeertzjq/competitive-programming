@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 5010, M = 200010;
@@ -44,7 +48,9 @@ const int N = 5010, M = 200010;
 struct edge {
   int x, y, z;
 
-  bool operator<(const edge &rhs) const { return z < rhs.z; }
+  bool operator<(const edge &rhs) const {
+    return z < rhs.z;
+  }
 } e[M];
 
 int n, m, rk[N], p[N], len = 0, ecnt = 0;
@@ -60,7 +66,9 @@ inline void unions(int x, int y) {
     p[x] = y;
 }
 
-int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
+int finds(int x) {
+  return p[x] == x ? x : p[x] = finds(p[x]);
+}
 
 void kruskal() {
   for (int i = 1; i <= m; ++i) {

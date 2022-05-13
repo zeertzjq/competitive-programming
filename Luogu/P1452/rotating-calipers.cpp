@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 50010;
@@ -50,9 +54,13 @@ struct pt {
   }
 } p[N], s[N];
 
-inline int sqr(int x) { return x * x; }
+inline int sqr(int x) {
+  return x * x;
+}
 
-inline int slen(pt a, pt b) { return sqr(a.x - b.x) + sqr(a.y - b.y); }
+inline int slen(pt a, pt b) {
+  return sqr(a.x - b.x) + sqr(a.y - b.y);
+}
 
 inline bool ccw(pt a, pt b, pt c) {
   return (b.x - a.x) * (c.y - b.y) - (c.x - b.x) * (b.y - a.y) > 0;

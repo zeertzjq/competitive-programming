@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 200010, inf = ~0U >> 1;
@@ -50,9 +54,13 @@ struct point {
   }
 } p[N];
 
-inline bool cmpy(int a, int b) { return p[a].y < p[b].y; }
+inline bool cmpy(int a, int b) {
+  return p[a].y < p[b].y;
+}
 
-inline double sqr(double n) { return n * n; }
+inline double sqr(double n) {
+  return n * n;
+}
 
 inline double dis(int a, int b) {
   return sqrt(sqr(p[b].x - p[a].x) + sqr(p[b].y - p[a].y));

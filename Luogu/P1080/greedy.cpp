@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 1010;
@@ -46,14 +50,18 @@ int n, a, b;
 struct itm {
   int a, b, p;
 
-  inline bool operator<(const itm &rhs) const { return p < rhs.p; }
+  inline bool operator<(const itm &rhs) const {
+    return p < rhs.p;
+  }
 } m[N];
 
 struct bi {
   unsigned d[N];
   int sz;
 
-  bi(unsigned n = 0) { d[sz = 0] = n; }
+  bi(unsigned n = 0) {
+    d[sz = 0] = n;
+  }
 
   bi(const bi &rhs) {
     sz = rhs.sz;

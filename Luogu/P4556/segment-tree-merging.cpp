@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 100010, E = N << 1, S = N * 68;
@@ -44,7 +48,9 @@ int n, m, e0[N], e1[E], to[E], rt[N], mx[S], c[S][2], q0[N], q1[E], qi[E], p[N],
     fa[N], z[N], ans[N], tot = 0;
 bool ck[N];
 
-int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
+int finds(int x) {
+  return p[x] == x ? x : p[x] = finds(p[x]);
+}
 
 void upd(int &rt, int l, int r, int x, int w) {
   if (!rt)

@@ -34,16 +34,22 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int base[8] = {2, 3, 5, 7, 11, 13, 17, 19};
 const long long U = ~0ULL >> 4;
 long long seed = 19260817LL, n, ans;
 
-inline long long ran() { return seed = (seed * 1103515245LL + 12345LL) & U; }
+inline long long ran() {
+  return seed = (seed * 1103515245LL + 12345LL) & U;
+}
 
 inline long long gcd(long long a, long long b) {
   if (!(a && b))

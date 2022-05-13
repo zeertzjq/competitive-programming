@@ -34,15 +34,21 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 101, mod = 9999973;
 int n, m, dp[N][N][N];
 
-inline int c2(int x) { return x * (x - 1) >> 1; }
+inline int c2(int x) {
+  return x * (x - 1) >> 1;
+}
 
 int main() {
   n = gi(), m = gi(), dp[0][0][0] = 1;

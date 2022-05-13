@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 100010, M = 50010;
@@ -45,8 +49,12 @@ struct itm {
   int t, p, v;
 } q[N], tmp[N];
 
-inline bool cmp0(const itm &lhs, const itm &rhs) { return lhs.t > rhs.t; }
-inline bool cmp1(const itm &lhs, const itm &rhs) { return lhs.t < rhs.t; }
+inline bool cmp0(const itm &lhs, const itm &rhs) {
+  return lhs.t > rhs.t;
+}
+inline bool cmp1(const itm &lhs, const itm &rhs) {
+  return lhs.t < rhs.t;
+}
 
 int n, m, pos[N], f[N], bit[N];
 long long ans = 0;

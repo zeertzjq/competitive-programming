@@ -34,15 +34,21 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 100010, inf = ~0U >> 1;
 int seed = 19260817, key[N], pri[N], cnt[N], sz[N], c[N][2], tot = 0;
 
-inline int ran() { return seed = (seed * 1103515245LL + 12345LL) & inf; }
+inline int ran() {
+  return seed = (seed * 1103515245LL + 12345LL) & inf;
+}
 
 inline int mk(int k) {
   key[++tot] = k, pri[tot] = ran(), sz[tot] = cnt[tot] = 1,
@@ -50,7 +56,9 @@ inline int mk(int k) {
   return tot;
 }
 
-inline void upd(int p) { sz[p] = cnt[p] + sz[c[p][0]] + sz[c[p][1]]; }
+inline void upd(int p) {
+  sz[p] = cnt[p] + sz[c[p][0]] + sz[c[p][1]];
+}
 
 inline int tpred(int rt) {
   if (!c[rt][0])

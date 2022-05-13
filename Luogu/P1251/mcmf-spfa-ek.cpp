@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 4010, E = N * 12, inf = ~0U >> 1;
@@ -44,7 +48,9 @@ int n, s, t, e0[N], e1[E], to[E], w[E], c[E], ei = 0, dis[N], pre[N], q[N],
                                               head, tail;
 bool inq[N];
 
-inline int &qo(int &x) { return x == N ? x = 0 : x == -1 ? x = N - 1 : x; }
+inline int &qo(int &x) {
+  return x == N ? x = 0 : x == -1 ? x = N - 1 : x;
+}
 
 inline void mk(int u, int v, int w0, int c0) {
   ++ei;

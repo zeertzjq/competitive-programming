@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 50010, M = 100010, inf = ~0U >> 1;
@@ -46,10 +50,14 @@ bool r[N + M];
 struct edge {
   int x, y, a, b;
 
-  inline bool operator<(const edge &rhs) const { return a < rhs.a; }
+  inline bool operator<(const edge &rhs) const {
+    return a < rhs.a;
+  }
 } e[M];
 
-int finds(int x) { return uf[x] == x ? x : uf[x] = finds(uf[x]); }
+int finds(int x) {
+  return uf[x] == x ? x : uf[x] = finds(uf[x]);
+}
 
 inline void upd(int x) {
   mx[x] = x;
@@ -111,9 +119,13 @@ inline void access(int x) {
     splay(x), push(x), c[x][1] = s, upd(x);
 }
 
-inline void mkrt(int x) { access(x), splay(x), r[x] ^= 1; }
+inline void mkrt(int x) {
+  access(x), splay(x), r[x] ^= 1;
+}
 
-inline void link(int x, int y) { mkrt(x), splay(x), f[x] = y; }
+inline void link(int x, int y) {
+  mkrt(x), splay(x), f[x] = y;
+}
 
 inline void cut(int x, int y) {
   mkrt(x), access(y), splay(y), push(y), f[x] = c[y][0] = 0, upd(y);

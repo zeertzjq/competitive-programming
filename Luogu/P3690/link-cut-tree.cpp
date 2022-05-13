@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 300010;
@@ -44,7 +48,9 @@ int n, m;
 int f[N], c[N][2], s[N], v[N];
 bool r[N];
 
-inline void upd(int x) { s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]]; }
+inline void upd(int x) {
+  s[x] = v[x] ^ s[c[x][0]] ^ s[c[x][1]];
+}
 
 inline void push(int x) {
   if (!x || !r[x])
@@ -98,7 +104,9 @@ inline void access(int x) {
     splay(x), push(x), c[x][1] = s, upd(x);
 }
 
-inline void mkrt(int x) { access(x), splay(x), r[x] ^= 1; }
+inline void mkrt(int x) {
+  access(x), splay(x), r[x] ^= 1;
+}
 
 inline int frt(int x) {
   access(x), splay(x);

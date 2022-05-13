@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 1010, inf = ~0U >> 1;
@@ -44,9 +48,13 @@ const double eps = 1e-15;
 int seed = 19260817, n, x[N], y[N], w[N];
 double ax = 0, ay = 0, af = INFINITY, r = 0.997;
 
-inline int ran() { return seed = (seed * 1103515245LL + 12345LL) & inf; }
+inline int ran() {
+  return seed = (seed * 1103515245LL + 12345LL) & inf;
+}
 
-inline double sqr(double x) { return x * x; }
+inline double sqr(double x) {
+  return x * x;
+}
 
 inline double f(double x0, double y0) {
   double ans = 0;

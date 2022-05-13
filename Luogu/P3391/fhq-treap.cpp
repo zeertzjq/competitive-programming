@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 100010;
@@ -49,7 +53,9 @@ inline int mk(int v, int p) {
   return tot;
 }
 
-inline void upd(int p) { sz[p] = 1 + sz[c[p][0]] + sz[c[p][1]]; }
+inline void upd(int p) {
+  sz[p] = 1 + sz[c[p][0]] + sz[c[p][1]];
+}
 
 inline void push(int p) {
   if (!rev[p])

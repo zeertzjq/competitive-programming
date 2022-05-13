@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 int n, k;
@@ -50,7 +54,9 @@ inline int bs(int s) {
   return ans;
 }
 
-inline bool ck(int s) { return !(s & s << 1); }
+inline bool ck(int s) {
+  return !(s & s << 1);
+}
 
 int main() {
   n = gi(), k = gi();

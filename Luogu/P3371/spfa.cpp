@@ -34,16 +34,22 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 10010, M = 500010, inf = ~0U >> 1;
 int n, m, s, e0[N], e1[M], to[M], w[M], dis[N], q[N], head = 1, tail = 0;
 bool inq[N];
 
-inline int &qo(int &x) { return x == N ? x = 0 : x; }
+inline int &qo(int &x) {
+  return x == N ? x = 0 : x;
+}
 
 void spfa() {
   fill(dis + 1, dis + 1 + n, inf), dis[s] = 0, q[++tail] = s, inq[s] = 1;

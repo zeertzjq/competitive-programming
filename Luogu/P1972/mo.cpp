@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 500010;
@@ -45,7 +49,9 @@ int n, m, bs, a[N], cnt[N], ans[N];
 struct _ {
   int v, *p;
 
-  inline bool operator<(const _ &rhs) const { return v < rhs.v; }
+  inline bool operator<(const _ &rhs) const {
+    return v < rhs.v;
+  }
 } a_[N];
 
 struct query {

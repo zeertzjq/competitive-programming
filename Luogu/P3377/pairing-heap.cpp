@@ -34,16 +34,22 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 100010;
 
 int n, m, c[N], sib[N], p[N], v[N];
 
-int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
+int finds(int x) {
+  return p[x] == x ? x : p[x] = finds(p[x]);
+}
 
 inline int mrg(int x, int y) {
   if (!x || !y)

@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 200010, S = N * 90, inf = ~0U >> 1;
@@ -44,7 +48,9 @@ int seed = 19260817, n, rt[N], val[S], c[S][2], pri[S], sz[S], tot = 0;
 bool rev[S];
 long long s[S], lastans = 0;
 
-inline int ran() { return seed = (seed * 1103515245LL + 12345LL) & inf; }
+inline int ran() {
+  return seed = (seed * 1103515245LL + 12345LL) & inf;
+}
 
 inline int mk(int v) {
   val[++tot] = v, pri[tot] = ran(), sz[tot] = 1, s[tot] = v;

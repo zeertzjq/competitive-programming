@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 1010, B = 60;
@@ -47,7 +51,9 @@ struct rock {
   long long a;
   int b;
 
-  inline bool operator<(const rock &rhs) const { return b > rhs.b; }
+  inline bool operator<(const rock &rhs) const {
+    return b > rhs.b;
+  }
 } r[N];
 
 inline bool ins(long long x) {

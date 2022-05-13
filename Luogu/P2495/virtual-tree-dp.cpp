@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 250010, E = N << 1, inf = ~0U >> 1;
@@ -86,7 +90,9 @@ inline int lca(int x, int y) {
   return anc[x][0];
 }
 
-inline bool cmp(int a, int b) { return dfn[a] < dfn[b]; }
+inline bool cmp(int a, int b) {
+  return dfn[a] < dfn[b];
+}
 
 long long dfs(int u) {
   long long ans = 0;

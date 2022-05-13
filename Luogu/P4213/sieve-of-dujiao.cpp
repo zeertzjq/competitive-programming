@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int M1 = 1300, M2 = 2000010;
@@ -47,7 +51,9 @@ namespace phi {
 int v[M2];
 long long s0[M2], ad[M1];
 
-inline void clr() { fill(ad + 1, ad + 1 + N / M2, 0); }
+inline void clr() {
+  fill(ad + 1, ad + 1 + N / M2, 0);
+}
 
 long long s(int n) {
   if (n < M2)
@@ -65,7 +71,9 @@ long long s(int n) {
 namespace mu {
 int v[M2], s0[M2], ad[M1];
 
-inline void clr() { fill(ad + 1, ad + 1 + N / M2, 0); }
+inline void clr() {
+  fill(ad + 1, ad + 1 + N / M2, 0);
+}
 
 int s(int n) {
   if (n < M2)

@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 2010, M = 3010, inf = ~0U >> 1;
@@ -52,7 +56,9 @@ inline void clear() {
     inq[q.front()] = 0, q.pop();
 }
 
-inline void push(int v) { ++cnt[v], inq[v] = 1, q.push(v); }
+inline void push(int v) {
+  ++cnt[v], inq[v] = 1, q.push(v);
+}
 
 inline int pop() {
   int v = q.front(), inq[v] = 0, q.pop();

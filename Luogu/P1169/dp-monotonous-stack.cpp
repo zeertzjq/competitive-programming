@@ -34,16 +34,22 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 2010;
 int n, m, w[N][N], stk[N], top, ub[N], a1 = 0, a2 = 0;
 bool mp[N][N];
 
-inline int sq(int x) { return x * x; }
+inline int sq(int x) {
+  return x * x;
+}
 
 void solve() {
   for (int i = 1; i <= n; ++i)

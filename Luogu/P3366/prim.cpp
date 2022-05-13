@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 5010, M = 200010, inf = ~0U >> 1;
@@ -45,7 +49,9 @@ int n, m, e0[N], e1[M << 1], to[M << 1], z[M << 1], dis[N], len = 0, vcnt = 0,
 struct hitm {
   int d, u;
 
-  inline bool operator<(const hitm &rhs) const { return d > rhs.d; }
+  inline bool operator<(const hitm &rhs) const {
+    return d > rhs.d;
+  }
 } h[M];
 bool vis[N];
 

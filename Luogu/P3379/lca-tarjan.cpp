@@ -34,16 +34,22 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 500010, E = N << 1;
 int n, m, s, e0[N], e1[E], to[E], q0[N], q1[E], qi[E], ans[N], p[N];
 bool ck[N];
 
-int finds(int x) { return p[x] == x ? x : p[x] = finds(p[x]); }
+int finds(int x) {
+  return p[x] == x ? x : p[x] = finds(p[x]);
+}
 
 void tarjan(int u, int fa) {
   for (int e = e0[u]; e; e = e1[e]) {

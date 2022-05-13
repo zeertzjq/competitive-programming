@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 55;
@@ -45,7 +49,9 @@ int n;
 double a0[N][N], *a[N];
 bool f0, f1;
 
-inline bool is0(double x) { return fabs(x) < eps; }
+inline bool is0(double x) {
+  return fabs(x) < eps;
+}
 
 int main() {
   n = gi();

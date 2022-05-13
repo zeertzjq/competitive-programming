@@ -34,9 +34,13 @@ template <typename T> void puti(T x) {
   putchar(x % 10 + '0');
 }
 
-template <typename T> inline void putsp(T x) { puti(x), putchar(' '); }
+template <typename T> inline void putsp(T x) {
+  puti(x), putchar(' ');
+}
 
-template <typename T> inline void putln(T x) { puti(x), putchar('\n'); }
+template <typename T> inline void putln(T x) {
+  puti(x), putchar('\n');
+}
 //}}}
 
 const int N = 200010, S = N * 20;
@@ -45,7 +49,9 @@ int n, m, a[N], lc[S], rc[S], val[S], rt[N], tot = 0;
 struct _ {
   int v, *p;
 
-  inline bool operator<(const _ &rhs) const { return v < rhs.v; }
+  inline bool operator<(const _ &rhs) const {
+    return v < rhs.v;
+  }
 } a_[N];
 
 inline int mk(int v, int l, int r) {
