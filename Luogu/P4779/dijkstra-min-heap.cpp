@@ -71,7 +71,7 @@ void dijkstra() {
       int v = to[e];
       long long ndis = dis[u] + w[e];
       if (ndis < dis[v])
-        dis[v] = ndis, h[hsz++] = {ndis, v}, push_heap(h, h + hsz);
+        dis[v] = ndis, h[hsz++] = {(int)ndis, v}, push_heap(h, h + hsz);
     }
   }
 }

@@ -78,8 +78,11 @@ int main() {
   for (int i = 0; i < n; ++i)
     for (int j = 0; j < n; ++j)
       a.m[i][j] = gi() % mod;
-  for (; k; k >>= 1)
-    k & 1 && (ans *= a), a *= a;
+  for (; k; k >>= 1) {
+    if (k & 1)
+      ans *= a;
+    a *= a;
+  }
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < n; ++j)
       putsp(ans.m[i][j]);

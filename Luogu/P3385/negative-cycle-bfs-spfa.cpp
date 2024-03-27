@@ -61,7 +61,8 @@ inline void push(int v) {
 }
 
 inline int pop() {
-  int v = q.front(), inq[v] = 0, q.pop();
+  int v = q.front();
+  inq[v] = 0, q.pop();
   return v;
 }
 

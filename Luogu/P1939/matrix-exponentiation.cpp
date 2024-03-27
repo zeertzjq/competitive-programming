@@ -82,8 +82,11 @@ int main() {
     b.m[0][0] = b.m[0][2] = b.m[1][0] = b.m[2][1] = 1;
     for (int i = 0; i < 3; ++i)
       p.m[i][i] = 1;
-    for (; n; n >>= 1)
-      n & 1 && (p *= b), b *= b;
+    for (; n; n >>= 1) {
+      if (n & 1)
+        p *= b;
+      b *= b;
+    }
     for (int i = 0; i < 3; ++i)
       a.m[i][0] = 1;
     p *= a, putln(p.m[0][0]);
